@@ -1,600 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>
-            Kartikey Pathak | Electrical Engineer & Robotics Enthusiast
-        </title>
+        <title>Kartikey Pathak | Electrical Engineer & Robotics Enthusiast</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
-            rel="stylesheet"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        />
-        <style>
-            :root {
-                --primary: #2563eb;
-                --primary-light: #3b82f6;
-                --primary-dark: #1d4ed8;
-                --secondary: #10b981;
-                --dark: #1e293b;
-                --light: #f8fafc;
-                --gray: #64748b;
-                --light-gray: #e2e8f0;
-                --accent: #f97316;
-                --bg-gradient: linear-gradient(135deg, #1e293b, #0f172a);
-                --card-bg: rgba(30, 41, 59, 0.8);
-                --border-radius: 10px;
-                --box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
-                --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-            }
-
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-
-            body {
-                font-family: "Poppins", sans-serif;
-                background: var(--bg-gradient);
-                color: var(--light);
-                line-height: 1.6;
-                overflow-x: hidden;
-            }
-
-            .container {
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 0 2rem;
-            }
-
-            a {
-                text-decoration: none;
-                color: var(--primary-light);
-                transition: var(--transition);
-            }
-
-            a:hover {
-                color: var(--secondary);
-            }
-
-            .btn {
-                display: inline-block;
-                background: transparent;
-                color: var(--primary);
-                border: 1px solid var(--primary);
-                border-radius: var(--border-radius);
-                padding: 0.75rem 1.5rem;
-                font-size: 0.9rem;
-                font-weight: 500;
-                cursor: pointer;
-                transition: var(--transition);
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-
-            .btn:hover {
-                background: rgba(37, 99, 235, 0.1);
-                color: var(--primary-light);
-                transform: translateY(-3px);
-            }
-
-            h1,
-            h2,
-            h3,
-            h4 {
-                font-weight: 600;
-                line-height: 1.2;
-            }
-
-            h1 {
-                font-size: 2.75rem;
-                margin-bottom: 0.5rem;
-                background: linear-gradient(
-                    to right,
-                    var(--light),
-                    var(--primary-light)
-                );
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-
-            h2 {
-                font-size: 2rem;
-                margin-bottom: 2rem;
-                position: relative;
-                display: inline-block;
-            }
-
-            h2::after {
-                content: "";
-                position: absolute;
-                bottom: -10px;
-                left: 0;
-                width: 40px;
-                height: 3px;
-                background: var(--secondary);
-            }
-
-            h3 {
-                font-size: 1.5rem;
-                margin-bottom: 1rem;
-                color: var(--light);
-            }
-
-            /* Header */
-            header {
-                padding: 2rem 0;
-                position: relative;
-            }
-
-            .profile-container {
-                display: flex;
-                align-items: center;
-                gap: 2rem;
-            }
-
-            .profile-img {
-                width: 150px;
-                height: 150px;
-                border-radius: 50%;
-                overflow: hidden;
-                border: 3px solid var(--primary);
-                box-shadow: var(--box-shadow);
-            }
-
-            .profile-img img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-            .profile-text p {
-                font-size: 1.2rem;
-                margin-bottom: 1rem;
-                color: var(--light-gray);
-            }
-
-            .social-links {
-                display: flex;
-                gap: 1rem;
-            }
-
-            .social-links a {
-                font-size: 1.5rem;
-                color: var(--light);
-                transition: var(--transition);
-            }
-
-            .social-links a:hover {
-                color: var(--primary);
-                transform: translateY(-3px);
-            }
-
-            /* Navigation */
-            nav {
-                background: rgba(15, 23, 42, 0.95);
-                position: sticky;
-                top: 0;
-                z-index: 1000;
-                backdrop-filter: blur(10px);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            nav ul {
-                display: flex;
-                justify-content: center;
-                list-style: none;
-            }
-
-            nav li {
-                padding: 1.5rem 1rem;
-            }
-
-            nav a {
-                color: var(--light);
-                font-weight: 500;
-                font-size: 0.9rem;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                padding: 0.5rem;
-                position: relative;
-            }
-
-            nav a:hover {
-                color: var(--primary);
-            }
-
-            nav a::after {
-                content: "";
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 0;
-                height: 2px;
-                background: var(--primary);
-                transition: var(--transition);
-            }
-
-            nav a:hover::after {
-                width: 100%;
-            }
-
-            /* Sections */
-            .section {
-                padding: 6rem 0;
-            }
-
-            .section p {
-                margin-bottom: 1.5rem;
-                color: var(--light-gray);
-            }
-
-            /* About Section */
-            #about p {
-                font-size: 1.1rem;
-                max-width: 800px;
-            }
-
-            /* Skills Section */
-            .skills-container {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 2rem;
-                margin-bottom: 2rem;
-            }
-
-            .skill-category {
-                background: var(--card-bg);
-                border-radius: var(--border-radius);
-                padding: 1.5rem;
-                box-shadow: var(--box-shadow);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                transition: var(--transition);
-            }
-
-            .skill-category:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.8);
-            }
-
-            .skill-category h3 {
-                color: var(--primary-light);
-                font-weight: 600;
-                font-size: 1.2rem;
-                margin-bottom: 1.2rem;
-            }
-
-            .skill-items {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.8rem;
-            }
-
-            .skill-items span {
-                background: rgba(37, 99, 235, 0.2);
-                color: var(--primary-light);
-                padding: 0.4rem 0.8rem;
-                border-radius: 20px;
-                font-size: 0.85rem;
-                border: 1px solid rgba(59, 130, 246, 0.3);
-            }
-
-            .skill-summary {
-                max-width: 800px;
-            }
-
-            /* Projects Section */
-            .projects-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-                gap: 2.5rem;
-            }
-
-            .project-card {
-                background: var(--card-bg);
-                border-radius: var(--border-radius);
-                overflow: hidden;
-                box-shadow: var(--box-shadow);
-                transition: var(--transition);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .project-card:hover {
-                transform: translateY(-7px);
-                box-shadow: 0 20px 30px -15px rgba(2, 12, 27, 0.8);
-            }
-
-            .slider-container,
-            .carousel-container,
-            .media-container {
-                position: relative;
-                height: 250px;
-                width: 100%;
-                overflow: hidden;
-                background: #0a101f;
-            }
-
-            .slider-wrapper,
-            .carousel-slide,
-            .media-content {
-                height: 100%;
-                width: 100%;
-            }
-
-            .slide,
-            .media-item {
-                height: 100%;
-                width: 100%;
-                display: none;
-            }
-
-            .slide.active,
-            .media-item.active {
-                display: block;
-            }
-
-            .slide img,
-            .slide video,
-            .carousel-slide img,
-            .media-item img,
-            .media-item video {
-                width: 100%;
-                height: 100%;
-                object-fit: cover; /* Default to contain */
-                background: #0a101f; /* Dark background for letterboxing */
-            }
-
-            /* Add classes for specific fitting styles */
-            .img-cover,
-            .video-cover {
-                object-fit: cover !important;
-            }
-
-            .img-contain,
-            .video-contain {
-                object-fit: contain !important;
-            }
-
-            /* Optional: Add a class for images that need specific aspect ratio */
-            .img-square,
-            .video-square {
-                aspect-ratio: 1/1;
-            }
-
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                }
-                to {
-                    opacity: 1;
-                }
-            }
-
-            .slide {
-                display: none;
-                animation: fadeIn 0.4s ease-in-out;
-            }
-
-            .slide.active {
-                display: block;
-            }
-
-            .slider-arrow,
-            .carousel-btn {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                background: rgba(0, 0, 0, 0.5);
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                z-index: 10;
-                transition: var(--transition);
-            }
-
-            .slider-arrow:hover,
-            .carousel-btn:hover {
-                background: rgba(37, 99, 235, 0.8);
-            }
-
-            .prev {
-                left: 10px;
-            }
-
-            .next {
-                right: 10px;
-            }
-
-            .carousel-dots {
-                position: absolute;
-                bottom: 10px;
-                left: 50%;
-                transform: translateX(-50%);
-                display: flex;
-                gap: 8px;
-            }
-
-            .dot {
-                width: 10px;
-                height: 10px;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.5);
-                cursor: pointer;
-            }
-
-            .dot.active {
-                background: white;
-            }
-
-            .project-card h3 {
-                color: var(--primary-light);
-                padding: 1.5rem 1.5rem 0.75rem;
-                font-size: 1.3rem;
-            }
-
-            .project-card p {
-                padding: 0 1.5rem;
-                font-size: 0.95rem;
-                flex-grow: 1;
-            }
-
-            .tech-used {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.6rem;
-                padding: 0 1.5rem 1.5rem;
-            }
-
-            .tech-used span {
-                font-family: "Roboto Mono", monospace;
-                font-size: 0.8rem;
-                color: var(--secondary);
-            }
-
-            .tech-used span::before {
-                content: "#";
-                margin-right: 2px;
-            }
-
-            /* Contact Section */
-            .contact-methods {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                gap: 2rem;
-                margin-top: 3rem;
-            }
-
-            .contact-method {
-                background: var(--card-bg);
-                border-radius: var(--border-radius);
-                padding: 2rem;
-                text-align: center;
-                box-shadow: var(--box-shadow);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                transition: var(--transition);
-            }
-
-            .contact-method:hover {
-                transform: translateY(-5px);
-            }
-
-            .contact-method i {
-                font-size: 2.5rem;
-                color: var(--primary);
-                margin-bottom: 1rem;
-            }
-
-            .contact-method h3 {
-                margin-bottom: 0.5rem;
-            }
-
-            .contact-method a {
-                font-family: "Roboto Mono", monospace;
-                font-size: 0.9rem;
-            }
-
-            /* Footer */
-            footer {
-                text-align: center;
-                padding: 2rem 0;
-                background: rgba(15, 23, 42, 0.8);
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            /* Media Queries */
-            @media (max-width: 768px) {
-                h1 {
-                    font-size: 2.2rem;
-                }
-
-                h2 {
-                    font-size: 1.8rem;
-                }
-
-                .profile-container {
-                    flex-direction: column;
-                    text-align: center;
-                }
-
-                .social-links {
-                    justify-content: center;
-                }
-
-                nav ul {
-                    flex-wrap: wrap;
-                }
-
-                .projects-grid {
-                    grid-template-columns: 1fr;
-                }
-
-                .skills-container {
-                    grid-template-columns: 1fr;
-                }
-            }
-
-            /* Animation for slide display */
-            .slide,
-            .media-item {
-                animation: fadeIn 0.4s ease-in-out;
-            }
-
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                }
-                to {
-                    opacity: 1;
-                }
-            }
-        </style>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
         <header>
             <div class="container">
                 <div class="profile-container">
                     <div class="profile-img">
-                        <img
-                            src="Assets/Prati/PFP.JPEG"
-                            alt="Kartikey Pathak"
-                        />
+                        <img src="Assets/Prati/PFP.JPEG" alt="Kartikey Pathak" />
                     </div>
                     <div class="profile-text">
                         <h1>Kartikey Pathak</h1>
                         <p>Electrical Engineer & Robotics Enthusiast</p>
                         <div class="social-links">
-                            <a
-                                href="https://www.linkedin.com/in/kartikey-pathak-a365a8281/"
-                                target="_blank"
-                            >
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            <a
-                                href="https://github.com/NoobMaster-version"
-                                target="_blank"
-                            >
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="mailto:krpathak_b23@el.vjti.ac.in">
-                                <i class="fas fa-envelope"></i>
-                            </a>
+                            <a href="https://www.linkedin.com/in/kartikey-pathak-a365a8281/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://github.com/NoobMaster-version" target="_blank"><i class="fab fa-github"></i></a>
+                            <a href="mailto:krpathak_b23@el.vjti.ac.in"><i class="fas fa-envelope"></i></a>
                         </div>
                     </div>
                 </div>
@@ -607,7 +36,7 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#skills">Skills</a></li>
                     <li><a href="#projects">Projects</a></li>
-                    <li><a href="#extracurricular">Extracurricular</a></li>
+                    <li><a href="#extracurricular">Fun</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
@@ -617,26 +46,12 @@
             <div class="container">
                 <h2>About Me</h2>
                 <p>
-                    I'm an Electrical Engineering student at VJTI who loves
-                    building robots. I'm always excited to work on new projects
-                    - you can call me at midnight with an idea and I'll be ready
-                    to help! Since my first year of college, I've been making
-                    all kinds of robots and really enjoy seeing them come to
-                    life.
+                    I'm an Electrical Engineering student at VJTI who loves building robots. I'm always excited to work on new projects - you can call me at midnight with an idea and I'll be ready to help! Since my first year of college, I've been making all kinds of robots and really enjoy seeing them come to life.
                 </p>
                 <p>
-                    What makes me happy is when my creations actually work. I
-                    don't give up easily and will try everything possible to
-                    solve problems. This determination has helped me complete
-                    many robot projects and win competitions while learning new
-                    skills along the way.
+                    What makes me happy is when my creations actually work. I don't give up easily and will try everything possible to solve problems. This determination has helped me complete many robot projects and win competitions while learning new skills along the way.
                 </p>
-                <a
-                    href="Assets/CV_Kartikey_Pathak-3.pdf"
-                    class="btn"
-                    target="_blank"
-                    >Download CV</a
-                >
+                <a href="Assets/CV_Kartikey_Pathak-3.pdf" class="btn" target="_blank">Download CV</a>
             </div>
         </section>
 
@@ -677,11 +92,7 @@
                     </div>
                 </div>
                 <p class="skill-summary">
-                    My continuous exploration in robotics has equipped me with a
-                    versatile skillset that spans hardware design, programming,
-                    computer vision, and AI integration. This interdisciplinary
-                    approach allows me to conceptualize and execute complete
-                    robotic solutions from the ground up.
+                    My continuous exploration in robotics has equipped me with a versatile skillset that spans hardware design, programming, computer vision, and AI integration. This interdisciplinary approach allows me to conceptualize and execute complete robotic solutions from the ground up.
                 </p>
             </div>
         </section>
@@ -694,237 +105,142 @@
                         <div class="slider-container">
                             <div class="slider-wrapper">
                                 <div class="slide active">
-                                    <img
-                                        src="Assets/KDAIL/iCloud Photos/IMG_4664.JPEG"
-                                        alt="KDAIL Project"
-                                    />
+                                    <img src="Assets/KDAIL/iCloud Photos/IMG_4664.JPEG" alt="KDAIL Project" />
                                 </div>
                                 <div class="slide">
                                     <video controls>
-                                        <source
-                                            src="Assets/KDAIL/IMG_4702.MP4"
-                                            type="video/mp4"
-                                        />
-                                        Your browser does not support the video
-                                        tag.
+                                        <source src="Assets/KDAIL/IMG_4702.MP4" type="video/mp4" />
+                                        Your browser does not support the video tag.
                                     </video>
                                 </div>
                             </div>
-                            <button class="slider-arrow prev">&#10094;</button>
-                            <button class="slider-arrow next">&#10095;</button>
+                            <button class="slider-arrow prev">❮</button>
+                            <button class="slider-arrow next">❯</button>
                         </div>
-                        <h3>Warehouse Navigation System</h3>
-                        <p>
-                            Currently developing an autonomous navigation system
-                            for forklifts using SLAM and Ultrawide-band sensors.
-                            This ongoing project aims to enable precise indoor
-                            positioning within warehouses, allowing forklifts to
-                            navigate autonomously and perform pick-and-place
-                            operations with high precision.
-                        </p>
+                        <h3>Krishna Defence Internship: Navigation System</h3>
                         <div class="tech-used">
                             <span>SLAM</span>
                             <span>UWB Sensors</span>
                             <span>Autonomous Navigation</span>
                         </div>
+                        <a href="projects/kdail.html" class="btn">More Info</a>
                     </div>
 
                     <div class="project-card">
                         <div class="slider-container">
                             <div class="slider-wrapper">
                                 <div class="slide active">
-                                    <img
-                                        src="Assets/Mario/Mario_Santra.gif"
-                                        alt="MARIO Robot"
-                                        class="img-cover"
-                                    />
+                                    <img src="Assets/Mario/Mario_Santra.gif" alt="MARIO Robot" class="img-cover" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/Mario/bot2.png"
-                                        alt="MARIO Hardware"
-                                        class="img-contain"
-                                    />
+                                    <img src="Assets/Mario/bot2.png" alt="MARIO Hardware" class="img-contain" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/Mario/simulation.png"
-                                        alt="MARIO Simulation"
-                                        class="img-cover"
-                                    />
+                                    <img src="Assets/Mario/simulation.png" alt="MARIO Simulation" class="img-cover" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/Mario/simulation_mario_v2.3.gif"
-                                        alt="MARIO Simulation in Action"
-                                        class="img-contain"
-                                    />
+                                    <img src="Assets/Mario/simulation_mario_v2.3.gif" alt="MARIO Simulation in Action" class="img-contain" />
                                 </div>
                             </div>
-                            <button class="slider-arrow prev">&#10094;</button>
-                            <button class="slider-arrow next">&#10095;</button>
+                            <button class="slider-arrow prev">❮</button>
+                            <button class="slider-arrow next">❯</button>
                         </div>
                         <h3>MARIO: 3DOF Robotic Arm</h3>
-                        <p>
-                            Enhanced and modernized MARIO, a 3-DOF robotic
-                            manipulator used for teaching ROS2 workshops at SRA.
-                            Successfully ported the simulation from Gazebo
-                            Classic to Gazebo Fortress and implemented a new
-                            teleop controller feature. The manipulator uses
-                            ESP32 and micro-ROS for precise servo motor control,
-                            making it an excellent teaching tool for robotics
-                            students.
-                        </p>
                         <div class="tech-used">
                             <span>ROS2</span>
                             <span>Gazebo</span>
                             <span>ESP32</span>
                             <span>micro-ROS</span>
                         </div>
+                        <a href="projects/mario.html" class="btn">More Info</a>
                     </div>
 
                     <div class="project-card">
                         <div class="slider-container">
                             <div class="slider-wrapper">
                                 <div class="slide active">
-                                    <img
-                                        src="Assets/eyantra/e6e7b338-0101-4a82-88cf-1fd6ad3a4626.JPEG"
-                                        alt="Eyantra Project 1"
-                                        class="img-cover"
-                                    />
+                                    <img src="Assets/eyantra/e6e7b338-0101-4a82-88cf-1fd6ad3a4626.JPEG" alt="Eyantra Project 1" class="img-cover" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/eyantra/iCloud Photos(4)/iCloud Photos/IMG_3182.JPEG"
-                                        alt="Eyantra Project 2"
-                                        class="img-cover"
-                                    />
+                                    <img src="Assets/eyantra/iCloud Photos(4)/iCloud Photos/IMG_3182.JPEG" alt="Eyantra Project 2" class="img-cover" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/eyantra/iCloud Photos(5)/iCloud Photos/IMG_3176.JPEG"
-                                        alt="Eyantra Project 3"
-                                        class="img-cover"
-                                    />
+                                    <img src="Assets/eyantra/iCloud Photos(5)/iCloud Photos/IMG_3176.JPEG" alt="Eyantra Project 3" class="img-cover" />
                                 </div>
                             </div>
-                            <button class="slider-arrow prev">&#10094;</button>
-                            <button class="slider-arrow next">&#10095;</button>
+                            <button class="slider-arrow prev">❮</button>
+                            <button class="slider-arrow next">❯</button>
                         </div>
-                        <h3>Drone Warehouse Navigation</h3>
-                        <p>
-                            Competed in IIT Bombay's Eyantra competition,
-                            developing a drone system capable of autonomous
-                            warehouse navigation using ArUco markers for
-                            positioning and custom path-finding algorithms.
-                            Advanced to the semi-final level of this prestigious
-                            competition.
-                        </p>
+                        <h3>IIT Bombay - Eyantra Competition: Drone Warehouse Navigation</h3>
                         <div class="tech-used">
                             <span>Drones</span>
                             <span>ArUco Markers</span>
                             <span>Path-finding</span>
                         </div>
+                        <a href="projects/eyantra.html" class="btn">More Info</a>
                     </div>
 
                     <div class="project-card">
                         <div class="slider-container">
                             <div class="slider-wrapper">
                                 <div class="slide active">
-                                    <img
-                                        src="Assets/VVM_Assets/image.webp"
-                                        alt="VVM Project"
-                                    />
+                                    <img src="Assets/VVM_Assets/image.webp" alt="VVM Project" />
                                 </div>
                                 <div class="slide">
                                     <video controls>
-                                        <source
-                                            src="Assets/VVM_Assets/Screencast from 08-29-2024 12_01_43 AM.mp4"
-                                            type="video/mp4"
-                                        />
-                                        Your browser does not support the video
-                                        tag.
+                                        <source src="Assets/VVM_Assets/Screencast from 08-29-2024 12_01_43 AM.mp4" type="video/mp4" />
+                                        Your browser does not support the video tag.
                                     </video>
                                 </div>
                                 <div class="slide">
                                     <video controls>
-                                        <source
-                                            src="Assets/VVM_Assets/Screencast from 08-31-2024 04_56_15 AM.mp4"
-                                            type="video/mp4"
-                                        />
-                                        Your browser does not support the video
-                                        tag.
+                                        <source src="Assets/VVM_Assets/Screencast from 08-31-2024 04_56_15 AM.mp4" type="video/mp4" />
+                                        Your browser does not support the video tag.
                                     </video>
                                 </div>
                             </div>
-                            <button class="slider-arrow prev">&#10094;</button>
-                            <button class="slider-arrow next">&#10095;</button>
+                            <button class="slider-arrow prev">❮</button>
+                            <button class="slider-arrow next">❯</button>
                         </div>
                         <h3>Voice Video Manipulator</h3>
-                        <p>
-                            My first ROS2 project that integrated voice
-                            commands, computer vision, and robotic manipulation.
-                            Created a simulated manipulator in Gazebo that could
-                            detect objects, calculate their distance, and
-                            perform pick-and-place operations based on voice
-                            commands.
-                        </p>
                         <div class="tech-used">
                             <span>ROS2</span>
                             <span>Gazebo</span>
                             <span>ML</span>
                             <span>Object Detection</span>
                         </div>
+                        <a href="projects/vvm.html" class="btn">More Info</a>
                     </div>
 
                     <div class="project-card">
                         <div class="slider-container">
                             <div class="slider-wrapper">
                                 <div class="slide active">
-                                    <img
-                                        src="Assets/COin_Sorting/3D7563D3-87EC-4E96-AAC2-F3EF65814A51.JPEG"
-                                        alt="Coin Sorting Project 1"
-                                    />
+                                    <img src="Assets/COin_Sorting/3D7563D3-87EC-4E96-AAC2-F3EF65814A51.JPEG" alt="Coin Sorting Project 1" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/COin_Sorting/iCloud Photos(1)/iCloud Photos/IMG_4216.JPEG"
-                                        alt="Coin Sorting Project 2"
-                                    />
+                                    <img src="Assets/COin_Sorting/iCloud Photos(1)/iCloud Photos/IMG_4216.JPEG" alt="Coin Sorting Project 2" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/COin_Sorting/iCloud Photos(3)/iCloud Photos/IMG_3984.JPEG"
-                                        alt="Coin Sorting Project 3"
-                                    />
+                                    <img src="Assets/COin_Sorting/iCloud Photos(3)/iCloud Photos/IMG_3984.JPEG" alt="Coin Sorting Project 3" />
                                 </div>
                                 <div class="slide">
                                     <video controls>
-                                        <source
-                                            src="Assets/COin_Sorting/IMG_4188.MP4"
-                                            type="video/mp4"
-                                        />
-                                        Your browser does not support the video
-                                        tag.
+                                        <source src="Assets/COin_Sorting/IMG_4188.MP4" type="video/mp4" />
+                                        Your browser does not support the video tag.
                                     </video>
                                 </div>
                             </div>
-                            <button class="slider-arrow prev">&#10094;</button>
-                            <button class="slider-arrow next">&#10095;</button>
+                            <button class="slider-arrow prev">❮</button>
+                            <button class="slider-arrow next">❯</button>
                         </div>
                         <h3>Coin Sorting Robot</h3>
-                        <p>
-                            Developed during a 24-hour hackathon, this project
-                            utilized machine learning for coin denomination
-                            detection (₹1, ₹2, ₹5, ₹10) and custom hardware for
-                            physical sorting. The system ran successfully on a
-                            Raspberry Pi 4B.
-                        </p>
                         <div class="tech-used">
                             <span>ML</span>
                             <span>Raspberry Pi</span>
                             <span>Hardware Design</span>
                         </div>
+                        <a href="projects/coin-sorting.html" class="btn">More Info</a>
                     </div>
 
                     <div class="project-card">
@@ -932,74 +248,48 @@
                             <div class="slider-wrapper">
                                 <div class="slide active">
                                     <video controls>
-                                        <source
-                                            src="Assets/Kurma/IMG_4242.MP4"
-                                            type="video/mp4"
-                                        />
-                                        Your browser does not support the video
-                                        tag.
+                                        <source src="Assets/Kurma/IMG_4242.MP4" type="video/mp4" />
+                                        Your browser does not support the video tag.
                                     </video>
                                 </div>
                                 <div class="slide">
                                     <video controls>
-                                        <source
-                                            src="Assets/Kurma/IMG_4243.MP4"
-                                            type="video/mp4"
-                                        />
-                                        Your browser does not support the video
-                                        tag.
+                                        <source src="Assets/Kurma/IMG_4243.MP4" type="video/mp4" />
+                                        Your browser does not support the video tag.
                                     </video>
                                 </div>
                             </div>
-                            <button class="slider-arrow prev">&#10094;</button>
-                            <button class="slider-arrow next">&#10095;</button>
+                            <button class="slider-arrow prev">❮</button>
+                            <button class="slider-arrow next">❯</button>
                         </div>
                         <h3>Kurma Quadruped Robot</h3>
-                        <p>
-                            Built a turtle-inspired quadruped robot for the
-                            international Mass Robotics competition.
-                            Successfully implemented and refined the gait
-                            mechanism at the SRA Lab, advancing to further
-                            levels in the competition.
-                        </p>
                         <div class="tech-used">
                             <span>Quadruped Design</span>
                             <span>Gait Mechanism</span>
                         </div>
+                        <a href="projects/kurma.html" class="btn">More Info</a>
                     </div>
 
                     <div class="project-card">
                         <div class="slider-container">
                             <div class="slider-wrapper">
                                 <div class="slide active">
-                                    <img
-                                        src="Assets/EVS_Project_River_Cleaning/IMG_2408.JPEG"
-                                        alt="River Cleaning Robot 1"
-                                    />
+                                    <img src="Assets/EVS_Project_River_Cleaning/IMG_2408.JPEG" alt="River Cleaning Robot 1" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/EVS_Project_River_Cleaning/IMG_2406.JPEG"
-                                        alt="River Cleaning Robot 2"
-                                    />
+                                    <img src="Assets/EVS_Project_River_Cleaning/IMG_2406.JPEG" alt="River Cleaning Robot 2" />
                                 </div>
                             </div>
-                            <button class="slider-arrow prev">&#10094;</button>
-                            <button class="slider-arrow next">&#10095;</button>
+                            <button class="slider-arrow prev">❮</button>
+                            <button class="slider-arrow next">❯</button>
                         </div>
                         <h3>River Cleaning Robot</h3>
-                        <p>
-                            Created for an Environmental Studies course in third
-                            semester, this boat-based robot was designed to
-                            collect trash from rivers. Developed the chassis and
-                            hardware components from scratch, with full remote
-                            control capability.
-                        </p>
                         <div class="tech-used">
                             <span>Environmental Engineering</span>
                             <span>Chassis Design</span>
                             <span>Remote Control</span>
                         </div>
+                        <a href="projects/river-cleaning.html" class="btn">More Info</a>
                     </div>
 
                     <div class="project-card">
@@ -1007,26 +297,17 @@
                             <div class="media-content">
                                 <div class="media-item active">
                                     <video controls>
-                                        <source
-                                            src="Assets/Self Balancing Bot/IMG_3605.MP4"
-                                            type="video/mp4"
-                                        />
-                                        Your browser does not support the video
-                                        tag.
-                                    </video>
-                                </div>
+                                        <source src="Assets/Self Balancing Bot/IMG_3605.MP4" type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </div>
                             </div>
                         </div>
                         <h3>Self-Balancing Robot</h3>
-                        <p>
-                            Engineered a Wall-E inspired robot capable of
-                            balancing itself on two wheels, implementing control
-                            systems to maintain stability while in motion.
-                        </p>
                         <div class="tech-used">
                             <span>Control Systems</span>
                             <span>Balance Algorithms</span>
                         </div>
+                        <a href="projects/self-balancing.html" class="btn">More Info</a>
                     </div>
 
                     <div class="project-card">
@@ -1034,96 +315,62 @@
                             <div class="media-content">
                                 <div class="media-item active">
                                     <video controls>
-                                        <source
-                                            src="Assets/Gesture_Controlled_Car/Demonstration Video Internship Project .mp4"
-                                            type="video/mp4"
-                                        />
-                                        Your browser does not support the video
-                                        tag.
+                                        <source src="Assets/Gesture_Controlled_Car/Demonstration Video Internship Project .mp4" type="video/mp4" />
+                                        Your browser does not support the video tag.
                                     </video>
                                 </div>
                             </div>
                         </div>
                         <h3>Gesture Controlled Car</h3>
-                        <p>
-                            One of my first projects that marked the beginning
-                            of my robotics journey. Built an RC car controlled
-                            by hand gestures using an MPU6050 sensor.
-                            Implemented the ESP-NOW protocol for wireless
-                            communication.
-                        </p>
                         <div class="tech-used">
                             <span>MPU6050</span>
                             <span>ESP-NOW</span>
                             <span>RC Design</span>
                         </div>
+                        <a href="projects/gesture-car.html" class="btn">More Info</a>
                     </div>
 
                     <div class="project-card">
                         <div class="media-container">
                             <div class="media-content">
                                 <div class="media-item active">
-                                    <video controls>
-                                        <source
-                                            src="Assets/SAC/IMG_2092.MP4"
-                                            type="video/mp4"
-                                        />
-                                        Your browser does not support the video
-                                        tag.
-                                    </video>
+                                    <div class="media-item active">
+                                        <video controls>
+                                            <source src="Assets/SAC/IMG_2092.MP4" type="video/mp4" />
+                                            Your browser does not support view this video tag.
+                                        </video>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <h3>Line Following Maze Solver</h3>
-                        <p>
-                            Competed in the SRA Lab competition with a
-                            custom-built line-following robot capable of solving
-                            complex mazes. Secured 4th place with efficient
-                            pathfinding algorithms and reliable sensor
-                            integration.
-                        </p>
+                        <h3>Line Following Maze Solving</h3>
                         <div class="tech-used">
                             <span>Line Following</span>
                             <span>Maze Solving</span>
-                            <span>Arduino</span>
+                            <span>ESPIDF</span>
                         </div>
+                        <a href="projects/maze-solver.html" class="btn">More Info</a>
                     </div>
 
                     <div class="project-card">
                         <div class="slider-container">
                             <div class="slider-wrapper">
                                 <div class="slide active">
-                                    <img
-                                        src="Assets/AnimalFeeder/installation.gif"
-                                        alt="Animal Feeder Project"
-                                        class="img-contain"
-                                    />
+                                    <img src="Assets/AnimalFeeder/working_model.gif" alt="Animal Feeder Project" class="img-contain" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/AnimalFeeder/working_model.gif"
-                                        alt="Animal Feeder in Action"
-                                        class="img-contain"
-                                    />
+                                    <img src="Assets/AnimalFeeder/installation.gif" alt="Animal Feeder in Action" class="img-cover" />
                                 </div>
                             </div>
-                            <button class="slider-arrow prev">&#10094;</button>
-                            <button class="slider-arrow next">&#10095;</button>
+                            <button class="slider-arrow prev">❮</button>
+                            <button class="slider-arrow next">❯</button>
                         </div>
                         <h3>Automated Pet Feeder</h3>
-                        <p>
-                            Developed a solution to ensure regular feeding for
-                            the SRA lab's resident cat during off-hours and
-                            holidays. Built using readily available materials,
-                            this automated feeder addresses a real need in the
-                            community. Currently planning to scale the project
-                            by creating more units for donation to local animal
-                            welfare NGOs.
-                        </p>
                         <div class="tech-used">
                             <span>Automation</span>
                             <span>Hardware Design</span>
                         </div>
+                        <a href="projects/pet-feeder.html" class="btn">More Info</a>
                     </div>
                 </div>
             </div>
@@ -1137,244 +384,152 @@
                         <div class="slider-container">
                             <div class="slider-wrapper">
                                 <div class="slide active">
-                                    <img
-                                        src="Assets/Prati/IMG_4624.JPEG"
-                                        alt="Pratibimb Celebration"
-                                    />
+                                    <img src="Assets/Prati/IMG_4624.JPEG" alt="Pratibimb Celebration" class="img-contain" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/Prati/IMG_3660.JPEG"
-                                        alt="Pratibimb Event"
-                                        class="img-contain"
-                                    />
+                                    <img src="Assets/Prati/IMG_3660.JPEG" alt="Pratibimb Event" class="img-contain" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/Prati/b13d9ab8-41bc-445d-9388-de434ec377c0.JPEG"
-                                        alt="Pratibimb Team"
-                                        class="img-contain"
-                                    />
+                                    <img src="Assets/Prati/b13d9ab8-41bc-445d-9388-de434ec377c0.JPEG" alt="Pratibimb Team" class="img-contain" />
                                 </div>
                                 <div class="slide">
-                                    <img
-                                        src="Assets/Prati/IMG_3636.JPEG"
-                                        alt="Pratibimb Performance"
-                                    />
+                                    <img src="Assets/Prati/IMG_3636.JPEG" alt="Pratibimb Performance" class="img-contain" />
                                 </div>
                                 <div class="slide">
                                     <video controls class="video-contain">
-                                        <source
-                                            src="Assets/Prati/2f3eb3e3-2318-4b8f-a0d7-f6b545837c8e.MP4"
-                                            type="video/mp4"
-                                            class="video-contain"
-                                        />
-                                        Your browser does not support the video
-                                        tag.
+                                        <source src="Assets/Prati/2f3eb3e3-2318-4b8f-a0d7-f6b545837c8e.MP4" type="video/mp4">
+                                        Your browser does not support the video tag.
                                     </video>
                                 </div>
                             </div>
-                            <button class="slider-arrow prev">&#10094;</button>
-                            <button class="slider-arrow next">&#10095;</button>
+                            <button class="slider-arrow prev">❮</button>
+                            <button class="slider-arrow next">❯</button>
                         </div>
-                        <h3>Pratibimb: Victory</h3>
-                        <p>
-                            Led our Electrical Engineering branch to a historic
-                            first-place victory in Pratibimb, VJTI's prestigious
-                            cultural fest. This marked the first time in 26
-                            years that our branch won, with results announced on
-                            my 19th birthday—my most memorable birthday ever!
-                        </p>
-                        <div class="tech-used">
-                            <span>Leadership</span>
-                            <span>Cultural Events</span>
-                            <span>Team Management</span>
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="media-container">
-                            <div class="media-content">
-                                <div class="media-item active">
-                                    <img
-                                        src="Assets/Prati/PlotsePanga.JPEG"
-                                        alt="Plot Se Panga Movie Poster"
-                                    />
-                                </div>
+                            <h3>Pratibimb: Victory</h3>
+                            <p>
+                                Led our Electrical Engineering branch to a historic first-place victory in Pratibimb, VJTI’s prestigious cultural fest. This marked the first time in 26 years that our branch won, with results announced on my 19th birthday—my most memorable birthday ever!
+                            </p>
+                            <div class="tech-used">
+                                <span>Leadership</span>
+                                <span>Cultural Events</span>
+                                <span>Team Management</span>
                             </div>
                         </div>
-                        <h3>Casual Filmmaker</h3>
-                        <p>
-                            Directed and produced with my friends "Plot Se
-                            Panga," an original short film featuring students
-                            from all years of my Electrical Engineering branch.
-                            The film won first prize among all competing
-                            branches in the college.
-                        </p>
-                        <div class="tech-used">
-                            <span>Filmmaking</span>
-                            <span>Direction</span>
-                            <span>Creativity</span>
+
+                        <div class="project-card">
+                            <div class="media-container">
+                                <div class="media-content">
+                                    <div class="media-item active">
+                                        <img src="Assets/Prati/PlotsePanga.JPEG" alt="Plot Se Panga Movie Poster" />
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>Casual Filmmaker</h3>
+                            <p>
+                                Directed and produced with my friends "Plot Se Panga," an original short film featuring students from all years of my Electrical Engineering branch. The film won first prize among all competing branches in the college.
+                            </p>
+                            <div class="tech-used">
+                                <span>Filmmaking</span>
+                                <span>Direction</span>
+                                <span>Creativity</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="contact" class="section">
-            <div class="container">
-                <h2>Get In Touch</h2>
-                <p>
-                    I'm always open to discussing new projects, creative ideas,
-                    or opportunities to be part of your vision.
-                </p>
-
-                <div class="contact-methods">
-                    <div class="contact-method">
-                        <i class="fas fa-envelope"></i>
-                        <h3>Email</h3>
-                        <p>
-                            <a href="mailto:krpathak_b23@el.vjti.ac.in"
-                                >krpathak_b23@el.vjti.ac.in</a
-                            >
-                        </p>
-                    </div>
-                    <div class="contact-method">
-                        <i class="fab fa-linkedin"></i>
-                        <h3>LinkedIn</h3>
-                        <p>
-                            <a
-                                href="https://www.linkedin.com/in/kartikey-pathak-a365a8281/"
-                                target="_blank"
-                            >
-                                linkedin.com/in/kartikey-pathak
-                            </a>
-                        </p>
-                    </div>
-                    <div class="contact-method">
-                        <i class="fab fa-github"></i>
-                        <h3>GitHub</h3>
-                        <p>
-                            <a
-                                href="https://github.com/NoobMaster-version"
-                                target="_blank"
-                            >
-                                github.com/NoobMaster-version
-                            </a>
-                        </p>
+            <section id="contact" class="section">
+                <div class="container">
+                    <h2>Get In Touch</h2>
+                    <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <h3>Email</h3>
+                            <p><a href="mailto:krpathak_b23@el.vjti.ac.in">krpathak_b23@el.vjti.ac.in</a></p>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fab fa-linkedin"></i>
+                            <h3>LinkedIn</h3>
+                            <p><a href="https://www.linkedin.com/in/kartikey-pathak-a365a8281/" target="_blank">linkedin.com/in/kartikey-pathak</a></p>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fab fa-github"></i>
+                            <h3>GitHub</h3>
+                            <p><a href="https://github.com/NoobMaster-version" target="_blank">github.com/NoobMaster-version</a></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <footer>
-            <div class="container">
-                <p>&copy; 2023 Kartikey Pathak. All Rights Reserved.</p>
-            </div>
-        </footer>
+            <footer>
+                <div class="container">
+                    <p>© 2023 Kartikey Pathak. All Rights Reserved.</p>
+                </div>
+            </footer>
 
-        <script>
-            // Wait for the page to load
-            document.addEventListener("DOMContentLoaded", function () {
-                // Handle all sliders uniformly
-                const sliders = document.querySelectorAll(".slider-container");
-
-                sliders.forEach((slider) => {
-                    const slides = slider.querySelectorAll(".slide");
-                    const prevBtn = slider.querySelector(".prev");
-                    const nextBtn = slider.querySelector(".next");
-
-                    let currentIndex = 0;
-
-                    function updateSlider() {
-                        // First pause all videos in this slider
-                        slider.querySelectorAll("video").forEach((video) => {
-                            video.pause();
-                        });
-
-                        // Hide all slides
-                        slides.forEach((slide) => {
-                            slide.style.display = "none";
-                        });
-
-                        // Show current slide
-                        slides[currentIndex].style.display = "block";
-
-                        // Add fade in animation
-                        slides[currentIndex].style.animation =
-                            "fadeIn 0.4s ease-in-out";
-                    }
-
-                    // Initialize slider
-                    updateSlider();
-
-                    // Event listeners for buttons
-                    prevBtn.addEventListener("click", () => {
-                        currentIndex =
-                            currentIndex > 0
-                                ? currentIndex - 1
-                                : slides.length - 1;
-                        updateSlider();
-                    });
-
-                    nextBtn.addEventListener("click", () => {
-                        currentIndex =
-                            currentIndex < slides.length - 1
-                                ? currentIndex + 1
-                                : 0;
-                        updateSlider();
-                    });
-
-                    // Add touch swipe functionality
-                    let touchStartX = 0;
-                    let touchEndX = 0;
-
-                    slider.addEventListener("touchstart", (e) => {
-                        touchStartX = e.touches[0].clientX;
-                    });
-
-                    slider.addEventListener("touchend", (e) => {
-                        touchEndX = e.changedTouches[0].clientX;
-                        handleSwipe();
-                    });
-
-                    function handleSwipe() {
-                        const swipeThreshold = 50;
-                        const swipeDistance = touchEndX - touchStartX;
-
-                        if (Math.abs(swipeDistance) > swipeThreshold) {
-                            if (swipeDistance > 0) {
-                                // Swipe right - show previous
-                                currentIndex =
-                                    currentIndex > 0
-                                        ? currentIndex - 1
-                                        : slides.length - 1;
-                            } else {
-                                // Swipe left - show next
-                                currentIndex =
-                                    currentIndex < slides.length - 1
-                                        ? currentIndex + 1
-                                        : 0;
-                            }
-                            updateSlider();
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const sliders = document.querySelectorAll(".slider-container");
+                    sliders.forEach((slider) => {
+                        const slides = slider.querySelectorAll(".slide");
+                        const prevBtn = slider.querySelector(".prev");
+                        const nextBtn = slider.querySelector(".next");
+                        let currentIndex = 0;
+                        function updateSlider() {
+                            slider.querySelectorAll("video").forEach((video) => {
+                                video.pause();
+                            });
+                            slides.forEach((slide) => {
+                                slide.style.display = "none";
+                            });
+                            slides[currentIndex].style.display = "block";
+                            slides[currentIndex].style.animation = "fadeIn 0.4s ease-in-out";
                         }
-                    }
-                });
+                        updateSlider();
+                        prevBtn.addEventListener("click", () => {
+                            currentIndex = currentIndex > 0 ? currentIndex - 1 : slides.length - 1;
+                            updateSlider();
+                        });
+                        nextBtn.addEventListener("click", () => {
+                            currentIndex = currentIndex < slides.length - 1 ? currentIndex + 1 : 0;
+                            updateSlider();
+                        });
+                        let touchStartX = 0;
+                        let touchEndX = 0;
+                        slider.addEventListener("touchstart", (e) => {
+                            touchStartX = e.touches[0].clientX;
+                        });
+                        slider.addEventListener("touchend", (e) => {
+                            touchEndX = e.changedTouches[0].clientX;
+                            handleSwipe();
+                        });
+                        function handleSwipe() {
+                            const swipeThreshold = 50;
+                            const swipeDistance = touchEndX - touchStartX;
+                            if (Math.abs(swipeDistance) > swipeThreshold) {
+                                if (swipeDistance > 0) {
+                                    currentIndex = currentIndex > 0 ? currentIndex - 1 : slides.length - 1;
+                                } else {
+                                    currentIndex = currentIndex < slides.length - 1 ? currentIndex + 1 : 0;
+                                }
+                                updateSlider();
+                            }
+                        }
+                    });
 
-                // Smooth scrolling for navigation
-                document.querySelectorAll("nav a").forEach((anchor) => {
-                    anchor.addEventListener("click", function (e) {
-                        e.preventDefault();
-                        const targetId = this.getAttribute("href");
-                        const targetSection = document.querySelector(targetId);
-
-                        window.scrollTo({
-                            top: targetSection.offsetTop - 70,
-                            behavior: "smooth",
+                    document.querySelectorAll("nav a").forEach((anchor) => {
+                        anchor.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            const targetId = this.getAttribute("href");
+                            const targetSection = document.querySelector(targetId);
+                            window.scrollTo({
+                                top: targetSection.offsetTop - 70,
+                                behavior: "smooth",
+                            });
                         });
                     });
                 });
-            });
-        </script>
-    </body>
-</html>
+            </script>
+        </body>
+    </html>

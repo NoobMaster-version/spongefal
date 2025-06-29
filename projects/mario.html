@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MARIO: 3DOF Robotic Arm</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="../styles.css" />
+        <link rel="stylesheet" href="../css/project-page.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Back Button -->
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Home
+            </a>
+
+            <!-- Project Title -->
+            <h1 class="project-title">MARIO: 3DOF Robotic Arm</h1>
+
+            <!-- GitHub Link -->
+            <a
+                href="https://github.com/NoobMaster-version/MARIO_2025/"
+                class="github-link"
+                target="_blank"
+            >
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>
+
+            <!-- Project Description -->
+            <section class="project-content">
+                <h2 class="section-title">Project Overview</h2>
+                <p>
+                    MARIO is a 3-DOF robotic manipulator that serves as the
+                    perfect teaching tool for robotics students at SRA. I
+                    enhanced and modernized this existing project by porting it
+                    from old Gazebo Classic to the latest Gazebo Fortress and
+                    added new control features.
+                </p>
+            </section>
+
+            <!-- MARIO in Action -->
+            <section>
+                <h2 class="section-title">MARIO in Action</h2>
+                <div class="image-container">
+                    <img
+                        src="../Assets/Mario/Mario_Santra.gif"
+                        alt="MARIO in Action"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        MARIO robotic arm performing precise movements
+                    </p>
+                </div>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">What I Enhanced</h2>
+                <ul>
+                    <li>
+                        <strong>Simulation Upgrade:</strong> Migrated from
+                        deprecated Gazebo Classic to modern Gazebo Fortress
+                    </li>
+                    <li>
+                        <strong>Control System:</strong> Implemented new teleop
+                        controller for easier operation
+                    </li>
+                    <li>
+                        <strong>Hardware Integration:</strong> Improved ESP32
+                        and micro-ROS integration
+                    </li>
+                    <li>
+                        <strong>Educational Focus:</strong> Made it more
+                        user-friendly for ROS2 workshops
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Physical Hardware -->
+            <section>
+                <h2 class="section-title">Physical Robot</h2>
+                <div class="image-container">
+                    <img
+                        src="../Assets/Mario/bot2.png"
+                        alt="MARIO Hardware"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        Physical MARIO robot with ESP32 control system
+                    </p>
+                </div>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">Hardware Features</h2>
+                <p>
+                    The physical MARIO robot combines robust mechanical design
+                    with modern electronics:
+                </p>
+                <ul>
+                    <li>
+                        3 degrees of freedom for versatile manipulation tasks
+                    </li>
+                    <li>ESP32 microcontroller for real-time control</li>
+                    <li>Precise servo motors for accurate positioning</li>
+                    <li>
+                        micro-ROS integration for seamless ROS2 communication
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Simulation Environment -->
+            <section>
+                <h2 class="section-title">Enhanced Simulation</h2>
+                <div class="image-container">
+                    <img
+                        src="../Assets/Mario/simulation.png"
+                        alt="MARIO Simulation"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        MARIO simulation environment in Gazebo Fortress
+                    </p>
+                </div>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">Simulation Improvements</h2>
+                <p>
+                    The upgraded simulation provides a much better learning
+                    experience:
+                </p>
+                <ul>
+                    <li>Modern Gazebo Fortress with improved physics engine</li>
+                    <li>Better rendering and visualization capabilities</li>
+                    <li>Enhanced collision detection and dynamics</li>
+                    <li>Improved sensor simulation for realistic behavior</li>
+                </ul>
+            </section>
+
+            <!-- Advanced Simulation -->
+            <section>
+                <h2 class="section-title">Advanced Control Features</h2>
+                <div class="image-container">
+                    <img
+                        src="../Assets/Mario/simulation_mario_v2.3.gif"
+                        alt="MARIO Simulation Demo"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        Enhanced simulation with improved physics and teleop
+                        controls
+                    </p>
+                </div>
+            </section>
+
+            <!-- Technical Details -->
+            <section class="project-content">
+                <h2 class="section-title">Technical Features</h2>
+                <ul>
+                    <li>3 degrees of freedom for versatile manipulation</li>
+                    <li>ESP32 microcontroller for real-time control</li>
+                    <li>
+                        micro-ROS integration for seamless ROS2 communication
+                    </li>
+                    <li>
+                        Precise servo motor control for accurate positioning
+                    </li>
+                    <li>Modern Gazebo Fortress simulation environment</li>
+                    <li>Teleop controller for easy manual operation</li>
+                </ul>
+            </section>
+
+            <!-- Technologies Used -->
+            <section>
+                <h2 class="section-title">Built With</h2>
+                <div class="tech-used">
+                    <span>ROS2</span>
+                    <span>Gazebo Fortress</span>
+                    <span>ESP32</span>
+                    <span>micro-ROS</span>
+                    <span>C++</span>
+                    <span>Python</span>
+                    <span>URDF</span>
+                </div>
+            </section>
+
+            <!-- How It Works -->
+            <section class="project-content">
+                <h2 class="section-title">How It Works</h2>
+                <p>The MARIO system works in two main modes:</p>
+                <ul>
+                    <li>
+                        <strong>Simulation Mode:</strong> Run complete
+                        simulations in Gazebo Fortress for testing and learning
+                    </li>
+                    <li>
+                        <strong>Physical Mode:</strong> Control the real robot
+                        using ESP32 with micro-ROS for precise movements
+                    </li>
+                </ul>
+                <p>
+                    Students can learn ROS2 concepts, practice robot
+                    programming, and see their code work both in simulation and
+                    on real hardware.
+                </p>
+            </section>
+
+            <!-- Challenges and Solutions -->
+            <section class="project-content">
+                <h2 class="section-title">Challenges Solved</h2>
+                <ul>
+                    <li>
+                        <strong>Gazebo Migration:</strong> Successfully ported
+                        from deprecated Gazebo Classic to modern Gazebo Fortress
+                    </li>
+                    <li>
+                        <strong>Control System Upgrade:</strong> Improved servo
+                        control precision using ESP32 and micro-ROS
+                    </li>
+                    <li>
+                        <strong>User Experience:</strong> Added teleop
+                        controller to make the robot easier to operate for
+                        beginners
+                    </li>
+                    <li>
+                        <strong>Workshop Integration:</strong> Made the system
+                        more suitable for teaching ROS2 concepts
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Impact -->
+            <section class="project-content">
+                <h2 class="section-title">Impact</h2>
+                <p>
+                    MARIO is now actively used in SRA's ROS2 workshops, helping
+                    students learn robotics concepts through hands-on
+                    experience. The enhanced simulation and improved controls
+                    make it an excellent educational tool for the next
+                    generation of robotics engineers.
+                </p>
+            </section>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Self-Balancing Robot</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="../styles.css" />
+        <link rel="stylesheet" href="../css/project-page.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Back Button -->
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Home
+            </a>
+
+            <!-- Project Title -->
+            <h1 class="project-title">Self-Balancing Robot (Wall-E)</h1>
+
+            <!-- GitHub Link -->
+            <a
+                href="https://github.com/SRA-VJTI/WALL-E"
+                class="github-link"
+                target="_blank"
+            >
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>
+
+            <!-- Project Description -->
+            <section class="project-content">
+                <h2 class="section-title">Project Overview</h2>
+                <p>
+                    Inspired by the beloved Pixar character Wall-E, this
+                    self-balancing robot demonstrates advanced control systems
+                    engineering. The robot maintains perfect balance on just two
+                    wheels while moving, showcasing the power of feedback
+                    control and sensor fusion.
+                </p>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">The Balancing Challenge</h2>
+                <p>
+                    Creating a robot that can balance on two wheels requires
+                    solving several engineering challenges:
+                </p>
+                <ul>
+                    <li>Real-time angle detection and measurement</li>
+                    <li>Fast and accurate control system response</li>
+                    <li>Motor control precision for small adjustments</li>
+                    <li>System stability during movement and turns</li>
+                    <li>Robust performance under various conditions</li>
+                </ul>
+            </section>
+
+            <!-- Project Video -->
+            <section>
+                <h2 class="section-title">Wall-E in Action</h2>
+                <div class="video-container">
+                    <video controls>
+                        <source
+                            src="../Assets/Self Balancing Bot/IMG_3605.MP4"
+                            type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                    </video>
+                    <p class="image-caption">
+                        Wall-E demonstrating stable self-balancing while moving
+                    </p>
+                </div>
+            </section>
+
+            <!-- Technical Implementation -->
+            <section class="project-content">
+                <h2 class="section-title">Technical Design</h2>
+                <ul>
+                    <li>
+                        <strong>IMU Sensor:</strong> Gyroscope and accelerometer
+                        for precise angle detection
+                    </li>
+                    <li>
+                        <strong>PID Controller:</strong> Implements
+                        proportional, integral, and derivative control
+                    </li>
+                    <li>
+                        <strong>Motor Control:</strong> PWM-controlled DC motors
+                        for precise movement
+                    </li>
+                    <li>
+                        <strong>Real-time Processing:</strong> Fast sensor
+                        reading and control loop execution
+                    </li>
+                    <li>
+                        <strong>Sensor Fusion:</strong> Combines gyroscope and
+                        accelerometer data for accurate readings
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Technologies Used -->
+            <section>
+                <h2 class="section-title">Built With</h2>
+                <div class="tech-used">
+                    <span>Arduino/ESP32</span>
+                    <span>IMU Sensor</span>
+                    <span>PID Control</span>
+                    <span>Motor Drivers</span>
+                    <span>Control Systems</span>
+                    <span>Sensor Fusion</span>
+                </div>
+            </section>
+
+            <!-- Control System Theory -->
+            <section class="project-content">
+                <h2 class="section-title">Control System Engineering</h2>
+                <p>
+                    The self-balancing mechanism works through a sophisticated
+                    control loop:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Sensor Reading:</strong> IMU continuously
+                        measures the robot's tilt angle
+                    </li>
+                    <li>
+                        <strong>Error Calculation:</strong> System compares
+                        current angle to desired upright position
+                    </li>
+                    <li>
+                        <strong>PID Processing:</strong> Controller calculates
+                        required motor response
+                    </li>
+                    <li>
+                        <strong>Motor Action:</strong> Wheels move to counteract
+                        the tilt and maintain balance
+                    </li>
+                    <li>
+                        <strong>Feedback Loop:</strong> Process repeats hundreds
+                        of times per second
+                    </li>
+                </ul>
+            </section>
+
+            <!-- PID Tuning -->
+            <section class="project-content">
+                <h2 class="section-title">PID Controller Tuning</h2>
+                <ul>
+                    <li>
+                        <strong>Proportional (P):</strong> Provides immediate
+                        response proportional to current error
+                    </li>
+                    <li>
+                        <strong>Integral (I):</strong> Eliminates steady-state
+                        error over time
+                    </li>
+                    <li>
+                        <strong>Derivative (D):</strong> Predicts future error
+                        and provides system damping
+                    </li>
+                    <li>
+                        <strong>Tuning Process:</strong> Iterative adjustment
+                        for optimal performance
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Key Features -->
+            <section class="project-content">
+                <h2 class="section-title">Key Features</h2>
+                <ul>
+                    <li>Stable balancing on two wheels</li>
+                    <li>Movement while maintaining balance</li>
+                    <li>Recovery from external disturbances</li>
+                    <li>Smooth acceleration and deceleration</li>
+                    <li>Wall-E inspired design aesthetic</li>
+                    <li>Real-time control system response</li>
+                </ul>
+            </section>
+
+            <!-- Challenges and Solutions -->
+            <section class="project-content">
+                <h2 class="section-title">Engineering Challenges</h2>
+                <ul>
+                    <li>
+                        <strong>Sensor Noise:</strong> Implemented filtering
+                        algorithms to reduce IMU noise and vibrations
+                    </li>
+                    <li>
+                        <strong>PID Tuning:</strong> Extensive testing to find
+                        optimal controller parameters
+                    </li>
+                    <li>
+                        <strong>System Stability:</strong> Balanced
+                        responsiveness with stability to prevent oscillations
+                    </li>
+                    <li>
+                        <strong>Motor Precision:</strong> Achieved fine motor
+                        control for small balance adjustments
+                    </li>
+                    <li>
+                        <strong>Power Management:</strong> Optimized for
+                        extended operation time
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Development Process -->
+            <section class="project-content">
+                <h2 class="section-title">Development Journey</h2>
+                <p>
+                    Building Wall-E taught me the fundamentals of control
+                    systems:
+                </p>
+                <ul>
+                    <li>
+                        Started with basic tilt detection and simple motor
+                        response
+                    </li>
+                    <li>
+                        Gradually implemented PID control for smoother operation
+                    </li>
+                    <li>Fine-tuned parameters through extensive testing</li>
+                    <li>
+                        Added movement capabilities while maintaining balance
+                    </li>
+                    <li>Optimized code for real-time performance</li>
+                </ul>
+            </section>
+
+            <!-- Learning Outcomes -->
+            <section class="project-content">
+                <h2 class="section-title">What I Learned</h2>
+                <ul>
+                    <li>Control Systems theory and practical implementation</li>
+                    <li>PID controller design and tuning techniques</li>
+                    <li>Sensor fusion and noise filtering</li>
+                    <li>Real-time system programming</li>
+                    <li>Mechanical design for dynamic systems</li>
+                    <li>System debugging and performance optimization</li>
+                </ul>
+            </section>
+
+            <!-- Applications -->
+            <section class="project-content">
+                <h2 class="section-title">Real-World Applications</h2>
+                <p>
+                    The principles learned from this project apply to many
+                    modern technologies:
+                </p>
+                <ul>
+                    <li>Segway and personal transportation devices</li>
+                    <li>Drone stabilization systems</li>
+                    <li>Robotic platform stabilization</li>
+                    <li>Industrial automation control</li>
+                    <li>Automotive stability control systems</li>
+                </ul>
+            </section>
+
+            <!-- Future Improvements -->
+            <section class="project-content">
+                <h2 class="section-title">Future Enhancements</h2>
+                <ul>
+                    <li>Add remote control or smartphone app integration</li>
+                    <li>
+                        Implement obstacle avoidance using ultrasonic sensors
+                    </li>
+                    <li>Include LED displays for Wall-E's expressive eyes</li>
+                    <li>Add voice control or sound effects</li>
+                    <li>Develop more advanced balancing algorithms</li>
+                </ul>
+            </section>
+        </div>
+    </body>
+</html>

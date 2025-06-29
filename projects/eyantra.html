@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Drone Warehouse Navigation - Eyantra</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="../styles.css" />
+        <link rel="stylesheet" href="../css/project-page.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Back Button -->
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Home
+            </a>
+
+            <!-- Project Title -->
+            <h1 class="project-title">Drone Warehouse Navigation - Eyantra</h1>
+
+            <!-- GitHub Link -->
+            <!-- <a
+                href="https://github.com/NoobMaster-version/eyantra-drone"
+                class="github-link"
+                target="_blank"
+            >
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a> -->
+
+            <!-- Project Description -->
+            <section class="project-content">
+                <h2 class="section-title">Project Overview</h2>
+                <p>
+                    Participated in IIT Bombay's prestigious Eyantra robotics
+                    competition, where I developed an autonomous drone system
+                    capable of navigating complex warehouse environments. The
+                    project focused on precision flight control and intelligent
+                    navigation using visual markers.
+                </p>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">The Challenge</h2>
+                <p>
+                    The Eyantra competition required teams to build drones that
+                    could:
+                </p>
+                <ul>
+                    <li>
+                        Navigate autonomously through warehouse-like
+                        environments
+                    </li>
+                    <li>Detect and interpret ArUco markers for positioning</li>
+                    <li>Execute precise pick-and-place operations</li>
+                    <li>Follow optimal paths while avoiding obstacles</li>
+                    <li>Complete tasks within strict time limits</li>
+                </ul>
+            </section>
+
+            <!-- Project Images -->
+            <section>
+                <h2 class="section-title">Project Gallery</h2>
+
+                <!-- Drone Hardware -->
+                <div class="image-container">
+                    <img
+                        src="../Assets/eyantra/e6e7b338-0101-4a82-88cf-1fd6ad3a4626.JPEG"
+                        alt="Eyantra Drone Setup"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        Complete drone setup with camera and navigation systems
+                    </p>
+                </div>
+
+                <!-- Arena Setup -->
+                <div class="image-container">
+                    <img
+                        src="../Assets/eyantra/iCloud Photos(4)/iCloud Photos/IMG_3182.JPEG"
+                        alt="Competition Arena"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        Warehouse simulation arena with ArUco markers and
+                        obstacles
+                    </p>
+                </div>
+
+                <!-- Team Working -->
+                <div class="image-container">
+                    <img
+                        src="../Assets/eyantra/iCloud Photos(5)/iCloud Photos/IMG_3176.JPEG"
+                        alt="Team Development"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        Development and testing phase during the competition
+                    </p>
+                </div>
+
+                <!-- Drone in Action Video -->
+                <div class="image-container">
+                    <video
+                        src="../Assets/eyantra/IMG_3999.MP4"
+                        controls
+                        class="project-image"
+                        alt="Drone Navigation Demo"
+                    >
+                        Your browser does not support the video tag.
+                    </video>
+                    <p class="image-caption">
+                        Autonomous drone navigation demonstration during
+                        competition
+                    </p>
+                </div>
+            </section>
+
+            <!-- Technical Approach -->
+            <section class="project-content">
+                <h2 class="section-title">My Technical Approach</h2>
+                <ul>
+                    <li>
+                        <strong>ArUco Marker Detection:</strong> Implemented
+                        computer vision algorithms to detect and decode
+                        positioning markers
+                    </li>
+                    <li>
+                        <strong>Path Planning:</strong> Developed custom
+                        algorithms to find optimal routes through complex
+                        environments
+                    </li>
+                    <li>
+                        <strong>Flight Control:</strong> Created precise control
+                        systems for stable autonomous flight
+                    </li>
+                    <li>
+                        <strong>Real-time Processing:</strong> Optimized code
+                        for real-time decision making during flight
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Technologies Used -->
+            <section>
+                <h2 class="section-title">Built With</h2>
+                <div class="tech-used">
+                    <span>Python</span>
+                    <span>OpenCV</span>
+                    <span>ArUco Detection</span>
+                    <span>Drone SDK</span>
+                    <span>Computer Vision</span>
+                    <span>Path Planning</span>
+                    <span>Autonomous Flight</span>
+                </div>
+            </section>
+
+            <!-- Key Features -->
+            <section class="project-content">
+                <h2 class="section-title">Key Features</h2>
+                <ul>
+                    <li>Autonomous navigation using visual markers</li>
+                    <li>Real-time obstacle detection and avoidance</li>
+                    <li>
+                        Precise positioning using ArUco marker triangulation
+                    </li>
+                    <li>Optimal path finding algorithms</li>
+                    <li>Stable flight control in complex environments</li>
+                    <li>Quick response to environmental changes</li>
+                </ul>
+            </section>
+
+            <!-- Challenges and Solutions -->
+            <section class="project-content">
+                <h2 class="section-title">Challenges Solved</h2>
+                <ul>
+                    <li>
+                        <strong>Marker Detection Accuracy:</strong> Improved
+                        detection algorithms to work under various lighting
+                        conditions
+                    </li>
+                    <li>
+                        <strong>Flight Stability:</strong> Implemented advanced
+                        control algorithms for smooth autonomous flight
+                    </li>
+                    <li>
+                        <strong>Real-time Processing:</strong> Optimized
+                        computer vision pipeline for low-latency decision making
+                    </li>
+                    <li>
+                        <strong>Path Optimization:</strong> Developed efficient
+                        algorithms to find the shortest collision-free paths
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Competition Results -->
+            <section class="project-content">
+                <h2 class="section-title">Competition Achievement</h2>
+                <p>
+                    Successfully advanced to the semi-final level of this
+                    national competition organized by IIT Bombay.
+                </p>
+            </section>
+
+            <!-- Learning Outcomes -->
+            <section class="project-content">
+                <h2 class="section-title">What I Learned</h2>
+                <ul>
+                    <li>
+                        Advanced computer vision techniques for real-world
+                        applications
+                    </li>
+                    <li>Autonomous system design and implementation</li>
+                    <li>Real-time algorithm optimization</li>
+                    <li>
+                        Working under competition pressure and tight deadlines
+                    </li>
+                    <li>Integration of multiple complex systems</li>
+                </ul>
+            </section>
+        </div>
+    </body>
+</html>
