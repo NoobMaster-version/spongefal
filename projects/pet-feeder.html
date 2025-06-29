@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Automatic Pet Feeder</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="../styles.css" />
+        <link rel="stylesheet" href="../css/project-page.css" />
+        <style>
+            .image-container {
+                max-width: 500px;
+                margin: 20px auto;
+            }
+            .project-image {
+                width: 100%;
+                height: auto;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .image-caption {
+                font-size: 0.9em;
+                text-align: center;
+                color: #666;
+                margin-top: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Back Button -->
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Home
+            </a>
+
+            <!-- Project Title -->
+            <h1 class="project-title">Automatic Pet Feeder</h1>
+
+            <!-- GitHub Link -->
+            <a
+                href="https://github.com/NoobMaster-version/automatic-animal-feeder"
+                class="github-link"
+                target="_blank"
+            >
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>
+
+            <!-- Project Description -->
+            <section class="project-content">
+                <h2 class="section-title">Project Overview</h2>
+                <p>
+                    An automated pet feeder built for the SRA lab's cat to
+                    ensure regular feeding during off-hours and holidays. The
+                    project is expanding to help local animal welfare NGOs with
+                    more units.
+                </p>
+            </section>
+
+            <!-- Working Demo -->
+            <section>
+                <h2 class="section-title">Feeder in Action</h2>
+                <div class="image-container">
+                    <img
+                        src="../Assets/AnimalFeeder/working_model.gif"
+                        alt="Working Model Demo"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        The feeder in action - dispensing food automatically
+                    </p>
+                </div>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">How It Works</h2>
+                <p>
+                    The automated pet feeder operates on a simple yet effective
+                    mechanism:
+                </p>
+                <ul>
+                    <li>Timer-based food dispensing at regular intervals</li>
+                    <li>Servo motor rotates to release controlled portions</li>
+                    <li>
+                        Food drops through dispensing chute into feeding bowl
+                    </li>
+                    <li>
+                        System operates continuously without human intervention
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Installation Process -->
+            <section>
+                <h2 class="section-title">Installation Setup</h2>
+                <div class="image-container">
+                    <img
+                        src="../Assets/AnimalFeeder/installation.gif"
+                        alt="Installation Process"
+                        class="project-image"
+                    />
+                    <p class="image-caption">Installation and setup process</p>
+                </div>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">Design Philosophy</h2>
+                <p>
+                    This project addresses a real need in our community. The SRA
+                    lab has a resident cat that needed regular feeding,
+                    especially during holidays and off-hours when students
+                    aren't around. The solution needed to be:
+                </p>
+                <ul>
+                    <li>Reliable and low-maintenance</li>
+                    <li>Easy to refill and operate</li>
+                    <li>Cost-effective using available materials</li>
+                    <li>Scalable for deployment to animal welfare NGOs</li>
+                </ul>
+            </section>
+
+            <!-- Control System -->
+            <section>
+                <h2 class="section-title">Control System</h2>
+                <div class="image-container">
+                    <img
+                        src="../Assets/AnimalFeeder/SRA_Board_PetFeeder.JPEG"
+                        alt="SRA Board"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        SRA Board - The brain of the feeder
+                    </p>
+                </div>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">Technical Components</h2>
+                <p>
+                    The feeder uses simple but effective components to ensure
+                    reliable operation:
+                </p>
+                <ul>
+                    <li>
+                        <strong>SRA Board:</strong> Main microcontroller for
+                        timing and control logic
+                    </li>
+                    <li>
+                        <strong>Servo Motor:</strong> Precise food dispensing
+                        mechanism
+                    </li>
+                    <li>
+                        <strong>3D Printed Parts:</strong> Custom housing and
+                        dispensing components
+                    </li>
+                    <li>
+                        <strong>Storage Container:</strong> Large capacity food
+                        reservoir
+                    </li>
+                    <li>
+                        <strong>Power Supply:</strong> Reliable power system for
+                        continuous operation
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Technologies Used -->
+            <section>
+                <h2 class="section-title">Built With</h2>
+                <div class="tech-used">
+                    <span>SRA Board</span>
+                    <span>Arduino IDE</span>
+                    <span>3D Printing</span>
+                    <span>Servo Control</span>
+                    <span>Timer Programming</span>
+                </div>
+            </section>
+
+            <!-- Key Features -->
+            <section class="project-content">
+                <h2 class="section-title">Key Features</h2>
+                <ul>
+                    <li>
+                        <strong>Scheduled Feeding:</strong> Automatic food
+                        dispensing at preset intervals
+                    </li>
+                    <li>
+                        <strong>Portion Control:</strong> Consistent food
+                        portions every time
+                    </li>
+                    <li>
+                        <strong>Easy Maintenance:</strong> Simple refill and
+                        cleaning process
+                    </li>
+                    <li>
+                        <strong>Reliable Operation:</strong> Robust design for
+                        24/7 operation
+                    </li>
+                    <li>
+                        <strong>Community Impact:</strong> Scalable solution for
+                        animal welfare
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Social Impact -->
+            <section class="project-content">
+                <h2 class="section-title">Community Impact</h2>
+                <p>
+                    What started as a solution for our lab cat has grown into a
+                    broader initiative:
+                </p>
+                <ul>
+                    <li>
+                        Ensures regular feeding for animals during holidays and
+                        weekends
+                    </li>
+                    <li>
+                        Reduces dependency on human schedules for animal care
+                    </li>
+                    <li>Plans to donate units to local animal welfare NGOs</li>
+                    <li>
+                        Demonstrates how engineering can solve real-world
+                        problems
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </body>
+</html>

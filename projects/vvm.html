@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Voice Video Manipulator</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="../styles.css" />
+        <link rel="stylesheet" href="../css/project-page.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Back Button -->
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Home
+            </a>
+
+            <!-- Project Title -->
+            <h1 class="project-title">Voice Video Manipulator</h1>
+
+            <!-- GitHub Link -->
+            <a
+                href="https://github.com/NoobMaster-version/voice-video-manipulator"
+                class="github-link"
+                target="_blank"
+            >
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>
+
+            <!-- Project Description -->
+            <section class="project-content">
+                <h2 class="section-title">Project Overview</h2>
+                <p>
+                    VVM was my first venture into ROS2 development, combining
+                    voice commands, computer vision, and robotic manipulation.
+                    This project demonstrates how AI can make robots understand
+                    and respond to human commands naturally.
+                </p>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">How It Works</h2>
+                <p>The system works in three main steps:</p>
+                <ul>
+                    <li>
+                        <strong>Listen:</strong> Voice recognition converts
+                        speech to commands
+                    </li>
+                    <li>
+                        <strong>See:</strong> Computer vision detects and
+                        identifies objects
+                    </li>
+                    <li>
+                        <strong>Act:</strong> Robotic arm performs
+                        pick-and-place operations
+                    </li>
+                </ul>
+                <p>
+                    Say "pick up the red ball" and the robot will find the red
+                    ball, calculate its position, and grab it!
+                </p>
+            </section>
+
+            <!-- Project Images -->
+            <section>
+                <h2 class="section-title">System in Action</h2>
+
+                <!-- Main Project Image -->
+                <div class="image-container">
+                    <img
+                        src="../Assets/VVM_Assets/image.webp"
+                        alt="VVM System Overview"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        Voice Video Manipulator system architecture
+                    </p>
+                </div>
+            </section>
+
+            <!-- Object Detection Demo -->
+            <section>
+                <h2 class="section-title">Object Detection System</h2>
+                <div class="video-container">
+                    <video controls>
+                        <source
+                            src="../Assets/VVM_Assets/Screencast from 08-29-2024 12_01_43 AM.mp4"
+                            type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                    </video>
+                    <p class="image-caption">
+                        Object detection and distance calculation in real-time
+                    </p>
+                </div>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">Computer Vision Pipeline</h2>
+                <p>
+                    The vision system processes camera feeds to identify and
+                    locate objects:
+                </p>
+                <ul>
+                    <li>
+                        Real-time object detection using machine learning models
+                    </li>
+                    <li>3D position estimation from 2D camera coordinates</li>
+                    <li>Distance calculation for precise manipulation</li>
+                    <li>Object classification for command matching</li>
+                </ul>
+            </section>
+
+            <!-- Complete System Demo -->
+            <section>
+                <h2 class="section-title">Complete Voice Control Demo</h2>
+                <div class="video-container">
+                    <video controls>
+                        <source
+                            src="../Assets/VVM_Assets/Screencast from 08-31-2024 04_56_15 AM.mp4"
+                            type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                    </video>
+                    <p class="image-caption">
+                        Complete voice-controlled pick-and-place operation
+                    </p>
+                </div>
+            </section>
+
+            <!-- Technical Details -->
+            <section class="project-content">
+                <h2 class="section-title">Technical Implementation</h2>
+                <ul>
+                    <li>
+                        Voice recognition for natural language command
+                        processing
+                    </li>
+                    <li>
+                        Computer vision for object detection and identification
+                    </li>
+                    <li>3D distance calculation for precise positioning</li>
+                    <li>Inverse kinematics for robotic arm control</li>
+                    <li>ROS2 integration for modular system architecture</li>
+                    <li>Gazebo simulation for safe testing and development</li>
+                </ul>
+            </section>
+
+            <!-- Technologies Used -->
+            <section>
+                <h2 class="section-title">Built With</h2>
+                <div class="tech-used">
+                    <span>ROS2</span>
+                    <span>Gazebo</span>
+                    <span>Python</span>
+                    <span>OpenCV</span>
+                    <span>Machine Learning</span>
+                    <span>Speech Recognition</span>
+                    <span>Computer Vision</span>
+                </div>
+            </section>
+
+            <!-- Key Features -->
+            <section class="project-content">
+                <h2 class="section-title">Key Features</h2>
+                <ul>
+                    <li>Natural language voice commands</li>
+                    <li>Real-time object detection and classification</li>
+                    <li>Automatic distance calculation</li>
+                    <li>Precise robotic arm manipulation</li>
+                    <li>Gazebo simulation environment</li>
+                    <li>Modular ROS2 architecture</li>
+                </ul>
+            </section>
+
+            <!-- Challenges and Solutions -->
+            <section class="project-content">
+                <h2 class="section-title">Challenges Solved</h2>
+                <ul>
+                    <li>
+                        <strong>Voice Recognition Accuracy:</strong> Implemented
+                        robust speech processing to handle various accents and
+                        background noise
+                    </li>
+                    <li>
+                        <strong>Object Detection Precision:</strong> Fine-tuned
+                        machine learning models for accurate object
+                        identification
+                    </li>
+                    <li>
+                        <strong>3D Position Calculation:</strong> Developed
+                        algorithms to convert 2D camera coordinates to 3D robot
+                        workspace
+                    </li>
+                    <li>
+                        <strong>System Integration:</strong> Successfully
+                        integrated multiple AI components in a single ROS2
+                        system
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Learning Journey -->
+            <section class="project-content">
+                <h2 class="section-title">My First ROS2 Experience</h2>
+                <p>
+                    This project was my introduction to ROS2 development. It
+                    taught me how to:
+                </p>
+                <ul>
+                    <li>Design modular robotic systems</li>
+                    <li>Integrate multiple AI technologies</li>
+                    <li>Work with simulation environments</li>
+                    <li>Handle real-time data processing</li>
+                    <li>Debug complex multi-component systems</li>
+                </ul>
+                <p>
+                    The experience gained from VVM became the foundation for all
+                    my future robotics projects.
+                </p>
+            </section>
+        </div>
+    </body>
+</html>

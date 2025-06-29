@@ -69,7 +69,7 @@
 }
 
 .section-title::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -8px;
     left: 0;
@@ -80,12 +80,14 @@
 
 /* Image Gallery */
 .image-container {
-    margin: 2rem 0;
+    margin: 2rem auto;
+    max-width: 600px;
     transition: var(--transition);
 }
 
 .project-image {
     width: 100%;
+    height: auto;
     border-radius: var(--border-radius);
     margin-bottom: 0.5rem;
     box-shadow: var(--box-shadow);
@@ -101,13 +103,17 @@
 
 /* Video Section */
 .video-container {
-    margin: 2rem 0;
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-    height: 0;
-    overflow: hidden;
+    margin: 2rem auto;
+    max-width: 600px;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
+}
+
+.video-container video {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    border: none;
 }
 
 .video-container iframe {
@@ -118,6 +124,14 @@
     height: 100%;
     border-radius: var(--border-radius);
     border: none;
+}
+
+/* For YouTube embeds that still need aspect ratio */
+.video-container.youtube {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
 }
 
 /* Technologies Section */
@@ -185,6 +199,12 @@
         font-size: 0.8rem;
         padding: 0.4rem 0.8rem;
     }
+
+    .image-container,
+    .video-container {
+        max-width: 100%;
+        margin: 1.5rem auto;
+    }
 }
 
 @media (max-width: 480px) {
@@ -199,5 +219,10 @@
 
     .tech-used {
         justify-content: center;
+    }
+
+    .image-container,
+    .video-container {
+        margin: 1rem auto;
     }
 }

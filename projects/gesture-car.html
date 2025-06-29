@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Gesture Controlled Car</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="../styles.css" />
+        <link rel="stylesheet" href="../css/project-page.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Back Button -->
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Home
+            </a>
+
+            <!-- Project Title -->
+            <h1 class="project-title">Gesture Controlled Car</h1>
+
+            <!-- GitHub Link -->
+            <a
+                href="https://github.com/NoobMaster-version/gesture-controlled-car"
+                class="github-link"
+                target="_blank"
+            >
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>
+
+            <!-- Project Description -->
+            <section class="project-content">
+                <h2 class="section-title">Project Overview</h2>
+                <p>
+                    A car that you can control with hand movements. It uses an
+                    MPU6050 sensor to detect hand gestures and sends these
+                    commands to the car using ESP32 microcontrollers. No remote
+                    control needed - just move your hand to drive the car!
+                </p>
+            </section>
+
+            <!-- Project Video -->
+            <section>
+                <h2 class="section-title">See It In Action</h2>
+                <div class="video-container youtube">
+                    <iframe
+                        src="https://www.youtube.com/embed/i3521WBt12I"
+                        title="Gesture Controlled Car Demo"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">How It Works</h2>
+                <p>The system has two main parts:</p>
+                <ul>
+                    <li>
+                        <strong>Controller:</strong> ESP32 + MPU6050 that reads
+                        your hand movements
+                    </li>
+                    <li>
+                        <strong>Car:</strong> Another ESP32 that controls the
+                        motors based on your gestures
+                    </li>
+                </ul>
+                <p>
+                    Both parts talk to each other wirelessly using ESP-NOW
+                    protocol, making the car respond quickly to your movements.
+                </p>
+            </section>
+
+            <!-- Technical Details -->
+            <section class="project-content">
+                <h2 class="section-title">What's Inside</h2>
+                <ul>
+                    <li>
+                        2× ESP32 microcontrollers for wireless communication
+                    </li>
+                    <li>MPU6050 motion sensor for gesture detection</li>
+                    <li>L298N motor driver for precise motor control</li>
+                    <li>DC motors for smooth car movement</li>
+                    <li>Custom PCB for reliable connections</li>
+                </ul>
+            </section>
+
+            <!-- Technologies Used -->
+            <section>
+                <h2 class="section-title">Built With</h2>
+                <div class="tech-used">
+                    <span>ESP32</span>
+                    <span>MPU6050</span>
+                    <span>ESP-NOW</span>
+                    <span>Arduino IDE</span>
+                    <span>PCB Design</span>
+                </div>
+            </section>
+
+            <!-- Challenges and Solutions -->
+            <section class="project-content">
+                <h2 class="section-title">Challenges Solved</h2>
+                <ul>
+                    <li>
+                        <strong>Gesture Detection:</strong> Made accurate using
+                        signal filtering and noise reduction techniques
+                    </li>
+                    <li>
+                        <strong>Response Time:</strong> Achieved fast
+                        communication with ESP-NOW protocol
+                    </li>
+                    <li>
+                        <strong>Battery Life:</strong> Optimized power
+                        consumption with efficient code
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Learning Experience -->
+            <section class="project-content">
+                <h2 class="section-title">My First Robotics Project</h2>
+                <p>
+                    This was one of my first projects that marked the beginning
+                    of my robotics journey. Building this gesture-controlled car
+                    taught me the basics of:
+                </p>
+                <ul>
+                    <li>Sensor interfacing and data processing</li>
+                    <li>Wireless communication protocols</li>
+                    <li>Motor control and robotics basics</li>
+                    <li>PCB design and electronic prototyping</li>
+                </ul>
+            </section>
+        </div>
+    </body>
+</html>

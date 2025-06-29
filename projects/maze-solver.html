@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Line Following Maze Solver</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="../styles.css" />
+        <link rel="stylesheet" href="../css/project-page.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Back Button -->
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Home
+            </a>
+
+            <!-- Project Title -->
+            <h1 class="project-title">Line Following Maze Solver</h1>
+
+            <!-- GitHub Link -->
+            <!-- <a
+                href="https://github.com/NoobMaster-version/maze-solver-robot"
+                class="github-link"
+                target="_blank"
+            >
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a> -->
+
+            <!-- Project Description -->
+            <section class="project-content">
+                <h2 class="section-title">Project Overview</h2>
+                <p>
+                    Built for the SRA Lab competition, this intelligent robot
+                    combines line-following capabilities with advanced
+                    maze-solving algorithms. The robot can navigate complex
+                    mazes by following lines while making smart decisions at
+                    intersections and dead ends.
+                </p>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">Competition Challenge</h2>
+                <p>
+                    The SRA Lab maze competition required robots to:
+                </p>
+                <ul>
+                    <li>Follow black lines accurately on white surfaces</li>
+                    <li>Navigate complex maze patterns with multiple paths</li>
+                    <li>Make intelligent decisions at intersections</li>
+                    <li>Handle dead ends and backtrack efficiently</li>
+                    <li>Find the shortest path to the maze exit</li>
+                    <li>Complete the course in minimum time</li>
+                </ul>
+            </section>
+
+            <!-- Project Video -->
+            <section>
+                <h2 class="section-title">Robot in Action</h2>
+                <div class="video-container">
+                    <video controls>
+                        <source
+                            src="../Assets/SAC/IMG_2092.MP4"
+                            type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                    </video>
+                    <p class="image-caption">
+                        Maze solver robot navigating through complex line patterns
+                    </p>
+                </div>
+            </section>
+
+            <!-- Technical Implementation -->
+            <section class="project-content">
+                <h2 class="section-title">Technical Design</h2>
+                <ul>
+                    <li>
+                        <strong>Line Detection:</strong> Array of IR sensors for
+                        precise line following
+                    </li>
+                    <li>
+                        <strong>Maze Mapping:</strong> Algorithm to remember
+                        visited paths and intersections
+                    </li>
+                    <li>
+                        <strong>Decision Making:</strong> Logic for choosing
+                        paths at intersections
+                    </li>
+                    <li>
+                        <strong>Pathfinding:</strong> Implementation of
+                        maze-solving algorithms like wall-following
+                    </li>
+                    <li>
+                        <strong>Motor Control:</strong> Precise speed and
+                        direction control for smooth navigation
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Technologies Used -->
+            <section>
+                <h2 class="section-title">Built With</h2>
+                <div class="tech-used">
+                    <span>ESP-IDF</span>
+                    <span>IR Sensors</span>
+                    <span>Motor Drivers</span>
+                    <span>Pathfinding Algorithms</span>
+                    <span>Real-time Control</span>
+                    <span>Embedded Programming</span>
+                </div>
+            </section>
+
+            <!-- Algorithm Details -->
+            <section class="project-content">
+                <h2 class="section-title">Maze Solving Algorithm</h2>
+                <p></p>
+                    The robot uses a combination of algorithms for efficient
+                    maze solving:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Left-Hand Rule:</strong> Always prefer left
+                        turns when multiple options are available
+                    </li>
+                    <li>
+                        <strong>Dead End Detection:</strong> Recognize and
+                        backtrack from dead ends efficiently
+                    </li>
+                    <li>
+                        <strong>Path Memory:</strong> Remember visited paths to
+                        avoid repeated exploration
+                    </li>
+                    <li>
+                        <strong>Intersection Mapping:</strong> Track all
+                        intersection points and their connections
+                    </li>
+                    <li>
+                        <strong>Optimization:</strong> Find shortest path after
+                        initial maze exploration
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Line Following Technology -->
+            <section class="project-content">
+                <h2 class="section-title">Line Following System</h2>
+                <ul>
+                    <li>
+                        <strong>Sensor Array:</strong> Multiple IR sensors for
+                        accurate line detection
+                    </li>
+                    <li>
+                        <strong>PID Control:</strong> Smooth and stable line
+                        following with minimal oscillation
+                    </li>
+                    <li>
+                        <strong>Speed Control:</strong> Dynamic speed adjustment
+                        based on line curvature
+                    </li>
+                    <li>
+                        <strong>Junction Detection:</strong> Identify T-junctions,
+                        crossroads, and dead ends
+                    </li>
+                    <li>
+                        <strong>Error Correction:</strong> Quick recovery when
+                        robot loses the line
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Challenges and Solutions -->
+            <section class="project-content">
+                <h2 class="section-title">Engineering Challenges</h2>
+                <ul>
+                    <li>
+                        <strong>Sensor Calibration:</strong> Fine-tuned IR
+                        sensors for consistent line detection under various
+                        lighting conditions
+                    </li>
+                    <li>
+                        <strong>Junction Recognition:</strong> Developed robust
+                        algorithms to distinguish between different types of
+                        intersections
+                    </li>
+                    <li>
+                        <strong>Path Optimization:</strong> Implemented
+                        efficient data structures to store and process maze
+                        information
+                    </li>
+                    <li>
+                        <strong>Speed vs Accuracy:</strong> Balanced fast
+                        movement with reliable line following
+                    </li>
+                    <li>
+                        <strong>Memory Management:</strong> Optimized code for
+                        limited microcontroller memory
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Competition Performance -->
+            <section class="project-content">
+                <h2 class="section-title">Competition Achievement</h2>
+                <p>
+                    Secured fourth place in the SRA Lab maze-solving
+                    competition, demonstrating excellent pathfinding algorithms
+                    and reliable sensor integration. The robot successfully
+                    navigated complex maze patterns and showed consistent
+                    performance across multiple runs.
+                </p>
+            </section>
+
+            <!-- Key Features -->
+            <section class="project-content">
+                <h2 class="section-title">Key Features</h2>
+                <ul>
+                    <li>Accurate line following with PID control</li>
+                    <li>Intelligent maze-solving algorithms</li>
+                    <li>Robust junction and dead-end detection</li>
+                    <li>Path memory and optimization</li>
+                    <li>Fast and reliable navigation</li>
+                    <li>Competition-grade performance</li>
+                </ul>
+            </section>
+
+            <!-- Development Process -->
+            <section class="project-content">
+                <h2 class="section-title">Development Journey</h2>
+                <ul>
+                    <li>
+                        Started with basic line following using simple sensor
+                        feedback
+                    </li>
+                    <li>
+                        Implemented PID control for smoother line tracking
+                    </li>
+                    <li>
+                        Added junction detection and decision-making logic
+                    </li>
+                    <li>
+                        Developed maze-solving algorithms and path memory
+                    </li>
+                    <li>
+                        Optimized performance through extensive testing and
+                        tuning
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Learning Outcomes -->
+            <section class="project-content">
+                <h2 class="section-title">What I Learned</h2>
+                <ul>
+                    <li>Advanced sensor interfacing and calibration</li>
+                    <li>Pathfinding and maze-solving algorithms</li>
+                    <li>Real-time embedded systems programming</li>
+                    <li>PID control implementation and tuning</li>
+                    <li>Competition robotics strategies</li>
+                    <li>System optimization under resource constraints</li>
+                </ul>
+            </section>
+
+            <!-- Technical Specifications -->
+            <section class="project-content">
+                <h2 class="section-title">Technical Specifications</h2>
+                <ul>
+                    <li>Microcontroller: ESP32 with ESP-IDF framework</li>
+                    <li>Sensors: Array of IR sensors for line detection</li>
+                    <li>Motors: DC geared motors with encoder feedback</li>
+                    <li>Power: Rechargeable Li-Po battery system</li>
+                    <li>Processing: Real-time control loop at 100Hz</li>
+                    <li>Memory: Efficient maze mapping data structures</li>
+                </ul>
+            </section>
+
+            <!-- Future Improvements -->
+            <section class="project-content">
+                <h2 class="section-title">Future Enhancements</h2>
+                <ul>
+                    <li>Add computer vision for more robust line detection</li>
+                    <li>Implement advanced algorithms like A* pathfinding</li>
+                    <li>Include obstacle avoidance capabilities</li>
+                    <li>Add wireless communication for remote monitoring</li>
+                    <li>Develop machine learning for adaptive navigation</li>
+                </ul>
+            </section>
+        </div>
+    </body>
+</html>
