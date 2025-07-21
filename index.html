@@ -6,7 +6,7 @@
         <title>Kartikey Pathak | Electrical Engineer & Robotics Enthusiast</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
         <link rel="stylesheet" href="styles.css" />
     </head>
@@ -108,7 +108,8 @@
                                     <img src="Assets/KDAIL/iCloud Photos/IMG_4664.JPEG" alt="KDAIL Project" />
                                 </div>
                                 <div class="slide">
-                                    <video controls>
+                                    <div class="video-overlay"></div>
+                                    <video loop muted poster="Assets/KDAIL/iCloud Photos/IMG_4664.JPEG">
                                         <source src="Assets/KDAIL/IMG_4702.MP4" type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
@@ -187,13 +188,15 @@
                                     <img src="Assets/VVM_Assets/image.webp" alt="VVM Project" />
                                 </div>
                                 <div class="slide">
-                                    <video controls>
+                                    <div class="video-overlay"></div>
+                                    <video loop muted poster="Assets/VVM_Assets/image.webp">
                                         <source src="Assets/VVM_Assets/Screencast from 08-29-2024 12_01_43 AM.mp4" type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
                                 </div>
                                 <div class="slide">
-                                    <video controls>
+                                    <div class="video-overlay"></div>
+                                    <video loop muted poster="Assets/VVM_Assets/image.webp">
                                         <source src="Assets/VVM_Assets/Screencast from 08-31-2024 04_56_15 AM.mp4" type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
@@ -225,7 +228,8 @@
                                     <img src="Assets/COin_Sorting/iCloud Photos(3)/iCloud Photos/IMG_3984.JPEG" alt="Coin Sorting Project 3" />
                                 </div>
                                 <div class="slide">
-                                    <video controls>
+                                    <div class="video-overlay"></div>
+                                    <video loop muted poster="Assets/COin_Sorting/3D7563D3-87EC-4E96-AAC2-F3EF65814A51.JPEG">
                                         <source src="Assets/COin_Sorting/IMG_4188.MP4" type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
@@ -247,13 +251,15 @@
                         <div class="slider-container">
                             <div class="slider-wrapper">
                                 <div class="slide active">
-                                    <video controls>
+                                    <div class="video-overlay"></div>
+                                    <video loop muted poster="Assets/Kurma/kurma_over_rough_terrain.mp4">
                                         <source src="Assets/Kurma/IMG_4242.MP4" type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
                                 </div>
                                 <div class="slide">
-                                    <video controls>
+                                    <div class="video-overlay"></div>
+                                    <video loop muted poster="Assets/Kurma/kurma_over_rough_terrain.mp4">
                                         <source src="Assets/Kurma/IMG_4243.MP4" type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
@@ -296,10 +302,12 @@
                         <div class="media-container">
                             <div class="media-content">
                                 <div class="media-item active">
-                                    <video controls>
+                                    <div class="video-overlay"></div>
+                                    <video loop muted poster="Assets/Self Balancing Bot/IMG_3605.MP4">
                                         <source src="Assets/Self Balancing Bot/IMG_3605.MP4" type="video/mp4" />
                                         Your browser does not support the video tag.
-                                    </div>
+                                    </video>
+                                </div>
                             </div>
                         </div>
                         <h3>Self-Balancing Robot</h3>
@@ -314,7 +322,8 @@
                         <div class="media-container">
                             <div class="media-content">
                                 <div class="media-item active">
-                                    <video controls>
+                                    <div class="video-overlay"></div>
+                                    <video loop muted poster="Assets/Gesture_Controlled_Car/Demonstration Video Internship Project .mp4">
                                         <source src="Assets/Gesture_Controlled_Car/Demonstration Video Internship Project .mp4" type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
@@ -335,7 +344,8 @@
                             <div class="media-content">
                                 <div class="media-item active">
                                     <div class="media-item active">
-                                        <video controls>
+                                        <div class="video-overlay"></div>
+                                        <video loop muted poster="Assets/SAC/IMG_2092.MP4">
                                             <source src="Assets/SAC/IMG_2092.MP4" type="video/mp4" />
                                             Your browser does not support view this video tag.
                                         </video>
@@ -396,7 +406,8 @@
                                     <img src="Assets/Prati/IMG_3636.JPEG" alt="Pratibimb Performance" class="img-contain" />
                                 </div>
                                 <div class="slide">
-                                    <video controls class="video-contain">
+                                    <div class="video-overlay"></div>
+                                    <video loop muted class="video-contain" poster="Assets/Prati/IMG_4624.JPEG">
                                         <source src="Assets/Prati/2f3eb3e3-2318-4b8f-a0d7-f6b545837c8e.MP4" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
@@ -527,6 +538,30 @@
                                 top: targetSection.offsetTop - 70,
                                 behavior: "smooth",
                             });
+                        });
+                    });
+
+                    const videos = document.querySelectorAll(".project-card video");
+                    videos.forEach(video => {
+                        const container = video.parentElement;
+                        video.addEventListener("play", () => {
+                            container.classList.add("video-playing");
+                        });
+                        video.addEventListener("pause", () => {
+                            container.classList.remove("video-playing");
+                        });
+                        container.addEventListener("mouseenter", () => {
+                            video.play();
+                        });
+                        container.addEventListener("mouseleave", () => {
+                            video.pause();
+                        });
+                        container.addEventListener("click", () => {
+                            if (video.paused) {
+                                video.play();
+                            } else {
+                                video.pause();
+                            }
                         });
                     });
                 });
