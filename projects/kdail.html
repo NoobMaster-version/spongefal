@@ -3,8 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>KDAIL - Autonomous Bot with UWB Localization</title>
-
+        <title>Autonomous Bot with UWB Localization</title>
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,31 +11,24 @@
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
             rel="stylesheet"
         />
-
         <!-- Icons -->
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
-
         <!-- Styles -->
         <link rel="stylesheet" href="../styles.css" />
         <link rel="stylesheet" href="../css/project-page.css" />
     </head>
     <body>
         <div class="container">
-            <!-- Back Button -->
             <a href="../index.html" class="back-button">
                 <i class="fas fa-arrow-left"></i>
                 Home
             </a>
-
-            <!-- Project Title -->
             <h1 class="project-title">
-                KDAIL - Autonomous Bot with Ultra-Precise UWB Localization
+                Autonomous Bot with Precise UWB Localization
             </h1>
-
-            <!-- GitHub Link -->
             <a
                 href="https://github.com/De-funkd/KDAIL-Forklift"
                 class="github-link"
@@ -46,83 +38,318 @@
                 View on GitHub
             </a>
 
-            <!-- Project Description -->
             <section class="project-content">
                 <h2 class="section-title">Project Overview</h2>
                 <p>
-                    During our internship at
+                    As part of my internship after the end of my second year of
+                    engineering at
                     <a
                         href="https://krishnaallied.com/"
                         target="_blank"
                         style="color: #007bff; text-decoration: none"
                         >Krishna Defence and Allied Industries</a
-                    >, our team of 4 developed an autonomous navigation bot
-                    similar to TurtleBot with a revolutionary approach to
-                    localization. Instead of traditional encoders, we
-                    implemented Ultra-Wideband (UWB) sensors to achieve
-                    centimeter-level precision in indoor environments.
+                    >, I worked on developing an autonomous mobile robot that
+                    uses Ultra-Wideband (UWB) technology for precise
+                    localization. The goal was to achieve centimeter-level
+                    accuracy in both indoor and outdoor environments, replacing
+                    traditional encoder-based localization with a more robust
+                    and drift-free solution.
                 </p>
-            </section>
-
-            <!-- Project Video -->
-            <section>
-                <h2 class="section-title">See It In Action</h2>
-                <div class="video-container youtube">
-                    <iframe
-                        src="https://www.youtube.com/embed/qDDlVrJwSQA"
-                        title="KDAIL Bot Navigation Demo"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                    ></iframe>
-                </div>
-
-                <div class="video-container youtube">
-                    <iframe
-                        src="https://www.youtube.com/embed/iG-MlcV99eU"
-                        title="KDAIL 10m x 10m Area Testing"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                    ></iframe>
-                    <p class="image-caption">
-                        Testing the bot in a 10m × 10m area with precise UWB
-                        localization
-                    </p>
-                </div>
             </section>
 
             <section class="project-content">
-                <h2 class="section-title">The Challenge</h2>
+                <h2 class="section-title">Milestones & Technical Details</h2>
+                <h3>1. Understanding the Problem</h3>
                 <p>
-                    The project aimed to solve precise localization in large
-                    areas with the following objectives:
+                    We started by defining the requirements: achieve 1–2 cm
+                    localization accuracy in a 200 × 200 m area, keep costs low,
+                    ensure the system is autonomous and weather-independent, and
+                    minimize maintenance for use in a naval dockyard.
+                </p>
+                <h3>2. Technology Exploration</h3>
+                <p>
+                    We compared several technologies (Bluetooth, LoRaWAN, RFID,
+                    NFC, radar, CCTV, IR, hyperspectral) and found UWB to be the
+                    best fit for high-precision localization. UWB needed careful
+                    tuning to reach the required accuracy.
+                </p>
+                <h3>3. UWB Hardware Selection</h3>
+                <p>
+                    After researching available options, we selected the Qorvo
+                    DWM3001CDK UWB development kit for testing. We also gathered
+                    other electronics to build a basic mobile robot platform for
+                    lab experiments.
+                </p>
+                <h3>4. Building and Testing the Prototype</h3>
+                <p>
+                    We built a simple robot using a Raspberry Pi 4B (running
+                    ROS), a DWM3001CDK UWB tag, a G-DOF IMU for orientation, and
+                    basic DC motors. We performed range and accuracy tests both
+                    indoors and outdoors, and used SLAM (Simultaneous
+                    Localization and Mapping) to map the environment by
+                    combining UWB and LIDAR data.
+                </p>
+                <h3>5. Achieving Reliable Localization</h3>
+                <p>
+                    We successfully localized the robot within a 2 × 2 m area
+                    indoors, achieving consistent accuracy and reliable
+                    autonomous navigation.
+                </p>
+                <h3>6. Outdoor Testing (7 × 7 m Area)</h3>
+                <p>
+                    We set up four UWB anchors at the corners of a 7 × 7 m
+                    square outdoors and demonstrated that the robot could
+                    localize itself and navigate autonomously using only UWB and
+                    IMU data (no wheel encoders or LIDAR for this test).
+                </p>
+                <h3>7. Large-Scale Validation (IIT Gandhinagar, 50 × 60 m)</h3>
+                <p>
+                    We scaled up the system to a 50 × 60 m area, using the same
+                    4-anchor + 1-tag setup. We verified the accuracy using a
+                    total station, confirming the system's scalability.
+                </p>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">How UWB Localization Works</h2>
+                <p>
+                    UWB localization is based on measuring the distance between
+                    a mobile tag (on the robot) and several fixed anchors. The
+                    robot calculates its position using trilateration, which
+                    means it finds its location by measuring its distance from
+                    at least three known points (anchors). We used four anchors
+                    for better accuracy and redundancy.
                 </p>
                 <ul>
                     <li>
-                        <strong>Stage 1 (VJTI):</strong> 2cm accuracy in 10m ×
-                        10m area using UWB sensors
+                        <strong>Trilateration:</strong> The robot's UWB tag
+                        measures its distance to each anchor. Using these
+                        distances and the known anchor positions, the robot
+                        solves a set of equations to find its own (x, y)
+                        coordinates.
                     </li>
                     <li>
-                        <strong>Stage 2 (IIT Gandhinagar):</strong> 5cm accuracy
-                        in 500m × 500m area -
-                        <a href="iitgn.html" style="color: #28a745"
-                            >View Next Phase →</a
-                        >
+                        <strong>IMU Integration:</strong> The IMU provides the
+                        robot's orientation (yaw angle), which is important for
+                        navigation.
                     </li>
-                    <li>
-                        Replace traditional encoder-based localization with UWB
-                        technology
-                    </li>
-                    <li>
-                        Develop custom navigation algorithms without relying on
-                        Nav2
-                    </li>
-                    <li>Build complete firmware from scratch</li>
                 </ul>
             </section>
 
-            <!-- Hardware Setup -->
-            <section>
-                <h2 class="section-title">Hardware Setup</h2>
+            <section class="project-content">
+                <h2 class="section-title">Embedded System & ROS Integration</h2>
+                <ul>
+                    <li>
+                        <strong>Robot Operating System (ROS):</strong> We used
+                        ROS as the main software framework. ROS handled
+                        communication between the UWB, IMU, motors, and the user
+                        interface.
+                    </li>
+                    <li>
+                        <strong>Custom Firmware:</strong> For large-scale tests,
+                        we developed custom firmware for the DWM3001CDK modules.
+                        The stock firmware had a 45-meter range limit, so we
+                        implemented our own Double-Sided Two-Way Ranging
+                        (DS-TWR) protocol and added a custom message to send the
+                        calculated distance back to the robot.
+                    </li>
+                    <li>
+                        <strong>Parameter Tuning:</strong> We optimized UWB
+                        settings like preamble length, data rate, and delays to
+                        maximize range and stability. For example, using a
+                        longer preamble and lower data rate improved signal
+                        robustness for long distances.
+                    </li>
+                    <li>
+                        <strong>Navigation Stack:</strong> We wrote our own
+                        navigation logic in ROS. The robot could be teleoperated
+                        (manual control) or sent to a target coordinate, using
+                        only UWB for position and IMU for heading.
+                    </li>
+                </ul>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">Key Results</h2>
+                <ul>
+                    <li>
+                        <strong>Indoor/Outdoor Accuracy:</strong> Achieved ±2 cm
+                        accuracy in small areas (up to 10 × 10 m).
+                    </li>
+                    <li>
+                        <strong>Large-Scale Range:</strong> After custom
+                        firmware, achieved stable UWB communication up to 315
+                        meters and localization accuracy of ±40 cm in a 50 × 50
+                        m area (limited mainly by setup errors, not the UWB
+                        itself).
+                    </li>
+                    <li>
+                        <strong>Fully Embedded Solution:</strong> The robot ran
+                        all localization and navigation onboard, with real-time
+                        data displayed in a custom UI.
+                    </li>
+                </ul>
+            </section>
+            <section class="project-content">
+                <h2 class="section-title">
+                    Technical Results & UWB Configuration
+                </h2>
+                <p>
+                    During testing, we experimented with different UWB settings
+                    to optimize for range, accuracy, and update rate. Below are
+                    the main configurations and results:
+                </p>
+                <table
+                    style="
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 1em;
+                    "
+                >
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid #ccc; padding: 6px">
+                                Test Scenario
+                            </th>
+                            <th style="border: 1px solid #ccc; padding: 6px">
+                                Preamble Length
+                            </th>
+                            <th style="border: 1px solid #ccc; padding: 6px">
+                                PAC Size
+                            </th>
+                            <th style="border: 1px solid #ccc; padding: 6px">
+                                Data Rate
+                            </th>
+                            <th style="border: 1px solid #ccc; padding: 6px">
+                                Range Achieved
+                            </th>
+                            <th style="border: 1px solid #ccc; padding: 6px">
+                                Accuracy
+                            </th>
+                            <th style="border: 1px solid #ccc; padding: 6px">
+                                Key Time Delays (units)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                Indoor/Outdoor Small Area
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                128
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                8
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                6.8 Mbps
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                10 m
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                ±2 cm
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                poll_TX_to_response_RX: 2400<br />
+                                response_RX_to_final_TX: 2400<br />
+                                response_RX_timeout: 1200
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                Outdoor Medium Range
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                256
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                16/32
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                6.8 Mbps
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                50 m
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                ±10 cm
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                poll_TX_to_response_RX: 1500<br />
+                                response_RX_to_final_TX: 1500<br />
+                                response_RX_timeout: 1200
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                Large-Scale Field (Custom Firmware)
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                512
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                32
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                6.8 Mbps
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                315 m
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                ±40 cm
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 6px">
+                                poll_TX_to_response_RX: 2400<br />
+                                response_RX_to_final_TX: 2400<br />
+                                response_RX_timeout: 1200
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    <strong>Note:</strong> The time delays are in UWB device
+                    time units and were tuned for each scenario to maximize
+                    stability and accuracy. The large-scale accuracy was mainly
+                    limited by physical setup errors, not the UWB system itself.
+                </p>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">What I Did</h2>
+                <ul>
+                    <li>
+                        Helped define project requirements and select UWB as the
+                        localization technology.
+                    </li>
+                    <li>
+                        Set up and configured the Qorvo DWM3001CDK UWB modules
+                        and built the robot platform.
+                    </li>
+                    <li>
+                        Integrated UWB and IMU data in ROS for real-time
+                        localization and navigation.
+                    </li>
+                    <li>
+                        Developed and tested custom firmware for the UWB modules
+                        to overcome range limitations.
+                    </li>
+                    <li>
+                        Designed and ran experiments to validate accuracy, both
+                        indoors and outdoors, including large-scale field tests.
+                    </li>
+                    <li>
+                        Created a simple UI for live data monitoring and robot
+                        control.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Project Media Gallery -->
+            <section class="project-content">
+                <h2 class="section-title">Project Media Gallery</h2>
                 <div class="image-container">
                     <img
                         src="../Assets/KDAIL/iCloud Photos/IMG_4664.JPEG"
@@ -134,8 +361,6 @@
                         navigation systems
                     </p>
                 </div>
-
-                <!-- UWB Sensors -->
                 <div class="image-container">
                     <img
                         src="../Assets/KDAIL/uwb.JPEG"
@@ -147,40 +372,6 @@
                         precise localization
                     </p>
                 </div>
-            </section>
-
-            <section class="project-content">
-                <h2 class="section-title">
-                    Revolutionary Approach - UWB Over Encoders
-                </h2>
-                <p>
-                    Unlike traditional robots that rely on wheel encoders for
-                    localization, I implemented Ultra-Wideband (UWB) sensor
-                    technology which provided several advantages:
-                </p>
-                <ul>
-                    <li>
-                        <strong>Encoder-Free Navigation:</strong> Eliminated
-                        cumulative error from wheel slippage
-                    </li>
-                    <li>
-                        <strong>2cm Precision:</strong> Achieved exceptional
-                        accuracy in 10m × 10m operational range
-                    </li>
-                    <li>
-                        <strong>Real-time Positioning:</strong> Continuous
-                        absolute position without drift
-                    </li>
-                    <li>
-                        <strong>Robust Performance:</strong> Works reliably in
-                        various environmental conditions
-                    </li>
-                </ul>
-            </section>
-
-            <!-- Development Process -->
-            <section>
-                <h2 class="section-title">Development Process</h2>
                 <div class="video-container">
                     <video controls class="project-image">
                         <source
@@ -194,37 +385,6 @@
                         capabilities
                     </p>
                 </div>
-            </section>
-
-            <section class="project-content">
-                <h2 class="section-title">Custom Implementation</h2>
-                <p>
-                    We built the entire system from ground up without relying on
-                    existing navigation stacks:
-                </p>
-                <ul>
-                    <li>
-                        <strong>Custom SLAM:</strong> Implemented SLAM
-                        algorithms from scratch for mapping and localization
-                    </li>
-                    <li>
-                        <strong>No Nav2 Dependency:</strong> Created custom
-                        navigation scripts for path planning and execution
-                    </li>
-                    <li>
-                        <strong>Complete Firmware:</strong> Wrote all firmware
-                        code for the bot's control systems
-                    </li>
-                    <li>
-                        <strong>UWB Integration:</strong> Developed custom
-                        drivers and algorithms for UWB sensor integration
-                    </li>
-                </ul>
-            </section>
-
-            <!-- Additional Videos -->
-            <section>
-                <h2 class="section-title">System Testing</h2>
                 <div class="video-container">
                     <video controls class="project-image">
                         <source
@@ -237,124 +397,30 @@
                         KDAIL navigation system in action during testing phase
                     </p>
                 </div>
-
-                <!-- Teleop Demo -->
-            </section>
-
-            <section class="project-content">
-                <h2 class="section-title">Key Capabilities</h2>
-                <ul>
-                    <li>
-                        <strong>Object Detection:</strong> Identifies target
-                        boxes and objects in the environment
-                    </li>
-                    <li>
-                        <strong>Autonomous Navigation:</strong> Plans and
-                        executes paths to reach target locations
-                    </li>
-                    <li>
-                        <strong>Precise Localization:</strong> Maintains 2cm
-                        accuracy throughout the operational area
-                    </li>
-                    <li>
-                        <strong>Real-time Processing:</strong> Processes UWB
-                        signals and navigation commands in real-time
-                    </li>
-                    <li>
-                        <strong>Environmental Adaptation:</strong> Works both
-                        indoors and outdoors with consistent accuracy
-                    </li>
-                </ul>
-            </section>
-
-            <!-- Technologies Used -->
-            <section>
-                <h2 class="section-title">Built With</h2>
-                <div class="tech-used">
-                    <span>Ultra-Wideband (UWB)</span>
-                    <span>Custom SLAM</span>
-                    <span>ROS2</span>
-                    <span>Computer Vision</span>
-                    <span>Custom Navigation</span>
-                    <span>Object Detection</span>
-                    <span>Firmware Development</span>
-                    <span>Path Planning</span>
+                <div class="video-container youtube">
+                    <iframe
+                        src="https://www.youtube.com/embed/qDDlVrJwSQA"
+                        title="KDAIL Bot Navigation Demo"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                    <p class="image-caption">
+                        Indoor localization and navigation test using UWB and
+                        LIDAR
+                    </p>
                 </div>
-            </section>
-
-            <!-- Technical Achievements -->
-            <section class="project-content">
-                <h2 class="section-title">Technical Achievements</h2>
-                <ul>
-                    <li>
-                        <strong>2cm Accuracy:</strong> We achieved exceptional
-                        localization precision in 10m × 10m area
-                    </li>
-                    <li>
-                        <strong>10m UWB Range:</strong> UWB sensors provided
-                        reliable coverage across the operational area
-                    </li>
-                    <li>
-                        <strong>Custom SLAM Implementation:</strong> Built
-                        mapping and localization algorithms from scratch
-                    </li>
-                    <li>
-                        <strong>Encoder-Free Design:</strong> Revolutionary
-                        approach eliminating traditional encoder dependencies
-                    </li>
-                </ul>
-            </section>
-
-            <!-- Challenges and Solutions -->
-            <section class="project-content">
-                <h2 class="section-title">Challenges Overcome</h2>
-                <ul>
-                    <li>
-                        <strong>Eliminating Encoder Dependency:</strong>
-                        Successfully replaced traditional encoder-based
-                        localization with UWB technology for drift-free
-                        positioning
-                    </li>
-                    <li>
-                        <strong>Custom Algorithm Development:</strong> Built
-                        SLAM and navigation systems from scratch without relying
-                        on existing Nav2 framework
-                    </li>
-                    <li>
-                        <strong>Precision Requirements:</strong> Achieved
-                        demanding 2cm accuracy through careful calibration and
-                        algorithm optimization
-                    </li>
-                    <li>
-                        <strong>Real-world Testing:</strong> Validated system
-                        performance in both controlled and outdoor environments
-                    </li>
-                </ul>
-            </section>
-
-            <!-- Project Impact -->
-            <section class="project-content">
-                <h2 class="section-title">Our Robotics Journey</h2>
-                <p>
-                    This project at Krishna Defence and Allied Industries marked
-                    a significant milestone in our robotics journey. Working as
-                    a team of 4, the experience of building a complete
-                    autonomous system from scratch taught us:
-                </p>
-                <ul>
-                    <li>
-                        Advanced sensor integration and custom driver
-                        development
-                    </li>
-                    <li>Real-world robotics challenges and solutions</li>
-                    <li>
-                        Precision control systems and algorithm optimization
-                    </li>
-                    <li>Industrial-grade system design and implementation</li>
-                    <li>
-                        Working with cutting-edge UWB localization technology
-                    </li>
-                </ul>
+                <div class="video-container youtube">
+                    <iframe
+                        src="https://www.youtube.com/embed/iG-MlcV99eU"
+                        title="KDAIL 10m x 10m Area Testing"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                    <p class="image-caption">
+                        Testing the bot in a 10m × 10m area with precise UWB
+                        localization
+                    </p>
+                </div>
             </section>
         </div>
     </body>
