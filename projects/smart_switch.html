@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>IoT Smart Switch Board - Kartikey Pathak</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="../styles.css" />
+        <link rel="stylesheet" href="../css/project-page.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Back Button -->
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Home
+            </a>
+
+            <!-- Project Title -->
+            <h1 class="project-title">
+                Smart Switch Board
+            </h1>
+
+            <!-- GitHub Link -->
+            <!--<a
+                href="https://github.com/yourusername/smart-switch"
+                class="github-link"
+                target="_blank"
+            >
+                <i class="fab fa-github"></i>
+                View on GitHub
+            </a>-->
+
+            <!-- Project Description -->
+            <section class="project-content">
+                <h2 class="section-title">Project Overview</h2>
+                <p>
+                    This project turns regular electrical switches into smart
+                    switches that can be controlled remotely. It combines
+                    hardware design, embedded programming, cloud connectivity,
+                    and mobile app development.
+                </p>
+                <p>
+                    Users can control lights, fans, and other devices in two
+                    ways: using physical switches on the wall or through a
+                    Flutter mobile app. The system uses BLE (Bluetooth Low
+                    Energy) for WiFi setup, MQTT for cloud communication, and
+                    NVS storage to remember settings after power off.
+                </p>
+            </section>
+
+            <section class="project-content">
+                <h2 class="section-title">My Approach</h2>
+                <p>
+                    I built this project from scratch, handling everything from
+                    design to deployment:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Mechanical Design:</strong> Made CAD models for
+                        the switch box and buttons
+                    </li>
+                    <li>
+                        <strong>Circuit Design:</strong> Designed a custom perf
+                        board that connects relays, MOSFETs, and ESP32 to safely
+                        switch high-voltage devices
+                    </li>
+                    <li>
+                        <strong>Embedded Firmware:</strong> Wrote ESP32 code
+                        using ESP-IDF that handles WiFi, MQTT, BLE provisioning,
+                        NVS storage, and GPIO control
+                    </li>
+                    <li>
+                        <strong>Cloud Integration:</strong> Set up a cloud MQTT
+                        broker with TLS security for remote access
+                    </li>
+                    <li>
+                        <strong>Mobile Application:</strong> Built a Flutter app
+                        for WiFi setup and device control
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Hardware Design Section -->
+            <section class="project-content">
+                <h2 class="section-title">Hardware Design & Development</h2>
+
+                <h3>CAD Modeling</h3>
+                <p>I designed the physical parts using CAD software:</p>
+                <ul>
+                    <li>Button placement for easy use</li>
+                    <li>Air holes for cooling relays and MOSFETs</li>
+                    <li>Mounting points for the circuit board</li>
+                    <li>Clean look suitable for homes</li>
+                </ul>
+
+                <h3>Perf Board Circuit Design</h3>
+                <p>The circuit board includes:</p>
+                <ul>
+                    <li>
+                        <strong>ESP32 Microcontroller:</strong> Handles all the
+                        logic, WiFi, BLE, and MQTT
+                    </li>
+                    <li>
+                        <strong>Relay Modules:</strong> Switches high-voltage AC
+                        loads like lights and fans
+                    </li>
+                    <li>
+                        <strong>MOSFET Drivers:</strong> Controls relays using
+                        low-power signals from ESP32
+                    </li>
+                    <li>
+                        <strong>Power Supply Circuit:</strong> Converts AC mains
+                        to 5V and 3.3V DC
+                    </li>
+                    <li>
+                        <strong>Isolation & Protection:</strong> Uses
+                        optocouplers to separate low-voltage control from
+                        high-voltage loads
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Project Images -->
+            <section>
+                <h2 class="section-title">Project Gallery</h2>
+
+                <!-- CAD Model Image -->
+                <div class="image-container">
+                    <img
+                        src="../Assets/SmartSwitch/CAD_Model.png"
+                        alt="CAD Model of Smart Switch Button"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        CAD Model of the switch button and box
+                    </p>
+                </div>
+
+                <!-- Circuit Diagram -->
+                <div class="image-container">
+                    <img
+                        src="../Assets/SmartSwitch/circuit_diagram.jpeg"
+                        alt="Circuit Diagram"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        Circuit diagram showing ESP32, relays, MOSFETs, and
+                        power supply
+                    </p>
+                </div>
+
+                <!-- Perf Board Image -->
+                <div class="image-container">
+                    <img
+                        src="../Assets/SmartSwitch/perf_board.jpeg"
+                        alt="Perf Board Design"
+                        class="project-image"
+                        style="
+                            width: 60%;
+                            height: auto;
+                            margin: 0 auto;
+                            display: block;
+                        "
+                    />
+                    <p class="image-caption">
+                        Perf board with ESP32, relay modules, and MOSFET drivers
+                    </p>
+                </div>
+
+                <!-- Final Switch Image -->
+                <div class="image-container">
+                    <img
+                        src="../Assets/SmartSwitch/final_switch.jpeg"
+                        alt="Final Smart Switch Installation"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        Final product installed and working
+                    </p>
+                </div>
+
+                <!-- App Screenshot -->
+                <div class="video-container youtube">
+                    <iframe
+                        src="https://youtube.com/shorts/PdhZitnxkq0"
+                        title="Demo of the Smart Switch App"
+                        allow="
+                            accelerometer;
+                            autoplay;
+                            clipboard-write;
+                            encrypted-media;
+                            gyroscope;
+                            picture-in-picture;
+                        "
+                        allowfullscreen
+                    ></iframe>
+                    <p class="image-caption">App Demo video.</p>
+                </div>
+            </section>
+
+            <div class="video-container youtube">
+                <iframe
+                    src="https://youtube.com/shorts/XPfEatq_d18"
+                    title="Demo of the Button Control"
+                    allow="
+                        accelerometer;
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media;
+                        gyroscope;
+                        picture-in-picture;
+                    "
+                    allowfullscreen
+                ></iframe>
+                <p class="image-caption">Demo video for button control.</p>
+            </div>
+        </section>
+
+            <!-- Firmware Architecture Section -->
+            <section class="project-content">
+                <h2 class="section-title">ESP32 Firmware Architecture</h2>
+
+                <h3>Overview</h3>
+                <p>The ESP32 firmware has these features:</p>
+                <ul>
+                    <li>✔ WiFi + MQTT for remote control</li>
+                    <li>
+                        ✔ BLE provisioning to set WiFi credentials from the
+                        phone
+                    </li>
+                    <li>✔ NVS storage to save settings permanently</li>
+                    <li>✔ GPIO control for lights, fans, and sockets</li>
+                    <li>✔ Physical buttons for manual control</li>
+                    <li>✔ MQTT JSON commands to rename board and devices</li>
+                    <li>
+                        ✔ Heartbeat messages every 5 seconds for status updates
+                    </li>
+                    <li>✔ TLS security using certificates</li>
+                </ul>
+
+                <h3>Core Components</h3>
+
+                <h4>1. Device Management</h4>
+                <p>The system controls 6 devices. Each device has:</p>
+                <ul>
+                    <li>
+                        <strong>Fixed Name:</strong> A permanent ID used for
+                        MQTT topics
+                    </li>
+                    <li>
+                        <strong>Display Name:</strong> User can change this
+                        (like "Living Room Light")
+                    </li>
+                    <li>
+                        <strong>Device Type:</strong> Light, fan, socket, etc.
+                    </li>
+                    <li>
+                        <strong>GPIO Mapping:</strong> Which pins control the
+                        LED and button
+                    </li>
+                    <li><strong>State:</strong> ON or OFF</li>
+                    <li>
+                        <strong>MQTT Topics:</strong> Automatically created for
+                        each device
+                    </li>
+                </ul>
+
+                <h4>2. BLE Provisioning System</h4>
+                <p>
+                    BLE provisioning lets you set up WiFi without hardcoding it:
+                </p>
+                <ul>
+                    <li>Creates a GATT service that the phone app can find</li>
+                    <li>
+                        Receives WiFi SSID and password as JSON from the app
+                    </li>
+                    <li>Generates a unique board ID from the MAC address</li>
+                    <li>Saves everything to NVS storage</li>
+                    <li>Reboots to connect with new WiFi settings</li>
+                </ul>
+                <p>
+                    <strong>JSON Format:</strong>
+                    <code>{"ssid":"MyWiFi","password":"12345678"}</code>
+                </p>
+
+                <h4>3. MQTT Communication</h4>
+                <p>MQTT is used to send and receive messages:</p>
+                <ul>
+                    <li>
+                        <strong>Command Topic:</strong>
+                        <code
+                            >smart_switch/&lt;board_id&gt;/&lt;device&gt;/command</code
+                        >
+                    </li>
+                    <li>
+                        <strong>Status Topic:</strong>
+                        <code
+                            >smart_switch/&lt;board_id&gt;/&lt;device&gt;/status</code
+                        >
+                    </li>
+                    <li>
+                        <strong>Info Topic:</strong>
+                        <code>smart_switch/&lt;board_id&gt;/info</code>
+                    </li>
+                    <li>
+                        <strong>Rename Topic:</strong>
+                        <code>smart_switch/&lt;board_id&gt;/rename</code>
+                    </li>
+                </ul>
+                <p>
+                    <strong>Commands you can send:</strong> ON, OFF, TOGGLE,
+                    STATUS
+                </p>
+
+                <h4>4. NVS Storage</h4>
+                <p>These settings are saved even after power off:</p>
+                <ul>
+                    <li>WiFi SSID and password</li>
+                    <li>Board ID</li>
+                    <li>Setup completion flag</li>
+                    <li>Device display names</li>
+                </ul>
+
+                <h4>5. GPIO & Button Handling</h4>
+                <p>Physical buttons work like this:</p>
+                <ul>
+                    <li>Button press triggers an interrupt</li>
+                    <li>Debouncing prevents false triggers</li>
+                    <li>Device state toggles instantly</li>
+                    <li>Status is published to MQTT automatically</li>
+                </ul>
+
+                <h4>6. Heartbeat System</h4>
+                <p>Every 5 seconds, the board sends this JSON:</p>
+                <pre>
+{
+    "board": "esp_12ab34",
+    "devices": [
+        {"id": "light_1", "name": "Living Room", "type": "light"},
+        {"id": "fan_1", "name": "Bedroom Fan", "type": "fan"},
+        ...
+    ]
+}</pre
+                >
+                <p>This keeps the app updated with the latest status.</p>
+
+                <h4>7. Renaming System</h4>
+                <p>You can rename the board or devices using MQTT:</p>
+                <ul>
+                    <li>
+                        <strong>Rename Board:</strong>
+                        <code>{"type":"board","new_name":"home_01"}</code>
+                    </li>
+                    <li>
+                        <strong>Rename Device:</strong>
+                        <code
+                            >{"type":"device","target":"light_1","new_name":"Dining
+                            Light"}</code
+                        >
+                    </li>
+                </ul>
+                <p>
+                    The system checks the name is valid, saves it to NVS,
+                    updates MQTT topics, and confirms the change.
+                </p>
+            </section>
+
+            <!-- Software Architecture Details -->
+            <section class="project-content">
+                <h2 class="section-title">How the Firmware Boots Up</h2>
+                <ol>
+                    <li>
+                        <strong>Initialize NVS:</strong> Start the storage
+                        system
+                    </li>
+                    <li>
+                        <strong>Initialize Network:</strong> Set up WiFi and
+                        event handling
+                    </li>
+                    <li>
+                        <strong>Check Setup Status:</strong>
+                        <ul>
+                            <li>Read the setup flag from NVS</li>
+                            <li>Load WiFi credentials and board ID</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Load Device Names:</strong> Get custom names
+                        from NVS
+                    </li>
+                    <li>
+                        <strong>If Setup is Done:</strong>
+                        <ul>
+                            <li>Show board and device info</li>
+                            <li>Set up button GPIO with interrupts</li>
+                            <li>Set up LED GPIO as outputs</li>
+                            <li>Connect to WiFi</li>
+                            <li>Start MQTT client</li>
+                            <li>Subscribe to command topics</li>
+                            <li>Start sending heartbeat messages</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>If Setup is NOT Done:</strong>
+                        <ul>
+                            <li>Use default board ID</li>
+                            <li>Start BLE provisioning</li>
+                            <li>Wait for phone app to send WiFi details</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- Flutter App Section -->
+            <section class="project-content">
+                <h2 class="section-title">Flutter Mobile App</h2>
+                <p>The mobile app is built with Flutter and lets you:</p>
+                <ul>
+                    <li>
+                        <strong>BLE Provisioning:</strong> Set up WiFi by
+                        scanning for the switch via Bluetooth and sending
+                        credentials
+                    </li>
+                    <li>
+                        <strong>Device Discovery:</strong> Find smart switches
+                        on your network
+                    </li>
+                    <li>
+                        <strong>Device Control:</strong> Turn devices ON/OFF in
+                        real-time
+                    </li>
+                    <li>
+                        <strong>Device Renaming:</strong> Change board and
+                        device names
+                    </li>
+                    <li>
+                        <strong>Status Monitoring:</strong> See live device
+                        states
+                    </li>
+                </ul>
+                <p>
+                    The app was "vibe coded" - built quickly with focus on
+                    making it easy to use.
+                </p>
+            </section>
+
+            <!-- Technical Details -->
+            <section class="project-content">
+                <h2 class="section-title">Technical Details</h2>
+
+                <h3>WiFi & Network</h3>
+                <ul>
+                    <li>ESP32 works as a WiFi client (STA mode)</li>
+                    <li>Reconnects automatically if WiFi drops</li>
+                    <li>Gets IP address using DHCP</li>
+                    <li>Resolves MQTT broker address using DNS</li>
+                </ul>
+
+                <h3>MQTT Setup</h3>
+                <ul>
+                    <li>Uses TLS 1.2 encryption with certificates</li>
+                    <li>
+                        Connects to cloud MQTT broker (HiveMQ, AWS IoT, etc.)
+                    </li>
+                    <li>QoS Level 1 ensures messages are delivered</li>
+                    <li>
+                        Last Will and Testament (LWT) detects when device goes
+                        offline
+                    </li>
+                    <li>All data is sent as JSON</li>
+                </ul>
+
+                <h3>Security</h3>
+                <ul>
+                    <li>TLS encryption for MQTT</li>
+                    <li>Certificate-based authentication</li>
+                    <li>NVS storage can be encrypted</li>
+                    <li>Validates all commands and names</li>
+                    <li>Prevents command injection attacks</li>
+                </ul>
+
+                <h3>Power Management</h3>
+                <ul>
+                    <li>Relays are isolated to prevent feedback</li>
+                    <li>MOSFETs control relays efficiently</li>
+                    <li>Power supply has overcurrent protection</li>
+                    <li>Design allows heat to escape during operation</li>
+                </ul>
+            </section>
+
+            <!-- Technologies Used -->
+            <section>
+                <h2 class="section-title">Technologies & Tools</h2>
+                <div class="tech-used">
+                    <span>ESP32</span>
+                    <span>ESP-IDF</span>
+                    <span>MQTT</span>
+                    <span>TLS/SSL</span>
+                    <span>BLE</span>
+                    <span>NVS</span>
+                    <span>FreeRTOS</span>
+                    <span>cJSON</span>
+                    <span>Flutter</span>
+                    <span>Dart</span>
+                    <span>CAD Software</span>
+                    <span>Relays</span>
+                    <span>MOSFETs</span>
+                    <span>Cloud MQTT Broker</span>
+                </div>
+            </section>
+
+            <!-- Challenges and Solutions -->
+            <section class="project-content">
+                <h2 class="section-title">Challenges & Solutions</h2>
+
+                <h3>Challenge 1: High-Voltage Safety</h3>
+                <p>
+                    <strong>Problem:</strong> Need to control 220V AC using 3.3V
+                    signals from ESP32 without danger
+                </p>
+                <p>
+                    <strong>Solution:</strong> Used optocoupled relays and
+                    MOSFETs to completely isolate low voltage from high voltage
+                    circuits
+                </p>
+
+                <h3>Challenge 2: Easy WiFi Setup</h3>
+                <p>
+                    <strong>Problem:</strong> Users shouldn't need to reprogram
+                    the device to change WiFi
+                </p>
+                <p>
+                    <strong>Solution:</strong> Built BLE provisioning - the
+                    phone app sends WiFi details via Bluetooth, ESP32 saves them
+                    to NVS
+                </p>
+
+                <h3>Challenge 3: Keeping Everything in Sync</h3>
+                <p>
+                    <strong>Problem:</strong> App, physical buttons, and remote
+                    commands need to stay synchronized
+                </p>
+                <p>
+                    <strong>Solution:</strong> Used MQTT pub/sub - every state
+                    change publishes a status update. Heartbeat messages every 5
+                    seconds keep everything synced
+                </p>
+
+                <h3>Challenge 4: Renaming Devices</h3>
+                <p>
+                    <strong>Problem:</strong> Allow renaming while keeping MQTT
+                    connections working
+                </p>
+                <p>
+                    <strong>Solution:</strong> When renaming happens,
+                    unsubscribe old topics, save new name to NVS, then subscribe
+                    to new topics
+                </p>
+
+                <h3>Challenge 5: Button Bounce</h3>
+                <p>
+                    <strong>Problem:</strong> Physical buttons send multiple
+                    signals when pressed once
+                </p>
+                <p>
+                    <strong>Solution:</strong> Added software debouncing and
+                    used a task queue to handle button presses reliably
+                </p>
+
+                <h3>Challenge 6: Learning Flutter</h3>
+                <p>
+                    <strong>Problem:</strong> Limited Flutter experience but
+                    needed working app fast
+                </p>
+                <p>
+                    <strong>Solution:</strong> "Vibe coded" it - built basic
+                    features first, then improved the UI based on testing
+                </p>
+            </section>
+
+            <!-- Key Learnings -->
+            <section class="project-content">
+                <h2 class="section-title">What I Learned</h2>
+                <ul>
+                    <li>
+                        <strong>Full-Stack IoT:</strong> How to build an IoT
+                        product from hardware to cloud to mobile app
+                    </li>
+                    <li>
+                        <strong>Embedded Systems:</strong> ESP-IDF framework,
+                        FreeRTOS, and GPIO management
+                    </li>
+                    <li>
+                        <strong>IoT Protocols:</strong> How to use MQTT, BLE,
+                        and TLS in real projects
+                    </li>
+                    <li>
+                        <strong>Safety:</strong> How to safely design circuits
+                        that handle high voltage
+                    </li>
+                    <li>
+                        <strong>User Experience:</strong> Making IoT devices
+                        easy to set up and use
+                    </li>
+                    <li>
+                        <strong>State Sync:</strong> Keeping multiple interfaces
+                        (physical, mobile, cloud) synchronized
+                    </li>
+                    <li>
+                        <strong>Mobile Dev:</strong> Building cross-platform
+                        apps with Flutter
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Future Improvements -->
+            <section class="project-content">
+                <h2 class="section-title">Future Improvements</h2>
+                <ul>
+                    <li>Add voice control (Alexa, Google Home)</li>
+                    <li>Monitor energy usage with current sensors</li>
+                    <li>Add scheduling and automation</li>
+                    <li>Support multiple users</li>
+                    <li>OTA firmware updates</li>
+                    <li>Work with Home Assistant and OpenHAB</li>
+                    <li>Create scenes and macros</li>
+                    <li>Design a PCB instead of using perf board</li>
+                </ul>
+            </section>
+        </div>
+    </body>
+</html>

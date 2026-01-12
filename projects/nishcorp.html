@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Nishcorp Internship – Autonomous Stair-Climbing Wheelchair
+            Simulation
+        </title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="../styles.css" />
+        <link rel="stylesheet" href="../css/project-page.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Back Button -->
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Home
+            </a>
+
+            <!-- Project Title -->
+            <h1 class="project-title">
+                Nishcorp Internship – Autonomous Stair-Climbing Wheelchair
+                Simulation
+            </h1>
+
+            <!-- Startup Info -->
+            <section class="project-content">
+                <h2 class="section-title">About Nishcorp Technologies</h2>
+                <p>
+                    Nishcorp Technologies is a robotics startup focused on
+                    developing innovative mobility solutions. During my
+                    internship, I contributed to their flagship project: an
+                    autonomous wheelchair capable of climbing stairs. This
+                    project was pivotal in helping the startup secure grants
+                    totaling <strong>₹13 lakh</strong> for further development.
+                </p>
+            </section>
+
+            <!-- Project Overview -->
+            <section class="project-content">
+                <h2 class="section-title">Project Overview</h2>
+                <p>
+                    My main responsibility was to take a provided CAD model of
+                    the stair-climbing wheelchair and bring it to life in
+                    simulation. The goal was to validate the design, test its
+                    kinematics, and demonstrate its capabilities in both virtual
+                    and physical environments.
+                </p>
+                <ul>
+                    <li>Imported the CAD model into Gazebo for simulation.</li>
+                    <li>
+                        Applied kinematics to determine joint angles and
+                        movement feasibility.
+                    </li>
+                    <li>
+                        Simulated the robot in both Gazebo and RVIZ, including
+                        teleoperation.
+                    </li>
+                    <li>
+                        Added sensors and actuators in the simulation, including
+                        an IMU plugin for realistic sensor data.
+                    </li>
+                    <li>
+                        3D printed custom parts and helped assemble the
+                        half-scale physical model, which could sit and stand.
+                    </li>
+                    <li>
+                        This half-scale prototype was used by Nishcorp to
+                        demonstrate the concept and secure significant startup
+                        funding.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Media Section -->
+            <section>
+                <h2 class="section-title">Simulation & Assembly Media</h2>
+                <div class="image-container">
+                    <img
+                        src="../Assets/Nishcorp/electronics_to_control_motor.jpeg"
+                        alt="Electronics to Control Motors"
+                        class="project-image"
+                    />
+                    <p class="image-caption">PCB for the Wheelchair.</p>
+                </div>
+                <div class="image-container">
+                    <img
+                        src="../Assets/Nishcorp/assembled_bot_2.jpeg"
+                        alt="Wheelchair Simulation in RVIZ"
+                        class="project-image"
+                    />
+                    <p class="image-caption">Assembled Bot.</p>
+                </div>
+                <div class="image-container">
+                    <img
+                        src="../Assets/Nishcorp/assembled_bot_1.jpeg"
+                        alt="Physical Assembly of Wheelchair"
+                        class="project-image"
+                    />
+                    <p class="image-caption">
+                        Assembled half-scale model of the stair-climbing
+                        wheelchair.
+                    </p>
+                </div>
+                <div class="video-container youtube">
+                    <iframe
+                        src="https://www.youtube.com/embed/wYtic9mQcg0"
+                        title="Simulation of the wheelchair in Gazebo"
+                        allow="
+                            accelerometer;
+                            autoplay;
+                            clipboard-write;
+                            encrypted-media;
+                            gyroscope;
+                            picture-in-picture;
+                        "
+                        allowfullscreen
+                    ></iframe>
+                    <p class="image-caption">
+                        Simulation of the wheelchair in Gazebo.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Technical Details -->
+            <section class="project-content">
+                <h2 class="section-title">Technical Details</h2>
+                <ul>
+                    <li>
+                        <strong>CAD Import & URDF:</strong> The provided CAD
+                        model was converted to URDF and imported into Gazebo,
+                        ensuring all links and joints matched the physical
+                        design.
+                    </li>
+                    <li>
+                        <strong>Kinematics:</strong> Forward and inverse
+                        kinematics were applied to calculate joint angles for
+                        stair climbing and sitting/standing motions.
+                    </li>
+                    <li>
+                        <strong>Simulation:</strong> The robot was simulated in
+                        Gazebo for physics-based testing and in RVIZ for
+                        visualization. Sensors (IMU, joint encoders) and
+                        actuators (motors) were added in the simulation.
+                    </li>
+                    <li>
+                        <strong>IMU Plugin:</strong> Integrated the Gazebo IMU
+                        plugin to provide realistic orientation and acceleration
+                        data for the robot in simulation.
+                    </li>
+                    <li>
+                        <strong>Teleoperation:</strong> Developed scripts to
+                        teleoperate the robot in simulation, allowing manual
+                        control for testing and demonstration.
+                    </li>
+                    <li>
+                        <strong>Physical Assembly:</strong> Assisted in 3D
+                        printing custom parts and assembling the half-scale
+                        model, which could perform sit and stand actions.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Impact -->
+            <section class="project-content">
+                <h2 class="section-title">Project Impact</h2>
+                <p>
+                    The successful simulation and assembly of the half-scale
+                    wheelchair model played a key role in demonstrating the
+                    feasibility of the design. With this working prototype,
+                    Nishcorp Technologies was able to secure
+                    <strong>₹13 lakh</strong> in grants to continue developing
+                    their full-scale autonomous stair-climbing wheelchair.
+                </p>
+            </section>
+
+            <!-- Technologies Used -->
+            <section>
+                <h2 class="section-title">Built With</h2>
+                <div class="tech-used">
+                    <span>Gazebo</span>
+                    <span>RVIZ</span>
+                    <span>ROS</span>
+                    <span>IMU Plugin</span>
+                    <span>Teleoperation</span>
+                    <span>3D Printing</span>
+                </div>
+            </section>
+        </div>
+    </body>
+</html>
