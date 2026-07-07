@@ -1,0 +1,118 @@
+---
+title: "KDAIL: UWB-Localized Autonomous Forklift"
+callsign: KDAIL-01
+summary: "Defence-industry research internship: centimeter-level indoor localization for an autonomous naval-dockyard forklift, where GPS fails and encoders drift. When stock UWB firmware capped out at 45 m, we wrote our own DS-TWR ranging protocol and reached 315 m."
+kind: case-study
+order: 9
+status: validated
+dates: "May – Jul 2025"
+team: "team — Research Intern, Defence Technology"
+location: "Krishna Defence & Allied Industries, at IIT Gandhinagar"
+tech:
+  - UWB (Qorvo DWM3001CDK)
+  - Custom DS-TWR firmware
+  - ROS
+  - SLAM + NAV2
+  - Raspberry Pi 4B
+  - 9-DOF IMU
+  - LIDAR
+  - Trilateration
+featured: true
+repo: https://github.com/De-funkd/KDAIL-Forklift
+links:
+  - label: Krishna Defence
+    url: https://krishnaallied.com/
+  - label: Indoor UWB+LIDAR test
+    url: https://www.youtube.com/watch?v=qDDlVrJwSQA
+  - label: 10 m × 10 m field test
+    url: https://www.youtube.com/watch?v=iG-MlcV99eU
+poster: "kdail/bot.jpg"
+video: "kdail/teleop.mp4"
+metric: "315 m range · 0.4% error over 10,000 m²"
+---
+
+import Figure from '../../components/Figure.astro';
+import VideoEvidence from '../../components/VideoEvidence.astro';
+import YouTube from '../../components/YouTube.astro';
+import StatHero from '../../components/StatHero.astro';
+
+## Mission
+
+A naval dockyard needs autonomous forklifts that know where they are across a
+**200 × 200 m** area — indoors and out, under cranes and steel, where GPS is
+unreliable and wheel encoders drift with every slip. Target: **1–2 cm
+localization accuracy.**
+
+<StatHero
+  stats={[
+    { value: '315 m', label: 'UWB range with our custom DS-TWR firmware' },
+    { value: '±2 cm', label: 'accuracy at short range (≤10×10 m)' },
+    { value: '0.4%', label: 'error across 10,000 m²' },
+  ]}
+/>
+
+## Constraints → sensor choice
+
+We evaluated Bluetooth, LoRaWAN, RFID, NFC, radar, CCTV, IR, and hyperspectral
+options against the accuracy/range/infrastructure trade — and chose
+**Ultra-Wideband**, on the Qorvo DWM3001CDK development kit.
+
+## Build — scaling in stages
+
+1. **Prototype:** Raspberry Pi 4B running ROS, a DWM3001CDK tag, a 9-DOF IMU
+   for orientation, DC-motor base; SLAM fusing UWB and LIDAR
+2. **2 × 2 m indoor** — proof the trilateration math worked
+3. **7 × 7 m outdoor** — UWB + IMU only: no encoders, no LIDAR
+4. **50 × 60 m at IIT Gandhinagar** — validated against a surveyor's
+   **total station**, not our own estimates
+
+<Figure src="kdail/uwb-anchor.jpg" alt="UWB anchor hardware" caption="UWB anchor — Qorvo DWM3001CDK" />
+
+<VideoEvidence
+  src="kdail/teleop.mp4"
+  poster="kdail/teleop-poster.jpg"
+  caption="The bot under teleoperation during early testing"
+/>
+
+<YouTube id="qDDlVrJwSQA" title="Indoor test: UWB + LIDAR localization" />
+
+## The firmware problem
+
+Stock firmware capped ranging at **45 meters** — useless for a dockyard. So we
+implemented our own **Double-Sided Two-Way Ranging (DS-TWR)** protocol and
+tuned the physical layer ourselves: switching between **channel 5 and channel
+9**, adjusting **preamble length and PAC size**, and tuning the ranging **time
+delays** for each configuration.
+
+| Configuration | Preamble | Range | Accuracy |
+| --- | --- | --- | --- |
+| Short-range | 128 | ~10 m | ±2 cm |
+| Mid-range | 256 | ~50 m | ±10 cm |
+| Long-range | 512 | **315 m** | ±40 cm (50×50 m area) |
+
+The trade is physics, not settings: longer preambles buy range and cost
+update rate; the time-delay budget (`poll_TX_to_response_RX` and friends) has
+to be re-derived for every profile.
+
+<VideoEvidence
+  src="kdail/field-test.mp4"
+  poster="kdail/field-test-poster.jpg"
+  caption="Field testing at scale"
+/>
+
+<YouTube id="iG-MlcV99eU" title="10 m × 10 m localization test" />
+
+## Telemetry
+
+- ±2 cm accuracy in areas up to 10 × 10 m
+- Stable communication at **315 m** after the firmware rewrite
+- **0.4% error across a 10,000 m² operational area**, validated with a total
+  station
+- SLAM + NAV2 autonomous navigation running on top of the localization layer
+
+## Debrief
+
+Three things this internship burned in: sensor selection is a systems decision,
+not a datasheet lookup; every 10× jump in scale exposes a failure mode the
+smaller test hid; and results only count when an *independent* instrument — a
+total station, not our own code — says they're real.

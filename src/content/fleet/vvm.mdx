@@ -1,0 +1,61 @@
+---
+title: "VVM: Voice Video Manipulator"
+callsign: VVM-01
+summary: "Say “pick up the red ball” and a simulated arm finds it, computes its 3D position, and grabs it. My first ROS2 project — the foundation everything after was built on."
+kind: case-study
+order: 3
+status: retired
+dates: "Jun – Jul 2024"
+team: "solo"
+location: "simulation (Gazebo)"
+tech:
+  - ROS2
+  - Gazebo
+  - RViz
+  - Python
+  - OpenCV
+  - Speech recognition
+  - Open Manipulator X
+  - Forward/inverse kinematics
+repo: https://github.com/NoobMaster-version/voice-video-manipulator
+poster: "vvm/demo-pick-poster.jpg"
+video: "vvm/demo-pick.mp4"
+metric: "first ROS2 node to full pick-and-place"
+---
+
+import VideoEvidence from '../../components/VideoEvidence.astro';
+import Figure from '../../components/Figure.astro';
+
+## Mission
+
+Connect three senses into one loop: **listen** (voice → command), **see**
+(camera → object detection → 3D position), **act** (inverse kinematics →
+pick-and-place with an Open Manipulator X arm in Gazebo).
+
+## Build
+
+- Voice commands parsed into target descriptions ("the red ball")
+- Object detection and tracking locates the target in the camera frame
+- 2D pixel coordinates converted to a 3D position estimate
+- Forward and inverse kinematics drive the arm through the pick sequence
+- Everything wired as ROS2 nodes — my first real contact with topics,
+  services, and the discipline of modular robot software
+
+<VideoEvidence
+  src="vvm/demo-detect.mp4"
+  poster="vvm/demo-detect-poster.jpg"
+  caption="Object detection locating the target in simulation"
+/>
+
+<VideoEvidence
+  src="vvm/demo-pick.mp4"
+  poster="vvm/demo-pick-poster.jpg"
+  caption="Full pipeline: command → detect → kinematics → grasp"
+/>
+
+## Debrief
+
+This was my introduction to ROS2, and it became the template for every project
+after it: MARIO's simulation work, the e-Yantra drone stack, the internship
+navigation systems. Learning to think in nodes and topics — instead of one big
+loop — was the single biggest jump in how I write robot software.

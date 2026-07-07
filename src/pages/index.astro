@@ -1,0 +1,163 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const fleet = (await getCollection('fleet')).sort((a, b) => b.data.order - a.data.order);
+const featured = fleet.filter((e) => e.data.featured).slice(0, 3);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const docks = [
+  { href: `${base}/fleet/`, label: 'FLEET', desc: `${fleet.length} units, all real` },
+  { href: `${base}/research/`, label: 'RESEARCH', desc: 'UWB localization at 315 m' },
+  { href: `${base}/timeline/`, label: 'TIMELINE', desc: 'v0.1 → today, as a changelog' },
+  { href: `${base}/uplink/`, label: 'UPLINK', desc: 'contact + resume' },
+];
+---
+
+<Base title="Console" description="Kartikey Pathak — robotics engineer at VJTI. I build robots that know where they are. UWB localization, ROS2, embedded systems.">
+  <div class="container">
+    <section class="hero">
+      <p class="label">// operator console · VJTI, Mumbai</p>
+      <h1 class="hero__name">Kartikey Pathak</h1>
+      <p class="hero__thesis">
+        I build robots that <em>know where they are</em> — UWB localization,
+        SLAM, drones, and the embedded systems underneath. Electrical
+        Engineering (Minor: Robotics), VJTI · class of 2027.
+      </p>
+      <p class="hero__status label">
+        <span class="blip" aria-hidden="true"></span>
+        STATUS: building · open to internships · you can call me at midnight
+        with an idea
+      </p>
+    </section>
+
+    <nav class="docks" aria-label="Main destinations">
+      {
+        docks.map((d) => (
+          <a class="dock" href={d.href}>
+            <span class="dock__label">{d.label}</span>
+            <span class="dock__desc label">{d.desc}</span>
+          </a>
+        ))
+      }
+    </nav>
+
+    <section aria-labelledby="featured-h">
+      <p class="label">featured missions</p>
+      <h2 id="featured-h">The evidence, up front</h2>
+      <div class="missions">
+        {
+          featured.map((entry) => (
+            <a class="mission panel" href={`${base}/fleet/${entry.id}/`}>
+              <img
+                src={`${base}/assets/${entry.data.poster}`}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <div>
+                <span class="label">{entry.data.callsign} · {entry.data.dates}</span>
+                <h3>{entry.data.title}</h3>
+                <p class="mission__metric">{entry.data.metric}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+
+  <style>
+    .hero {
+      padding-block: var(--sp-24) var(--sp-12);
+    }
+    .hero__name {
+      font-size: var(--text-hero);
+      letter-spacing: -0.02em;
+      margin: var(--sp-2) 0 var(--sp-4);
+    }
+    .hero__thesis {
+      font-size: var(--text-lg);
+      color: var(--ink-soft);
+      max-width: 46ch;
+    }
+    .hero__thesis em {
+      font-style: normal;
+      color: var(--signal);
+    }
+    .hero__status {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      margin-top: var(--sp-6);
+    }
+    .blip {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ok);
+      box-shadow: 0 0 8px var(--ok);
+    }
+    .docks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--sp-3);
+      margin-block: var(--sp-8) var(--sp-16);
+    }
+    .dock {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-1);
+      padding: var(--sp-4);
+      min-height: 88px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--surface-1);
+      text-decoration: none;
+      transition: border-color var(--t-fast) var(--e-mech), box-shadow var(--t-fast) var(--e-mech);
+    }
+    .dock:hover,
+    .dock:focus-visible {
+      border-color: var(--signal);
+      box-shadow: var(--glow);
+    }
+    .dock__label {
+      font-family: var(--font-mono);
+      font-size: var(--text-lg);
+      letter-spacing: 0.1em;
+      color: var(--ink);
+    }
+    .missions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--sp-4);
+      margin-top: var(--sp-6);
+    }
+    .mission {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+      text-decoration: none;
+      color: var(--ink);
+      transition: border-color var(--t-fast) var(--e-mech), box-shadow var(--t-fast) var(--e-mech);
+    }
+    .mission:hover,
+    .mission:focus-visible {
+      border-color: var(--signal);
+      box-shadow: var(--glow);
+    }
+    .mission img {
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      width: 100%;
+      border: 1px solid var(--line);
+    }
+    .mission h3 { margin: var(--sp-1) 0; }
+    .mission__metric {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--signal);
+      margin: 0;
+    }
+  </style>
+</Base>

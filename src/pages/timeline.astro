@@ -1,0 +1,204 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const releases = [
+  {
+    v: 'v0.1',
+    date: 'Dec 2023 – Jan 2024',
+    title: 'First boot — Gesture-Controlled Car',
+    notes: [
+      '+ ESP32, MPU6050, ESP-NOW — first hardware, first internship (SRW, semester 1)',
+      '+ learned: sensors lie until you filter them',
+    ],
+    link: 'origins',
+  },
+  {
+    v: 'v0.5',
+    date: '2024',
+    title: 'Control systems — Wall-E & the maze solver',
+    notes: [
+      '+ PID control, complementary filters, ESP-IDF',
+      '+ 4th place, SRA maze competition',
+      '+ joined SRA; started teaching what I had just learned',
+    ],
+    link: 'origins',
+  },
+  {
+    v: 'v1.0',
+    date: 'Jun – Jul 2024',
+    title: 'BREAKING: the ROS2 migration — VVM',
+    notes: [
+      '+ ROS2, Gazebo, nodes/topics, inverse kinematics',
+      '- one-big-loop firmware thinking (deprecated)',
+    ],
+    link: 'vvm',
+  },
+  {
+    v: 'v1.2',
+    date: 'Jul – Aug 2024',
+    title: 'Maintainership — MARIO',
+    notes: [
+      '+ ported SRA\'s teaching arm from EOL Gazebo Classic to Fortress',
+      '+ micro-ROS on ESP32; now runs SRA\'s ROS2 workshops',
+    ],
+    link: 'mario',
+  },
+  {
+    v: 'v2.0',
+    date: 'Oct 2024 – Jan 2025',
+    title: 'Flight — e-Yantra warehouse drone',
+    notes: [
+      '+ PID-stabilized autonomous flight, ArUco localization',
+      '+ national semifinalist (IIT Bombay)',
+      '+ learned: vision-only localization is fragile — foreshadowing',
+    ],
+    link: 'eyantra',
+  },
+  {
+    v: 'v2.5',
+    date: '2024 – 2025',
+    title: 'Side quests — Kurma, coin sorter, the cat feeder',
+    notes: [
+      '+ quadruped gait over rough terrain (Mass Robotics prototype)',
+      '+ >95% coin recognition in a 24-hour hackathon',
+      '+ one (1) cat reliably fed',
+    ],
+    link: 'kurma',
+  },
+  {
+    v: 'v3.0',
+    date: 'May – Jul 2025',
+    title: 'MAJOR: defence research — KDAIL',
+    notes: [
+      '+ custom DS-TWR UWB firmware: 45 m stock limit → 315 m',
+      '+ channel 5/9, preamble & PAC tuning, ranging time-delay budgets',
+      '+ 0.4% error over 10,000 m², validated by total station',
+    ],
+    link: 'kdail',
+  },
+  {
+    v: 'v3.2',
+    date: 'May – Nov 2025',
+    title: 'Sim-to-real at a startup — NishCorp',
+    notes: [
+      '+ CAD → URDF → Gazebo → half-scale stair-climbing wheelchair',
+      '+ work supported ₹13 lakh in grants',
+    ],
+    link: 'nishcorp',
+  },
+  {
+    v: 'v4.0',
+    date: '2025 – 2026',
+    title: 'Full stack, physics to pixels — Smart Switch',
+    notes: [
+      '+ hobby project → product ambition',
+      '+ 220 V hardware, ESP-IDF firmware, TLS MQTT cloud, BLE provisioning, Flutter app — solo',
+    ],
+    link: 'smart-switch',
+  },
+  {
+    v: 'HEAD',
+    date: 'now',
+    title: 'In development',
+    notes: [
+      '~ open-sourcing the pet feeder',
+      '~ Smart Switch: perf board → KiCAD PCB, OTA updates',
+      '~ known issue: cannot stop building robots. won\'t fix.',
+    ],
+    link: null,
+  },
+];
+---
+
+<Base title="Timeline" description="Kartikey Pathak's growth as a changelog: from a first-semester gesture car (v0.1) to custom UWB ranging firmware (v3.0).">
+  <div class="container">
+    <header class="tl-head">
+      <p class="label">/timeline · git log --oneline me</p>
+      <h1>Changelog</h1>
+      <p class="prose">
+        Release notes for an engineer. <code>+</code> shipped, <code>-</code> deprecated,
+        <code>~</code> in progress.
+      </p>
+    </header>
+
+    <ol class="releases" role="list">
+      {
+        releases.map((r) => (
+          <li class="release">
+            <div class="release__meta">
+              <span class="release__v">{r.v}</span>
+              <span class="label">{r.date}</span>
+            </div>
+            <div class="release__body panel">
+              <h2>{r.title}</h2>
+              <ul class="release__notes">
+                {r.notes.map((n) => (
+                  <li
+                    class={
+                      n.startsWith('+') ? 'add' : n.startsWith('-') ? 'del' : 'wip'
+                    }
+                  >
+                    {n}
+                  </li>
+                ))}
+              </ul>
+              {r.link && <a class="label" href={`${base}/fleet/${r.link}/`}>open case study →</a>}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
+  <style>
+    .tl-head { padding-top: var(--sp-12); }
+    .releases {
+      list-style: none;
+      padding: 0;
+      margin-top: var(--sp-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-6);
+      position: relative;
+    }
+    .release {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: var(--sp-6);
+    }
+    .release__meta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-1);
+      padding-top: var(--sp-4);
+    }
+    .release__v {
+      font-family: var(--font-mono);
+      font-size: var(--text-lg);
+      color: var(--signal);
+      font-weight: 500;
+    }
+    .release__body h2 {
+      margin: 0 0 var(--sp-3);
+      font-size: var(--text-lg);
+    }
+    .release__notes {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 var(--sp-3);
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-1);
+    }
+    .release__notes .add { color: var(--ok); }
+    .release__notes .del { color: var(--alert); }
+    .release__notes .wip { color: var(--warn); }
+    @media (max-width: 768px) {
+      .release { grid-template-columns: 1fr; gap: var(--sp-2); }
+      .release__meta { flex-direction: row; align-items: baseline; gap: var(--sp-3); padding-top: 0; }
+    }
+  </style>
+</Base>

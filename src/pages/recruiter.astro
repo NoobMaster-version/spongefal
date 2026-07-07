@@ -1,0 +1,96 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const fleet = (await getCollection('fleet')).sort((a, b) => b.data.order - a.data.order);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base title="Recruiter view" description="Kartikey Pathak in 60 seconds: education, experience, every project with dates, metrics, and links. No animations.">
+  <div class="container">
+    <header class="rec-head">
+      <p class="label">/recruiter · dense, static, facts only</p>
+      <h1>The 60-second version</h1>
+      <p class="prose">
+        Kartikey Pathak — B.Tech Electrical Engineering, Minor in Robotics,
+        VJTI Mumbai, 2023–2027 (CGPA 8.04). Robotics engineer:
+        localization/navigation, ROS2, embedded systems.
+        <a href={`${base}/resume.pdf`}>Resume PDF</a> ·
+        <a href="mailto:kartikeypathak.imp@gmail.com">kartikeypathak.imp@gmail.com</a> ·
+        <a href="https://www.linkedin.com/in/kartikey-pathak-a365a8281/">LinkedIn</a> ·
+        <a href="https://github.com/NoobMaster-version">GitHub</a>
+      </p>
+    </header>
+
+    <section>
+      <h2>Experience</h2>
+      <table>
+        <thead>
+          <tr><th scope="col">Role</th><th scope="col">Dates</th><th scope="col">Result</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Research Intern, Defence Technology — Krishna Defence & Allied Industries (at IIT Gandhinagar)</td>
+            <td>May – Jul 2025</td>
+            <td>Custom DS-TWR UWB firmware: 315 m range; 0.4% localization error over 10,000 m²; SLAM + NAV2 autonomous forklift</td>
+          </tr>
+          <tr>
+            <td>Robotics Control Systems Engineer Intern — NishCorp Technologies</td>
+            <td>May – Nov 2025</td>
+            <td>Gazebo simulation + half-scale prototype of stair-climbing wheelchair; supported ₹13 lakh in grants</td>
+          </tr>
+          <tr>
+            <td>Active Member — Society of Robotics and Automation, VJTI</td>
+            <td>Aug 2024 – present</td>
+            <td>Workshops (embedded C, ESP32) and mentoring; Wall-E kit program has taught 200+ students</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Projects ({fleet.length} pages, all with footage)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Project</th>
+            <th scope="col">Dates</th>
+            <th scope="col">Key result</th>
+            <th scope="col">Stack</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            fleet.map((e) => (
+              <tr>
+                <td><a href={`${base}/fleet/${e.id}/`}>{e.data.title}</a></td>
+                <td>{e.data.dates}</td>
+                <td>{e.data.metric ?? '—'}</td>
+                <td>{e.data.tech.slice(0, 4).join(', ')}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <table>
+        <tbody>
+          <tr><th scope="row">Languages</th><td>C, C++, Python, Dart</td></tr>
+          <tr><th scope="row">Robotics</th><td>ROS/ROS2, Gazebo, RViz, SLAM, NAV2, URDF, micro-ROS, kinematics</td></tr>
+          <tr><th scope="row">Embedded</th><td>ESP32 (ESP-IDF, FreeRTOS, ESP-NOW, BLE), Raspberry Pi, sensor fusion, PID</td></tr>
+          <tr><th scope="row">Perception</th><td>OpenCV, ArUco, CNNs/transfer learning</td></tr>
+          <tr><th scope="row">Hardware</th><td>KiCAD, OnShape, 3D printing, UWB (Qorvo DWM3001CDK), IMU, LIDAR</td></tr>
+          <tr><th scope="row">Connectivity</th><td>MQTT (TLS), BLE provisioning, Flutter</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <style>
+    .rec-head { padding-top: var(--sp-12); }
+    table { margin-bottom: var(--sp-6); }
+  </style>
+</Base>

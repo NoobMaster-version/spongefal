@@ -1,0 +1,160 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base title="Operator" description="About Kartikey Pathak — robotics engineer, SRA member, occasional filmmaker, cat-feeder builder.">
+  <div class="container">
+    <header class="op-head">
+      <p class="label">/operator · the human running the console</p>
+      <h1>About me</h1>
+    </header>
+
+    <div class="op-grid">
+      <img
+        class="op-portrait"
+        src={`${base}/assets/operator/portrait.jpg`}
+        alt="Kartikey Pathak"
+        width="340"
+        loading="eager"
+      />
+      <div class="prose">
+        <p>
+          I'm an Electrical Engineering student at VJTI, Mumbai (class of 2027,
+          Minor in Robotics) who loves building robots. You can call me at
+          midnight with an idea and I'll be ready to help — since my first year
+          I've been making all kinds of machines and really enjoy seeing them
+          come to life.
+        </p>
+        <p>
+          What makes me happy is when my creations actually work. I don't give
+          up easily: that stubbornness has carried projects from a
+          first-semester gesture-controlled car to custom UWB ranging firmware
+          for a defence-industry forklift.
+        </p>
+      </div>
+    </div>
+
+    <section>
+      <h2>Society of Robotics and Automation (SRA)</h2>
+      <p class="prose">
+        SRA is where most of this happened. Beyond my own builds, I conduct
+        workshops on embedded C and ESP32, mentor junior teams building
+        self-balancing and line-following robots, and teach MPU6050 integration
+        and complementary-filter math. Our Wall-E workshop — where we
+        manufacture, assemble, and sell self-balancing robot kits — has taught
+        <strong>more than 200 students</strong>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Off the bench</h2>
+      <div class="fun-grid">
+        <div class="panel">
+          <p class="label">leadership</p>
+          <h3>Pratibimb — first in 26 years</h3>
+          <p>
+            Led our Electrical Engineering branch to first place in Pratibimb,
+            VJTI's cultural fest — the branch's first win in 26 years. Results
+            were announced on my 19th birthday. Best birthday so far.
+          </p>
+        </div>
+        <div class="panel">
+          <p class="label">filmmaking</p>
+          <h3>"Plot Se Panga"</h3>
+          <p>
+            Directed and produced an original short film with my friends — it
+            took first prize among all competing branches. Directing a film and
+            directing a robot build have more in common than you'd think:
+            both are mostly debugging.
+          </p>
+        </div>
+        <div class="panel">
+          <p class="label">lab resident</p>
+          <h3>The SRA cat</h3>
+          <p>
+            Our robotics club has a cat. She has her own robot —
+            <a href={`${base}/fleet/robots-for-good/`}>an automatic feeder</a> —
+            so she eats even during semester breaks.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Systems map</h2>
+      <p class="prose">
+        Skills, stated as what they've been used for — every claim links to a
+        unit in <a href={`${base}/fleet/`}>the fleet</a>.
+      </p>
+      <table>
+        <thead>
+          <tr><th scope="col">Domain</th><th scope="col">Tools</th><th scope="col">Proven in</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Localization & navigation</td>
+            <td>UWB (DS-TWR), SLAM, NAV2, trilateration, ArUco</td>
+            <td><a href={`${base}/fleet/kdail/`}>KDAIL</a>, <a href={`${base}/fleet/eyantra/`}>e-Yantra</a></td>
+          </tr>
+          <tr>
+            <td>Robot software</td>
+            <td>ROS/ROS2, Gazebo (Classic→Fortress), RViz, URDF, micro-ROS</td>
+            <td><a href={`${base}/fleet/mario/`}>MARIO</a>, <a href={`${base}/fleet/nishcorp/`}>NishCorp</a>, <a href={`${base}/fleet/vvm/`}>VVM</a></td>
+          </tr>
+          <tr>
+            <td>Embedded systems</td>
+            <td>ESP32, ESP-IDF, FreeRTOS, ESP-NOW, BLE, Raspberry Pi</td>
+            <td><a href={`${base}/fleet/smart-switch/`}>Smart Switch</a>, <a href={`${base}/fleet/origins/`}>Origins</a></td>
+          </tr>
+          <tr>
+            <td>Control</td>
+            <td>PID, sensor fusion, complementary filters, kinematics</td>
+            <td><a href={`${base}/fleet/origins/`}>Wall-E</a>, <a href={`${base}/fleet/eyantra/`}>drone flight</a></td>
+          </tr>
+          <tr>
+            <td>Perception & ML</td>
+            <td>OpenCV, CNNs / transfer learning, speech recognition</td>
+            <td><a href={`${base}/fleet/robots-for-good/`}>Coin sorter</a>, <a href={`${base}/fleet/vvm/`}>VVM</a></td>
+          </tr>
+          <tr>
+            <td>Design & fabrication</td>
+            <td>KiCAD, OnShape, 3D printing, perf-board electronics</td>
+            <td><a href={`${base}/fleet/smart-switch/`}>Smart Switch</a>, <a href={`${base}/fleet/kurma/`}>Kurma</a></td>
+          </tr>
+          <tr>
+            <td>Languages</td>
+            <td>C, C++, Python, Dart</td>
+            <td>everywhere above</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <style>
+    .op-head { padding-top: var(--sp-12); }
+    .op-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: var(--sp-8);
+      align-items: start;
+      margin-bottom: var(--sp-12);
+    }
+    .op-portrait {
+      width: 100%;
+      border: 1px solid var(--line-strong);
+    }
+    .fun-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--sp-4);
+    }
+    .fun-grid h3 { margin-top: var(--sp-2); }
+    @media (max-width: 768px) {
+      .op-grid { grid-template-columns: 1fr; }
+      .op-portrait { max-width: 280px; }
+    }
+  </style>
+</Base>

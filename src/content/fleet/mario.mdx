@@ -1,0 +1,69 @@
+---
+title: "MARIO: 3-DOF Teaching Arm"
+callsign: MARIO-25
+summary: "SRA's educational robot arm, modernized: ported from end-of-life Gazebo Classic to Gazebo Fortress, given a new teleop system, and hardened for ESP32 + micro-ROS hardware — now used to teach ROS2 workshops at VJTI."
+kind: case-study
+order: 4
+status: teaching
+dates: "Jul – Aug 2024"
+team: "SRA team — simulation & hardware pipeline"
+location: "SRA Lab, VJTI"
+tech:
+  - ROS2
+  - Gazebo Fortress
+  - micro-ROS
+  - ESP32
+  - URDF
+  - C++
+  - Python
+  - Servo control
+repo: https://github.com/SRA-VJTI/MARIO/
+poster: "mario/arm-demo-poster.jpg"
+video: "mario/arm-demo.mp4"
+metric: "runs SRA's ROS2 workshops"
+---
+
+import VideoEvidence from '../../components/VideoEvidence.astro';
+import Figure from '../../components/Figure.astro';
+
+## Mission
+
+MARIO is the arm SRA students learn ROS2 on: a 3-DOF manipulator that exists
+twice — as a Gazebo simulation and as physical hardware driven by an ESP32
+running micro-ROS. When Gazebo Classic hit end-of-life, the whole teaching
+stack was about to rot. My job: keep MARIO teachable.
+
+## Build
+
+- **Ported the simulation from Gazebo Classic to Gazebo Fortress** — the EOL
+  migration touched the model description, plugins, and launch system
+- Implemented a new teleop control system, built for workshop ease-of-use
+- Improved the ESP32 ↔ micro-ROS hardware communication pipeline so the same
+  commands drive both the sim and the physical arm
+
+<Figure
+  src="mario/simulation.jpg"
+  alt="MARIO arm in Gazebo Fortress simulation"
+  caption="The migrated Gazebo Fortress simulation"
+/>
+
+<VideoEvidence
+  src="mario/sim-demo.mp4"
+  poster="mario/sim-demo-poster.jpg"
+  caption="Simulated arm under the new teleop control"
+  loop
+/>
+
+<VideoEvidence
+  src="mario/arm-demo.mp4"
+  poster="mario/arm-demo-poster.jpg"
+  caption="The physical arm running the same stack via micro-ROS on ESP32"
+  loop
+/>
+
+## Debrief
+
+Modernizing someone else's working robot is a different discipline from
+building your own: the constraint isn't "make it work," it's "don't break what
+200 students depend on." MARIO now runs SRA's ROS2 workshops on current
+tooling — the most durable result of anything I built that year.

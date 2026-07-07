@@ -1,0 +1,92 @@
+---
+title: "Robots for Good"
+callsign: CIVIC-00
+summary: "Machines built for someone other than me: an automatic feeder for our robotics club's cat, a river-cleaning boat, and a hackathon coin sorter — small robots, real users."
+kind: cluster
+order: 2
+status: deployed
+dates: "2024 – present"
+team: "solo + SRA lab"
+location: "VJTI, Mumbai"
+tech:
+  - SRA Board
+  - Servo control
+  - 3D printing
+  - Raspberry Pi 4B
+  - TensorFlow (transfer learning)
+  - OpenCV
+  - Waterproof chassis design
+  - Remote control
+repo: https://github.com/NoobMaster-version/automatic-animal-feeder
+links:
+  - label: Coin sorter code
+    url: https://github.com/NoobMaster-version/Coin_Detection
+poster: "robots-for-good/cat-poster.jpg"
+video: "robots-for-good/cat.mp4"
+metric: ">95% coin recognition on ₹5/₹10"
+---
+
+import VideoEvidence from '../../components/VideoEvidence.astro';
+import Figure from '../../components/Figure.astro';
+
+Not everything needs SLAM. These three exist because someone — or some cat —
+needed them.
+
+## The Automatic Pet Feeder
+
+Our robotics club has a cat. The cat does not observe weekends or semester
+breaks. So: an SRA-Board-driven feeder with a servo-rotated dispenser and a
+3D-printed chute, timer-scheduled so she eats even when the lab is empty.
+
+<VideoEvidence
+  src="robots-for-good/feeder-working.mp4"
+  poster="robots-for-good/feeder-working-poster.jpg"
+  caption="Dispensing mechanism in action"
+  loop
+/>
+
+<VideoEvidence
+  src="robots-for-good/cat.mp4"
+  poster="robots-for-good/cat-poster.jpg"
+  caption="The user. Feedback has been positive."
+  loop
+/>
+
+**Status: work in progress.** The plan is to harden the design and open-source
+it properly so animal-welfare NGOs can build their own.
+
+## The River-Cleaning Boat
+
+Built for my Environmental Studies course: a remote-controlled boat with a
+front-mounted collection mechanism and onboard storage for floating debris, so
+an operator can clean from the shore instead of wading in. Everything —
+waterproof hull, propulsion, collection gate — built from scratch on a student
+budget.
+
+<Figure
+  src="robots-for-good/river-water.jpg"
+  alt="River cleaning boat operating on the water"
+  caption="On the water, collecting floating debris"
+/>
+
+## The Coin Sorter (24-hour hackathon)
+
+A machine that recognizes Indian coin denominations (₹1, ₹2, ₹5, ₹10) with a
+camera and a CNN (transfer learning, running on a Raspberry Pi 4B), then routes
+each coin to its container through servo-controlled gates — designed, trained,
+built, and demoed **within 24 hours**.
+
+<VideoEvidence
+  src="robots-for-good/coin-demo.mp4"
+  poster="robots-for-good/coin-demo-poster.jpg"
+  caption="End-to-end: recognize, gate, sort"
+/>
+
+**Measured:** recognition accuracy above **95% for ₹5 and ₹10 coins**, with all
+four denominations sorted end-to-end in the final demo.
+
+## Debrief
+
+Small robots with real users are honest teachers: nobody cares about your
+architecture if the cat doesn't get fed. Reliability, not novelty, is the
+deliverable.

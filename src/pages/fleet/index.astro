@@ -1,0 +1,163 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const fleet = (await getCollection('fleet')).sort((a, b) => a.data.order - b.data.order);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const statusClass: Record<string, string> = {
+  deployed: 'ok', validated: 'ok', teaching: 'ok',
+  prototype: 'warn', wip: 'warn', retired: 'faint',
+};
+---
+
+<Base
+  title="Fleet"
+  description="Every robot, in order of increasing difficulty — from a first-semester gesture car to a UWB-localized autonomous forklift."
+>
+  <div class="container">
+    <header class="fleet-head">
+      <p class="label">/fleet · {fleet.length} units · ordered by increasing difficulty</p>
+      <h1>The Fleet</h1>
+      <p class="prose">
+        Every unit below physically exists (or existed) — each page carries its
+        footage, its measured results, and an honest status stamp.
+      </p>
+    </header>
+
+    <ol class="wall" role="list">
+      {
+        fleet.map((entry) => (
+          <li class="monitor">
+            <a href={`${base}/fleet/${entry.id}/`}>
+              <span class="monitor__screen">
+                {entry.data.video ? (
+                  <video
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    data-wall-loop
+                    poster={`${base}/assets/${entry.data.poster}`}
+                    aria-hidden="true"
+                  >
+                    <source src={`${base}/assets/${entry.data.video}`} type="video/mp4" />
+                  </video>
+                ) : (
+                  <img
+                    src={`${base}/assets/${entry.data.poster}`}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <span class="monitor__id" aria-hidden="true">{entry.data.callsign}</span>
+                <span class={`monitor__status monitor__status--${statusClass[entry.data.status]}`}>
+                  {entry.data.status}
+                </span>
+              </span>
+              <span class="monitor__title">{entry.data.title}</span>
+              <span class="monitor__meta label">
+                {entry.data.dates}
+                {entry.data.metric && <> · {entry.data.metric}</>}
+              </span>
+              <span class="monitor__summary">{entry.data.summary}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
+  <script>
+    // Wall monitors: loop footage plays only on screen, never under reduced motion.
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) {
+      const io = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            const v = e.target as HTMLVideoElement;
+            if (e.isIntersecting) v.play().catch(() => {});
+            else v.pause();
+          }),
+        { threshold: 0.3 }
+      );
+      document
+        .querySelectorAll<HTMLVideoElement>('video[data-wall-loop]')
+        .forEach((v) => io.observe(v));
+    }
+  </script>
+
+  <style>
+    .fleet-head { padding-top: var(--sp-12); }
+    .wall {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--sp-6);
+      margin-top: var(--sp-8);
+    }
+    .monitor a {
+      display: block;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-1);
+      padding: var(--sp-3);
+      height: 100%;
+      transition: border-color var(--t-fast) var(--e-mech), box-shadow var(--t-fast) var(--e-mech);
+    }
+    .monitor a:hover,
+    .monitor a:focus-visible {
+      border-color: var(--signal);
+      box-shadow: var(--glow);
+    }
+    .monitor__screen {
+      position: relative;
+      display: block;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      background: var(--surface-0);
+    }
+    .monitor__screen :is(video, img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: none;
+      border-radius: 0;
+    }
+    .monitor__id,
+    .monitor__status {
+      position: absolute;
+      top: var(--sp-2);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.08em;
+      padding: 2px var(--sp-2);
+      border-radius: var(--radius-sm);
+      background: rgb(0 0 0 / 0.55);
+    }
+    .monitor__id { left: var(--sp-2); color: var(--ink); }
+    .monitor__status { right: var(--sp-2); text-transform: uppercase; }
+    .monitor__status--ok { color: var(--ok); }
+    .monitor__status--warn { color: var(--warn); }
+    .monitor__status--faint { color: var(--ink-soft); }
+    .monitor__title {
+      display: block;
+      font-weight: 600;
+      font-size: var(--text-lg);
+      margin-top: var(--sp-3);
+    }
+    .monitor__meta { display: block; margin-top: var(--sp-1); color: var(--signal); }
+    .monitor__summary {
+      display: block;
+      margin-top: var(--sp-2);
+      color: var(--ink-soft);
+      font-size: var(--text-sm);
+    }
+  </style>
+</Base>

@@ -1,0 +1,63 @@
+---
+title: "Kurma: Quadruped Robot"
+callsign: KURMA-01
+summary: "A turtle-inspired quadruped built at SRA Lab for the international Mass Robotics challenge — statically stable gait over rough terrain, named for the world-bearing turtle of Hindu mythology."
+kind: case-study
+order: 6
+status: prototype
+dates: "2025"
+team: "SRA team build"
+location: "SRA Lab, VJTI"
+tech:
+  - Raspberry Pi
+  - Servo motors
+  - Gait sequencing
+  - Balance control
+  - Mechanical design
+  - Power systems
+repo: https://github.com/crisiumnih/kurma
+poster: "kurma/rough-terrain-poster.jpg"
+video: "kurma/rough-terrain.mp4"
+metric: "walks unstructured terrain"
+---
+
+import VideoEvidence from '../../components/VideoEvidence.astro';
+
+## Mission
+
+Build a four-legged robot that keeps walking when the floor stops being flat.
+Kurma — named for the turtle avatar in Hindu mythology that carries the world —
+borrows its locomotion from the animal too: slow, statically stable, hard to
+tip over.
+
+## Build
+
+- Servo-driven legs coordinated by a Raspberry Pi
+- Gait sequencing designed for **static stability**: three feet planted at all
+  times, so the robot never has to catch itself
+- Biomimetic gait study — actual turtle locomotion informed the leg timing
+- Structural design and power management for repeated field runs
+
+<VideoEvidence
+  src="kurma/walk-1.mp4"
+  poster="kurma/walk-1-poster.jpg"
+  caption="Gait cycle on flat ground"
+/>
+
+<VideoEvidence
+  src="kurma/rough-terrain.mp4"
+  poster="kurma/rough-terrain-poster.jpg"
+  caption="The real test: unstructured terrain"
+/>
+
+## Telemetry
+
+Honest status: **a working prototype.** It entered the international Mass
+Robotics challenge and didn't go far in the competition — but the gait held on
+terrain that stops most wheeled student robots cold.
+
+## Debrief
+
+Legged robots collapse the boundary between mechanical design and control —
+the gait *is* the structure moving. Kurma taught me to design the two together
+instead of bolting a controller onto a finished frame.
