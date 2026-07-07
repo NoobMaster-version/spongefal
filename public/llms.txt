@@ -1,0 +1,25 @@
+# Kartikey Pathak — robotics engineer
+
+> B.Tech Electrical Engineering (Minor: Robotics), VJTI Mumbai, 2023–2027.
+> Specialty: localization & navigation — UWB, SLAM/NAV2, ArUco — plus ROS2,
+> Gazebo simulation, and ESP32/ESP-IDF embedded systems.
+
+Key facts:
+- Research intern, Krishna Defence & Allied Industries (May–Jul 2025, at IIT
+  Gandhinagar): custom DS-TWR UWB ranging firmware — 315 m range (stock limit
+  was 45 m), ±2 cm short-range accuracy, 0.4% error over 10,000 m², validated
+  with a surveyor's total station.
+- Robotics intern, NishCorp Technologies (May–Nov 2025): Gazebo simulation +
+  half-scale prototype of a stair-climbing wheelchair; supported ₹13 lakh in
+  grants.
+- e-Yantra (IIT Bombay) national semifinalist — autonomous warehouse drone.
+- SRA (Society of Robotics and Automation, VJTI): workshops and mentoring;
+  Wall-E self-balancing kit program has taught 200+ students.
+
+## Pages
+- [Fleet — all projects](https://noobmaster-version.github.io/spongefal/fleet/): 13 projects, each with footage, dates, and measured results
+- [KDAIL case study](https://noobmaster-version.github.io/spongefal/fleet/kdail/): the UWB forklift work
+- [Research](https://noobmaster-version.github.io/spongefal/research/): DS-TWR firmware write-up
+- [Recruiter view](https://noobmaster-version.github.io/spongefal/recruiter/): dense 60-second summary
+- [Resume PDF](https://noobmaster-version.github.io/spongefal/resume.pdf)
+- Contact: kartikeypathak.imp@gmail.com · github.com/NoobMaster-version

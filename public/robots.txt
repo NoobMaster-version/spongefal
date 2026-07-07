@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://noobmaster-version.github.io/spongefal/sitemap-index.xml
