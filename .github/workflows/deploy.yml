@@ -25,6 +25,10 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - name: Configure Pages (auto-enables GitHub Actions as the source)
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - run: npm ci
       - run: npx astro check
       - run: npx astro build
