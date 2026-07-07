@@ -34,8 +34,13 @@ const nav = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} · Kartikey Pathak</title>
     <meta name="description" content={description} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={`${title} · Kartikey Pathak`} />
     <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL(`${base}/og.jpg`, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={new URL(`${base}/og.jpg`, Astro.site)} />
+    <meta name="theme-color" content="#0b0f14" />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   </head>
@@ -58,6 +63,10 @@ const nav = [
       </nav>
       <div class="telemetry__state">
         <span class="telemetry__topic" aria-live="off">{topic}</span>
+        <button id="theme-toggle" class="telemetry__btn" title="Toggle light / dark">
+          <span id="theme-icon" aria-hidden="true">☾</span>
+          <span class="sr-only">toggle theme</span>
+        </button>
         <button id="plain-toggle" class="telemetry__btn" aria-pressed="false" title="Plain mode: no animations, just the content (shortcut: R)">
           plain
         </button>
@@ -193,6 +202,62 @@ const nav = [
           apply(!html.classList.contains('plain'));
         }
       });
+
+      // --- light / dark theme (default dark) ---
+      const TKEY = 'kp-theme';
+      const tbtn = document.getElementById('theme-toggle');
+      const ticon = document.getElementById('theme-icon');
+      const setTheme = (day: boolean) => {
+        html.dataset.theme = day ? 'day' : 'night';
+        if (ticon) ticon.textContent = day ? '☀' : '☾';
+        localStorage.setItem(TKEY, day ? 'day' : 'night');
+      };
+      setTheme(localStorage.getItem(TKEY) === 'day');
+      tbtn?.addEventListener('click', () => setTheme(html.dataset.theme !== 'day'));
+
+      // --- hidden toy: the konami code ---
+      const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+      let ki = 0;
+      addEventListener('keydown', (e) => {
+        ki = e.key.toLowerCase() === seq[ki]?.toLowerCase() ? ki + 1 : (e.key === seq[0] ? 1 : 0);
+        if (ki === seq.length) {
+          ki = 0;
+          const t = document.createElement('div');
+          t.className = 'egg-toast';
+          t.textContent = '↑↑↓↓←→←→ b a — nice. now go build something.';
+          document.body.appendChild(t);
+          setTimeout(() => t.remove(), 4000);
+        }
+      });
     </script>
+
+    <style is:global>
+      .sr-only {
+        position: absolute; width: 1px; height: 1px;
+        padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+      }
+      .egg-toast {
+        position: fixed;
+        left: 50%;
+        bottom: var(--sp-8);
+        transform: translateX(-50%);
+        z-index: 200;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--signal-ink);
+        background: var(--signal);
+        border-radius: var(--radius);
+        padding: var(--sp-3) var(--sp-4);
+        box-shadow: var(--shadow-overlay);
+        animation: egg-in 240ms var(--e-mech) both;
+      }
+      @keyframes egg-in {
+        from { opacity: 0; transform: translate(-50%, 12px); }
+        to { opacity: 1; transform: translate(-50%, 0); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .egg-toast { animation: none; }
+      }
+    </style>
   </body>
 </html>

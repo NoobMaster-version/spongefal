@@ -29,6 +29,7 @@ metric: "hardware → firmware → cloud → app"
 
 import Figure from '../../components/Figure.astro';
 import YouTube from '../../components/YouTube.astro';
+import MqttFlow from '../../instruments/MqttFlow.astro';
 
 Normal wall switches, but you can also flip them from your phone, from
 anywhere. The rule I set myself: the physical switches must keep working no
@@ -54,6 +55,12 @@ Some details I'm fond of:
   whether a light is on. keeping four copies of the truth in sync was the
   hardest part of the whole project — harder than the mains voltage
 - the app was honestly vibe-coded. the firmware was not.
+
+When you flip a switch, this is roughly what happens — the message hops from
+the app to the broker to the ESP32 to the relay, carrying a topic string like
+the real one:
+
+<MqttFlow />
 
 <YouTube id="PdhZitnxkq0" title="from the app" />
 <YouTube id="XPfEatq_d18" title="from the buttons" />

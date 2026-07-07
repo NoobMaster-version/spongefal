@@ -1,0 +1,133 @@
+---
+/**
+ * Flip the switch → a packet travels app → broker → ESP32 → relay,
+ * carrying the real MQTT topic string. Shows how the smart switch
+ * actually talks to itself.
+ * Plain mode / reduced motion: hidden (enhancement).
+ */
+---
+
+<div class="mqtt panel instrument-only">
+  <p class="label">toy · flip it and follow the message</p>
+
+  <div class="mqtt-stage">
+    <div class="mqtt-node" data-node="app"><span>📱</span>app</div>
+    <div class="mqtt-wire"></div>
+    <div class="mqtt-node" data-node="broker"><span>☁︎</span>broker<br /><small>MQTT · TLS</small></div>
+    <div class="mqtt-wire"></div>
+    <div class="mqtt-node" data-node="esp"><span>▤</span>ESP32</div>
+    <div class="mqtt-wire"></div>
+    <div class="mqtt-node" data-node="bulb"><span id="mqtt-bulb" class="mqtt-bulb">◯</span>light</div>
+    <div class="mqtt-packet" id="mqtt-packet" aria-hidden="true"></div>
+  </div>
+
+  <div class="mqtt-controls">
+    <button id="mqtt-btn" class="btn btn--primary">flip the switch</button>
+    <code id="mqtt-topic">smart_switch/esp_12ab34/light_1/command → OFF</code>
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById('mqtt-btn');
+  const packet = document.getElementById('mqtt-packet');
+  const bulb = document.getElementById('mqtt-bulb');
+  const topic = document.getElementById('mqtt-topic');
+  const stage = document.querySelector('.mqtt-stage') as HTMLElement | null;
+  if (btn && packet && bulb && topic && stage) {
+    let on = false;
+    let busy = false;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nodes = ['app', 'broker', 'esp', 'bulb'].map(
+      (n) => stage.querySelector(`[data-node="${n}"]`) as HTMLElement
+    );
+
+    const setBulb = () => {
+      bulb.textContent = on ? '⬤' : '◯';
+      bulb.classList.toggle('is-on', on);
+      topic.textContent = `smart_switch/esp_12ab34/light_1/command → ${on ? 'ON' : 'OFF'}`;
+    };
+
+    const send = () => {
+      if (busy) return;
+      busy = true;
+      const next = !on;
+      topic.textContent = `smart_switch/esp_12ab34/light_1/command → ${next ? 'ON' : 'OFF'}`;
+      if (reduce) { on = next; setBulb(); busy = false; return; }
+      // animate the packet across the node centers
+      const sx = stage.getBoundingClientRect().left;
+      const xs = nodes.map((n) => n.offsetLeft + n.offsetWidth / 2);
+      let i = 0;
+      packet.style.opacity = '1';
+      const hop = () => {
+        packet.style.left = `${xs[i]}px`;
+        if (i >= xs.length - 1) {
+          setTimeout(() => {
+            packet.style.opacity = '0';
+            on = next; setBulb(); busy = false;
+          }, 260);
+          return;
+        }
+        i++;
+        setTimeout(hop, 260);
+      };
+      packet.style.left = `${xs[0]}px`;
+      requestAnimationFrame(() => setTimeout(hop, 60));
+    };
+
+    btn.addEventListener('click', send);
+    setBulb();
+  }
+</script>
+
+<style>
+  .mqtt { margin: var(--sp-8) 0; }
+  .mqtt-stage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-1);
+    padding: var(--sp-6) var(--sp-2);
+  }
+  .mqtt-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+  .mqtt-node span { font-size: var(--text-xl); line-height: 1; }
+  .mqtt-node small { color: var(--ink-faint); }
+  .mqtt-wire {
+    flex: 1;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--line-strong) 0 6px, transparent 6px 12px);
+  }
+  .mqtt-bulb { color: var(--ink-faint); transition: color var(--t-fast) var(--e-mech); }
+  .mqtt-bulb.is-on { color: var(--warn); text-shadow: 0 0 12px var(--warn); }
+  .mqtt-packet {
+    position: absolute;
+    top: var(--sp-4);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--signal);
+    box-shadow: var(--glow);
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: left 240ms var(--e-scan), opacity 160ms var(--e-mech);
+  }
+  .mqtt-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3);
+    margin-top: var(--sp-2);
+  }
+  #mqtt-topic { overflow-wrap: anywhere; }
+</style>

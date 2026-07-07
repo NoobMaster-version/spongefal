@@ -26,6 +26,7 @@ metric: "wall-e kits taught 200+ students"
 ---
 
 import VideoEvidence from '../../components/VideoEvidence.astro';
+import PidPlayground from '../../instruments/PidPlayground.astro';
 
 Three small robots from my first years. Everything I've built since uses
 something I learned from these.
@@ -62,6 +63,13 @@ Wall-E turned into something bigger than my build: at SRA we manufacture and
 assemble Wall-E kits and run workshops on them. More than 200 students have
 learned embedded C, ESP32 and sensor fusion on this little robot. I got to
 teach some of those workshops.
+
+Here's the part everyone struggles with — the PID tuning. This is the real
+thing: the dot wants to sit on the line, the controller fights to keep it
+there. Turn up P and kick it; it overshoots. Add D; it calms down. Too much
+I and it never settles. Same dance as balancing the actual robot.
+
+<PidPlayground />
 
 ## the maze solver
 

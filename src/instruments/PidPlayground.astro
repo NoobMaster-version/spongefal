@@ -1,0 +1,145 @@
+---
+/**
+ * A real PID controller trying to hold a dot at the center line.
+ * Drag P, I, D. Hit "kick" to disturb it. Watch it overshoot, wobble,
+ * or settle — the same feeling as tuning Wall-E.
+ * Plain mode / reduced motion: hidden (it's an enhancement, not content).
+ */
+---
+
+<div class="pid panel instrument-only">
+  <p class="label">toy · tune the controller, then kick it</p>
+  <canvas id="pid-canvas" width="720" height="220" role="img"
+    aria-label="A dot held at a center line by a PID controller you can tune"></canvas>
+
+  <div class="pid-controls">
+    <label>P <span class="pid-v" id="pid-p-v">3.0</span>
+      <input id="pid-p" type="range" min="0" max="8" step="0.1" value="3" />
+    </label>
+    <label>I <span class="pid-v" id="pid-i-v">0.2</span>
+      <input id="pid-i" type="range" min="0" max="2" step="0.05" value="0.2" />
+    </label>
+    <label>D <span class="pid-v" id="pid-d-v">1.2</span>
+      <input id="pid-d" type="range" min="0" max="4" step="0.1" value="1.2" />
+    </label>
+    <button id="pid-kick" class="btn">kick it</button>
+  </div>
+  <p class="label pid-hint" id="pid-hint">P alone overshoots · add D to damp it · too much I makes it hunt</p>
+</div>
+
+<script>
+  const canvas = document.getElementById('pid-canvas') as HTMLCanvasElement | null;
+  if (canvas) {
+    const ctx = canvas.getContext('2d')!;
+    const W = canvas.width, H = canvas.height;
+    const mid = H / 2;
+    const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+    const pP = $('pid-p'), pI = $('pid-i'), pD = $('pid-d');
+    const vP = document.getElementById('pid-p-v')!;
+    const vI = document.getElementById('pid-i-v')!;
+    const vD = document.getElementById('pid-d-v')!;
+
+    let pos = 0;        // offset from center (px)
+    let vel = 0;
+    let integral = 0;
+    let prevErr = 0;
+    const trail: number[] = [];
+    let raf = 0;
+
+    const css = (n: string) =>
+      getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+    const kick = () => { vel += (Math.random() > 0.5 ? 1 : -1) * (60 + Math.random() * 40); };
+    document.getElementById('pid-kick')!.addEventListener('click', kick);
+    [pP, pI, pD].forEach((s) =>
+      s.addEventListener('input', () => {
+        vP.textContent = (+pP.value).toFixed(1);
+        vI.textContent = (+pI.value).toFixed(2);
+        vD.textContent = (+pD.value).toFixed(1);
+        integral = 0;
+      })
+    );
+
+    const step = () => {
+      const kp = +pP.value, ki = +pI.value, kd = +pD.value;
+      const err = 0 - pos;          // want pos = 0
+      integral += err * 0.016;
+      integral = Math.max(-400, Math.min(400, integral));
+      const deriv = (err - prevErr) / 0.016;
+      prevErr = err;
+      const u = kp * err + ki * integral + kd * deriv;
+      // u is an acceleration command; add a little friction + mass
+      vel += u * 0.016;
+      vel *= 0.98;
+      pos += vel * 0.016;
+      pos = Math.max(-H / 2 + 12, Math.min(H / 2 - 12, pos));
+
+      trail.push(pos);
+      if (trail.length > W) trail.shift();
+
+      const signal = css('--signal') || '#3fe0c5';
+      const line = css('--line-strong') || '#456';
+      const ink = css('--ink-faint') || '#889';
+      ctx.clearRect(0, 0, W, H);
+      // center line (setpoint)
+      ctx.strokeStyle = line;
+      ctx.setLineDash([4, 6]);
+      ctx.beginPath(); ctx.moveTo(0, mid); ctx.lineTo(W, mid); ctx.stroke();
+      ctx.setLineDash([]);
+      // history trace
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      trail.forEach((p, i) => {
+        const x = W - trail.length + i;
+        i ? ctx.lineTo(x, mid + p) : ctx.moveTo(x, mid + p);
+      });
+      ctx.stroke();
+      // the dot
+      ctx.fillStyle = signal;
+      ctx.beginPath();
+      ctx.arc(W - 40, mid + pos, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.font = '11px "IBM Plex Mono", monospace';
+      ctx.fillStyle = ink;
+      ctx.fillText(`error: ${(-pos).toFixed(0)} px`, 10, 16);
+
+      raf = requestAnimationFrame(step);
+    };
+
+    const io = new IntersectionObserver(([e]) => {
+      cancelAnimationFrame(raf);
+      if (e?.isIntersecting) { kick(); raf = requestAnimationFrame(step); }
+    });
+    io.observe(canvas);
+  }
+</script>
+
+<style>
+  .pid { margin: var(--sp-8) 0; }
+  .pid canvas {
+    width: 100%;
+    background: var(--surface-0);
+    border: 1px solid var(--line);
+  }
+  .pid-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-4);
+    align-items: end;
+    margin-top: var(--sp-4);
+  }
+  .pid-controls label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+  .pid-controls input[type='range'] { accent-color: var(--signal); width: 140px; }
+  .pid-v { color: var(--signal); font-size: var(--text-sm); }
+  .pid-hint { margin: var(--sp-3) 0 0; }
+</style>
