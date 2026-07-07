@@ -13,29 +13,28 @@ const fleet = (await getCollection('fleet')).sort((a, b) => a.data.order - b.dat
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const rooms = [
-  { path: `${base}/`, id: '/', name: 'CONSOLE', desc: 'landing' },
-  { path: `${base}/fleet/`, id: '/fleet', name: 'FLEET', desc: `${fleet.length} units` },
-  { path: `${base}/research/`, id: '/research', name: 'RESEARCH', desc: 'UWB / DS-TWR' },
-  { path: `${base}/timeline/`, id: '/timeline', name: 'TIMELINE', desc: 'changelog' },
-  { path: `${base}/operator/`, id: '/operator', name: 'OPERATOR', desc: 'about' },
-  { path: `${base}/uplink/`, id: '/uplink', name: 'UPLINK', desc: 'contact' },
-  { path: `${base}/recruiter/`, id: '/recruiter', name: 'RECRUITER', desc: '60-sec view' },
+  { path: `${base}/`, id: '/', name: 'home', desc: 'start' },
+  { path: `${base}/projects/`, id: '/projects', name: 'projects', desc: 'the robots' },
+  { path: `${base}/log/`, id: '/log', name: 'log', desc: 'the story' },
+  { path: `${base}/about/`, id: '/about', name: 'about', desc: 'me' },
+  { path: `${base}/contact/`, id: '/contact', name: 'contact', desc: 'say hi' },
+  { path: `${base}/plain/`, id: '/plain', name: 'plain', desc: 'one page' },
 ];
 
 const commands = [
   ...rooms.map((r) => ({
-    cmd: `/goto ${r.id === '/' ? 'console' : r.id.slice(1)}`,
-    label: r.name.toLowerCase(),
+    cmd: `/goto ${r.id === '/' ? 'home' : r.id.slice(1)}`,
+    label: r.name,
     href: r.path,
   })),
   ...fleet.map((e) => ({
-    cmd: `/goto fleet/${e.id}`,
+    cmd: `/goto projects/${e.id}`,
     label: e.data.title,
-    href: `${base}/fleet/${e.id}/`,
+    href: `${base}/projects/${e.id}/`,
   })),
-  { cmd: '/call resume', label: 'download resume (PDF)', href: `${base}/resume.pdf` },
+  { cmd: '/call resume', label: 'resume (PDF)', href: `${base}/resume.pdf` },
   { cmd: '/call email', label: 'send email', href: 'mailto:kartikeypathak.imp@gmail.com' },
-  { cmd: '/call github', label: 'open GitHub profile', href: 'https://github.com/NoobMaster-version' },
+  { cmd: '/call github', label: 'github', href: 'https://github.com/NoobMaster-version' },
 ];
 ---
 
@@ -71,7 +70,7 @@ const commands = [
     aria-expanded="true"
     aria-controls="palette-list"
     aria-label="Type a command or destination"
-    placeholder="/goto fleet/kdail · resume · contact…"
+    placeholder="/goto projects/kdail · resume · contact…"
     autocomplete="off"
     spellcheck="false"
   />
@@ -95,7 +94,7 @@ const commands = [
   const here = location.pathname.replace(/\/$/, '') || '/';
   const rooms = [...document.querySelectorAll<HTMLAnchorElement>('.dock-room')];
   const roomIds = rooms.map((r) => r.dataset.room!);
-  // normalize: /spongefal/fleet/kdail → /fleet
+  // normalize: /spongefal/projects/kdail → /projects
   const match = roomIds
     .filter((id) => id !== '/')
     .find((id) => here.includes(id));
@@ -205,7 +204,7 @@ const commands = [
     border-color: var(--signal);
     box-shadow: var(--glow);
   }
-  html.recruiter .dock-fab { display: none; }
+  html.plain .dock-fab { display: none; }
 
   .console-dialog {
     border: 1px solid var(--line-strong);

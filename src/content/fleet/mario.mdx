@@ -1,13 +1,12 @@
 ---
-title: "MARIO: 3-DOF Teaching Arm"
-callsign: MARIO-25
-summary: "SRA's educational robot arm, modernized: ported from end-of-life Gazebo Classic to Gazebo Fortress, given a new teleop system, and hardened for ESP32 + micro-ROS hardware — now used to teach ROS2 workshops at VJTI."
+title: "MARIO"
+summary: "the 3-DOF arm students learn ROS2 on at my college. I ported it off a dying simulator and made it nicer to use."
 kind: case-study
 order: 4
 status: teaching
-dates: "Jul – Aug 2024"
-team: "SRA team — simulation & hardware pipeline"
-location: "SRA Lab, VJTI"
+dates: "jul – aug 2024"
+team: "me + SRA"
+location: "SRA lab, VJTI"
 tech:
   - ROS2
   - Gazebo Fortress
@@ -16,63 +15,53 @@ tech:
   - URDF
   - C++
   - Python
-  - Servo control
 repo: https://github.com/SRA-VJTI/MARIO/
 poster: "mario/arm-demo-poster.jpg"
 video: "mario/arm-demo.mp4"
-metric: "runs SRA's ROS2 workshops"
+metric: "still teaching workshops"
 ---
 
 import VideoEvidence from '../../components/VideoEvidence.astro';
 import Figure from '../../components/Figure.astro';
 import IkArm from '../../instruments/IkArm.astro';
 
-## Mission
+MARIO is a small robot arm that exists twice: once in simulation, once as
+real hardware running micro-ROS on an ESP32. It's what SRA uses to teach
+ROS2 workshops.
 
-MARIO is the arm SRA students learn ROS2 on: a 3-DOF manipulator that exists
-twice — as a Gazebo simulation and as physical hardware driven by an ESP32
-running micro-ROS. When Gazebo Classic hit end-of-life, the whole teaching
-stack was about to rot. My job: keep MARIO teachable.
-
-## Build
-
-- **Ported the simulation from Gazebo Classic to Gazebo Fortress** — the EOL
-  migration touched the model description, plugins, and launch system
-- Implemented a new teleop control system, built for workshop ease-of-use
-- Improved the ESP32 ↔ micro-ROS hardware communication pipeline so the same
-  commands drive both the sim and the physical arm
+The simulation was stuck on Gazebo Classic, which hit end-of-life. So I
+ported the whole thing to Gazebo Fortress — model, plugins, launch files —
+wrote a new teleop that's easier for beginners, and cleaned up the
+ESP32 ↔ micro-ROS pipeline so the same commands drive both the sim and the
+real arm.
 
 <Figure
   src="mario/simulation.jpg"
-  alt="MARIO arm in Gazebo Fortress simulation"
-  caption="The migrated Gazebo Fortress simulation"
+  alt="MARIO in Gazebo Fortress"
+  caption="the ported simulation"
 />
 
 <VideoEvidence
   src="mario/sim-demo.mp4"
   poster="mario/sim-demo-poster.jpg"
-  caption="Simulated arm under the new teleop control"
+  caption="sim"
   loop
 />
 
 <VideoEvidence
   src="mario/arm-demo.mp4"
   poster="mario/arm-demo-poster.jpg"
-  caption="The physical arm running the same stack via micro-ROS on ESP32"
+  caption="hardware, same stack"
   loop
 />
 
-## Try what MARIO does
+## try the math it runs
 
-This robot's job is teaching — so let it teach. The arm below runs the same
-math MARIO uses: 2-link inverse kinematics solving for your cursor, with servo
-lag and a workspace boundary it honestly cannot cross.
+This is the same idea MARIO uses to reach things: 2-link inverse kinematics.
+Move your cursor around. Notice it refuses to leave its workspace — real
+arms have real limits.
 
 <IkArm />
 
-## Debrief
-
-Modernizing someone else's working robot is a different discipline from
-building your own: the constraint isn't "make it work," it's "don't break what
-200 students depend on." MARIO now runs SRA's ROS2 workshops on current
-tooling — the most durable result of anything I built that year.
+Fixing up someone else's working robot is its own skill. The rule isn't
+"make it work", it's "don't break what the next workshop depends on".

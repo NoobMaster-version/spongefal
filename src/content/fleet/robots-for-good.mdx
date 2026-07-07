@@ -1,92 +1,78 @@
 ---
-title: "Robots for Good"
-callsign: CIVIC-00
-summary: "Machines built for someone other than me: an automatic feeder for our robotics club's cat, a river-cleaning boat, and a hackathon coin sorter — small robots, real users."
+title: "the feeder, the boat, and the coin sorter"
+summary: "a cat feeder for the lab cat, a river-cleaning boat, and a coin sorter built in 24 hours."
 kind: cluster
 order: 2
 status: deployed
-dates: "2024 – present"
-team: "solo + SRA lab"
+dates: "2024 – now"
+team: "me + SRA"
 location: "VJTI, Mumbai"
 tech:
-  - SRA Board
-  - Servo control
+  - SRA board
+  - servos
   - 3D printing
   - Raspberry Pi 4B
-  - TensorFlow (transfer learning)
+  - TensorFlow
   - OpenCV
-  - Waterproof chassis design
-  - Remote control
 repo: https://github.com/NoobMaster-version/automatic-animal-feeder
 links:
-  - label: Coin sorter code
+  - label: coin sorter code
     url: https://github.com/NoobMaster-version/Coin_Detection
 poster: "robots-for-good/cat-poster.jpg"
 video: "robots-for-good/cat.mp4"
-metric: ">95% coin recognition on ₹5/₹10"
+metric: "one cat, reliably fed"
 ---
 
 import VideoEvidence from '../../components/VideoEvidence.astro';
 import Figure from '../../components/Figure.astro';
 
-Not everything needs SLAM. These three exist because someone — or some cat —
-needed them.
+Three small builds, each made because something needed it.
 
-## The Automatic Pet Feeder
+## the cat feeder
 
-Our robotics club has a cat. The cat does not observe weekends or semester
-breaks. So: an SRA-Board-driven feeder with a servo-rotated dispenser and a
-3D-printed chute, timer-scheduled so she eats even when the lab is empty.
+Our robotics club has a cat. She doesn't care about semester breaks, so I
+built her a feeder: a servo turns the dispenser on a timer, food drops down a
+3D-printed chute, cat eats even when the lab is empty.
 
 <VideoEvidence
   src="robots-for-good/feeder-working.mp4"
   poster="robots-for-good/feeder-working-poster.jpg"
-  caption="Dispensing mechanism in action"
+  caption="dispensing"
   loop
 />
 
 <VideoEvidence
   src="robots-for-good/cat.mp4"
   poster="robots-for-good/cat-poster.jpg"
-  caption="The user. Feedback has been positive."
+  caption="the user"
   loop
 />
 
-**Status: work in progress.** The plan is to harden the design and open-source
-it properly so animal-welfare NGOs can build their own.
+Still a work in progress — I want to clean it up and open-source it properly
+so animal shelters can build their own.
 
-## The River-Cleaning Boat
+## the river boat
 
-Built for my Environmental Studies course: a remote-controlled boat with a
-front-mounted collection mechanism and onboard storage for floating debris, so
-an operator can clean from the shore instead of wading in. Everything —
-waterproof hull, propulsion, collection gate — built from scratch on a student
-budget.
+For my environmental studies course. A remote-controlled boat with a scoop at
+the front and a basket inside: drive it around, it collects floating trash,
+bring it back, empty it. Waterproofing electronics on a student budget was
+the whole adventure.
 
 <Figure
   src="robots-for-good/river-water.jpg"
-  alt="River cleaning boat operating on the water"
-  caption="On the water, collecting floating debris"
+  alt="the boat on the water"
+  caption="on the water"
 />
 
-## The Coin Sorter (24-hour hackathon)
+## the coin sorter
 
-A machine that recognizes Indian coin denominations (₹1, ₹2, ₹5, ₹10) with a
-camera and a CNN (transfer learning, running on a Raspberry Pi 4B), then routes
-each coin to its container through servo-controlled gates — designed, trained,
-built, and demoed **within 24 hours**.
+24-hour hackathon. A camera looks at a coin, a small CNN on a Raspberry Pi
+figures out if it's ₹1, ₹2, ₹5 or ₹10, servo gates route it into the right
+box. Trained with transfer learning because there was no time for anything
+else. Got above 95% on the ₹5 and ₹10 coins.
 
 <VideoEvidence
   src="robots-for-good/coin-demo.mp4"
   poster="robots-for-good/coin-demo-poster.jpg"
-  caption="End-to-end: recognize, gate, sort"
+  caption="sorting"
 />
-
-**Measured:** recognition accuracy above **95% for ₹5 and ₹10 coins**, with all
-four denominations sorted end-to-end in the final demo.
-
-## Debrief
-
-Small robots with real users are honest teachers: nobody cares about your
-architecture if the cat doesn't get fed. Reliability, not novelty, is the
-deliverable.

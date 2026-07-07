@@ -231,19 +231,19 @@ figcaption {
 }
 
 /* ============================================================
-   RECRUITER MODE — html.recruiter: dense, still, factual
+   PLAIN MODE — html.plain: no animations, just content
    Doubles as the high-legibility mode.
    ============================================================ */
-html.recruiter *,
-html.recruiter *::before,
-html.recruiter *::after {
+html.plain *,
+html.plain *::before,
+html.plain *::after {
   animation: none !important;
   transition: none !important;
 }
-html.recruiter body {
+html.plain body {
   background-image: none;
 }
-html.recruiter .instrument-only {
+html.plain .instrument-only {
   display: none !important;
 }
 

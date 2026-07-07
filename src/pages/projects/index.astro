@@ -4,32 +4,24 @@ import Base from '../../layouts/Base.astro';
 
 const fleet = (await getCollection('fleet')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-
-const statusClass: Record<string, string> = {
-  deployed: 'ok', validated: 'ok', teaching: 'ok',
-  prototype: 'warn', wip: 'warn', retired: 'faint',
-};
 ---
 
-<Base
-  title="Fleet"
-  description="Every robot, in order of increasing difficulty — from a first-semester gesture car to a UWB-localized autonomous forklift."
->
+<Base title="projects" description="Everything I've built, with videos. Roughly in the order I built it.">
   <div class="container">
-    <header class="fleet-head">
-      <p class="label">/fleet · {fleet.length} units · ordered by increasing difficulty</p>
-      <h1>The Fleet</h1>
+    <header class="pj-head">
+      <h1>projects</h1>
       <p class="prose">
-        Every unit below physically exists (or existed) — each page carries its
-        footage, its measured results, and an honest status stamp.
+        Everything here physically exists (or existed). There's a video on
+        every page — seeing a thing move beats reading about it.
       </p>
+      <p class="label">roughly in the order I built them</p>
     </header>
 
     <ol class="wall" role="list">
       {
         fleet.map((entry) => (
           <li class="monitor">
-            <a href={`${base}/fleet/${entry.id}/`}>
+            <a href={`${base}/projects/${entry.id}/`}>
               <span class="monitor__screen">
                 {entry.data.video ? (
                   <video
@@ -51,17 +43,11 @@ const statusClass: Record<string, string> = {
                     decoding="async"
                   />
                 )}
-                <span class="monitor__id" aria-hidden="true">{entry.data.callsign}</span>
-                <span class={`monitor__status monitor__status--${statusClass[entry.data.status]}`}>
-                  {entry.data.status}
-                </span>
+                <span class="monitor__status">{entry.data.status}</span>
               </span>
               <span class="monitor__title">{entry.data.title}</span>
-              <span class="monitor__meta label">
-                {entry.data.dates}
-                {entry.data.metric && <> · {entry.data.metric}</>}
-              </span>
               <span class="monitor__summary">{entry.data.summary}</span>
+              <span class="monitor__meta label">{entry.data.dates}</span>
             </a>
           </li>
         ))
@@ -70,7 +56,6 @@ const statusClass: Record<string, string> = {
   </div>
 
   <script>
-    // Wall monitors: loop footage plays only on screen, never under reduced motion.
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!reduce) {
       const io = new IntersectionObserver(
@@ -89,7 +74,7 @@ const statusClass: Record<string, string> = {
   </script>
 
   <style>
-    .fleet-head { padding-top: var(--sp-12); }
+    .pj-head { padding-top: var(--sp-12); }
     .wall {
       list-style: none;
       padding: 0;
@@ -130,34 +115,30 @@ const statusClass: Record<string, string> = {
       border: none;
       border-radius: 0;
     }
-    .monitor__id,
     .monitor__status {
       position: absolute;
       top: var(--sp-2);
+      right: var(--sp-2);
       font-family: var(--font-mono);
       font-size: var(--text-xs);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       padding: 2px var(--sp-2);
       border-radius: var(--radius-sm);
       background: rgb(0 0 0 / 0.55);
+      color: var(--ink-soft);
     }
-    .monitor__id { left: var(--sp-2); color: var(--ink); }
-    .monitor__status { right: var(--sp-2); text-transform: uppercase; }
-    .monitor__status--ok { color: var(--ok); }
-    .monitor__status--warn { color: var(--warn); }
-    .monitor__status--faint { color: var(--ink-soft); }
     .monitor__title {
       display: block;
       font-weight: 600;
       font-size: var(--text-lg);
       margin-top: var(--sp-3);
     }
-    .monitor__meta { display: block; margin-top: var(--sp-1); color: var(--signal); }
     .monitor__summary {
       display: block;
-      margin-top: var(--sp-2);
+      margin-top: var(--sp-1);
       color: var(--ink-soft);
       font-size: var(--text-sm);
     }
+    .monitor__meta { display: block; margin-top: var(--sp-2); }
   </style>
 </Base>

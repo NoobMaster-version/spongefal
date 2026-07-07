@@ -1,89 +1,76 @@
 ---
-title: "Origins: Learning Control"
-callsign: ORIGIN-00
-summary: "Three early robots — a gesture-controlled car, a self-balancing bot, and a maze solver — that taught me how machines feel, balance, and decide. One of them became a kit that 200+ students now learn on."
+title: "first robots"
+summary: "a gesture-controlled car, a self-balancing bot, and a maze solver. where it all started."
 kind: cluster
 order: 1
 status: teaching
-dates: "Dec 2023 – 2025"
-team: "solo + SRA team builds"
+dates: "dec 2023 – 2025"
+team: "me + SRA"
 location: "VJTI, Mumbai"
 tech:
-  - ESP32 (×2)
+  - ESP32
   - MPU6050
   - ESP-NOW
   - ESP-IDF
-  - PID control
-  - Complementary filter
-  - IR sensor array
+  - PID
+  - complementary filter
+  - IR sensors
   - L298N
-  - Custom PCB
 repo: https://github.com/SRA-VJTI/Wall-E
 links:
-  - label: Gesture car code
+  - label: gesture car code
     url: https://github.com/NoobMaster-version/gesture-controlled-car
 poster: "origins/wall-e-poster.jpg"
 video: "origins/wall-e.mp4"
-metric: "200+ students taught on Wall-E kits"
+metric: "wall-e kits taught 200+ students"
 ---
 
 import VideoEvidence from '../../components/VideoEvidence.astro';
-import YouTube from '../../components/YouTube.astro';
 
-Every robot I've built since traces back to these three. Together they cover the
-three problems every mobile robot has: **feel** (reading the world through sensors),
-**balance** (acting faster than physics), and **decide** (choosing a path).
+Three small robots from my first years. Everything I've built since uses
+something I learned from these.
 
-## Chapter 1 — Feel: Gesture-Controlled Car
+## the gesture car
 
-**Winter internship (SRW), first semester — my first real project.** Tilt your
-hand and the car follows. An MPU6050 on the glove reads hand orientation, an
-ESP32 streams it over ESP-NOW to a second ESP32 driving the motors through an
-L298N, on a custom PCB.
+My first real project — winter internship, first semester. You tilt your hand,
+the car moves. An MPU6050 on a glove reads the tilt, one ESP32 sends it over
+ESP-NOW, another ESP32 drives the motors.
 
 <VideoEvidence
   src="origins/gesture-car.mp4"
   poster="origins/gesture-car-poster.jpg"
-  caption="Internship demonstration — hand gestures driving the car over ESP-NOW"
+  caption="the demo from the internship"
 />
 
-The hard parts at the time: filtering raw IMU noise into stable gesture
-detection, keeping wireless latency low enough that the car felt connected to
-your hand, and writing code efficient enough to live on a battery.
+The IMU data was garbage until I learned to filter it. That lesson keeps
+paying rent.
 
-## Chapter 2 — Balance: Wall-E, the Self-Balancing Robot
+## wall-e
 
-An inverted pendulum on two wheels: read the MPU6050, fuse gyro + accelerometer
-through a **complementary filter**, run PID hundreds of times per second, drive
-the motors before the robot falls over. Tuning it teaches you what P, I, and D
-each *feel* like — the overshoot, the sag, the jitter.
+A robot that balances on two wheels. Read the IMU, fuse gyro and
+accelerometer with a complementary filter, run PID a few hundred times a
+second, don't fall over. Tuning it teaches you what P, I and D actually
+*feel* like.
 
 <VideoEvidence
   src="origins/wall-e.mp4"
   poster="origins/wall-e-poster.jpg"
-  caption="Wall-E holding balance on two wheels"
+  caption="staying up"
 />
 
-Wall-E is more than my build: it's the **SRA workshop platform**. We manufacture,
-assemble, and sell Wall-E kits, and have taught **more than 200 students**
-embedded C, ESP32, MPU6050 integration, and complementary-filter math on them.
-I went from building one to teaching with it.
+Wall-E turned into something bigger than my build: at SRA we manufacture and
+assemble Wall-E kits and run workshops on them. More than 200 students have
+learned embedded C, ESP32 and sensor fusion on this little robot. I got to
+teach some of those workshops.
 
-## Chapter 3 — Decide: Line-Following Maze Solver
+## the maze solver
 
-Built for the SRA maze competition — **4th place**. ESP32 on ESP-IDF, an IR
-sensor array, a 100 Hz control loop. It follows the line with PID, maps the maze
-with the left-hand rule while remembering every junction, then replays the
-shortest path it found.
+Built for the SRA maze competition. ESP32 on ESP-IDF, a row of IR sensors, a
+100 Hz control loop. It follows the line, maps the maze with the left-hand
+rule, remembers the junctions, then runs the shortest path back. We came 4th.
 
 <VideoEvidence
   src="origins/maze-run.mp4"
   poster="origins/maze-run-poster.jpg"
-  caption="Competition run — mapping first, then the optimized pass"
+  caption="a run"
 />
-
-## Debrief
-
-These three taught me the full loop — sense, filter, control, act — before I ever
-touched ROS. The instinct that firmware should be honest about physics (latency,
-noise, momentum) started here.

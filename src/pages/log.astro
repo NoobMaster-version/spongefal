@@ -2,13 +2,14 @@
 import Base from '../layouts/Base.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+// my life as a changelog. + shipped, - dropped, ~ in progress
 const releases = [
   {
     v: 'v0.1',
-    date: 'Dec 2023 – Jan 2024',
-    title: 'First boot — Gesture-Controlled Car',
+    date: 'dec 2023',
+    title: 'first robot',
     notes: [
-      '+ ESP32, MPU6050, ESP-NOW — first hardware, first internship (SRW, semester 1)',
+      '+ gesture-controlled car (winter internship, semester 1)',
       '+ learned: sensors lie until you filter them',
     ],
     link: 'origins',
@@ -16,94 +17,91 @@ const releases = [
   {
     v: 'v0.5',
     date: '2024',
-    title: 'Control systems — Wall-E & the maze solver',
+    title: 'control systems',
     notes: [
-      '+ PID control, complementary filters, ESP-IDF',
-      '+ 4th place, SRA maze competition',
-      '+ joined SRA; started teaching what I had just learned',
+      '+ wall-e (self-balancing) and the maze solver — 4th place',
+      '+ joined SRA, started teaching what I had just learned',
     ],
     link: 'origins',
   },
   {
     v: 'v1.0',
-    date: 'Jun – Jul 2024',
-    title: 'BREAKING: the ROS2 migration — VVM',
+    date: 'jun 2024',
+    title: 'ROS2',
     notes: [
-      '+ ROS2, Gazebo, nodes/topics, inverse kinematics',
-      '- one-big-loop firmware thinking (deprecated)',
+      '+ VVM: voice → vision → robot arm',
+      '- writing robots as one big loop',
     ],
     link: 'vvm',
   },
   {
     v: 'v1.2',
-    date: 'Jul – Aug 2024',
-    title: 'Maintainership — MARIO',
+    date: 'jul 2024',
+    title: 'MARIO',
     notes: [
-      '+ ported SRA\'s teaching arm from EOL Gazebo Classic to Fortress',
-      '+ micro-ROS on ESP32; now runs SRA\'s ROS2 workshops',
+      '+ ported the teaching arm off a dead simulator',
+      '+ it still runs the ROS2 workshops',
     ],
     link: 'mario',
   },
   {
     v: 'v2.0',
-    date: 'Oct 2024 – Jan 2025',
-    title: 'Flight — e-Yantra warehouse drone',
+    date: 'oct 2024',
+    title: 'flying',
     notes: [
-      '+ PID-stabilized autonomous flight, ArUco localization',
-      '+ national semifinalist (IIT Bombay)',
-      '+ learned: vision-only localization is fragile — foreshadowing',
+      '+ e-Yantra warehouse drone, national semifinals',
+      '+ learned: camera-only localization is fragile (this comes back later)',
     ],
     link: 'eyantra',
   },
   {
     v: 'v2.5',
     date: '2024 – 2025',
-    title: 'Side quests — Kurma, coin sorter, the cat feeder',
+    title: 'side quests',
     notes: [
-      '+ quadruped gait over rough terrain (Mass Robotics prototype)',
-      '+ >95% coin recognition in a 24-hour hackathon',
-      '+ one (1) cat reliably fed',
+      '+ kurma the turtle robot',
+      '+ coin sorter in a 24-hour hackathon',
+      '+ one cat feeder',
     ],
     link: 'kurma',
   },
   {
     v: 'v3.0',
-    date: 'May – Jul 2025',
-    title: 'MAJOR: defence research — KDAIL',
+    date: 'may 2025',
+    title: 'the forklift',
     notes: [
-      '+ custom DS-TWR UWB firmware: 45 m stock limit → 315 m',
-      '+ channel 5/9, preamble & PAC tuning, ranging time-delay budgets',
-      '+ 0.4% error over 10,000 m², validated by total station',
+      '+ defence research internship at IIT Gandhinagar',
+      '+ wrote our own UWB ranging firmware: 45 m stock limit → 315 m',
+      '+ 0.4% error over 10,000 m², checked against a total station',
     ],
     link: 'kdail',
   },
   {
     v: 'v3.2',
-    date: 'May – Nov 2025',
-    title: 'Sim-to-real at a startup — NishCorp',
+    date: 'may – nov 2025',
+    title: 'the wheelchair',
     notes: [
-      '+ CAD → URDF → Gazebo → half-scale stair-climbing wheelchair',
-      '+ work supported ₹13 lakh in grants',
+      '+ NishCorp internship: CAD → simulation → half-scale prototype',
     ],
     link: 'nishcorp',
   },
   {
     v: 'v4.0',
     date: '2025 – 2026',
-    title: 'Full stack, physics to pixels — Smart Switch',
+    title: 'the smart switch',
     notes: [
-      '+ hobby project → product ambition',
-      '+ 220 V hardware, ESP-IDF firmware, TLS MQTT cloud, BLE provisioning, Flutter app — solo',
+      '+ hardware, firmware, cloud, app — all of it',
+      '+ started as a hobby, trying to make it a real product',
     ],
     link: 'smart-switch',
   },
   {
     v: 'HEAD',
     date: 'now',
-    title: 'In development',
+    title: 'in progress',
     notes: [
-      '~ open-sourcing the pet feeder',
-      '~ Smart Switch: perf board → KiCAD PCB, OTA updates',
+      '~ open-sourcing the cat feeder',
+      '~ smart switch: perf board → real PCB, OTA updates',
       '~ known issue: cannot stop building robots. won\'t fix.',
     ],
     link: null,
@@ -111,14 +109,13 @@ const releases = [
 ];
 ---
 
-<Base title="Timeline" description="Kartikey Pathak's growth as a changelog: from a first-semester gesture car (v0.1) to custom UWB ranging firmware (v3.0).">
+<Base title="log" description="The story so far, written as a changelog.">
   <div class="container">
     <header class="tl-head">
-      <p class="label">/timeline · git log --oneline me</p>
-      <h1>Changelog</h1>
+      <h1>log</h1>
       <p class="prose">
-        Release notes for an engineer. <code>+</code> shipped, <code>-</code> deprecated,
-        <code>~</code> in progress.
+        The story so far, as a changelog. <code>+</code> shipped,
+        <code>-</code> dropped, <code>~</code> in progress.
       </p>
     </header>
 
@@ -134,16 +131,12 @@ const releases = [
               <h2>{r.title}</h2>
               <ul class="release__notes">
                 {r.notes.map((n) => (
-                  <li
-                    class={
-                      n.startsWith('+') ? 'add' : n.startsWith('-') ? 'del' : 'wip'
-                    }
-                  >
+                  <li class={n.startsWith('+') ? 'add' : n.startsWith('-') ? 'del' : 'wip'}>
                     {n}
                   </li>
                 ))}
               </ul>
-              {r.link && <a class="label" href={`${base}/fleet/${r.link}/`}>open case study →</a>}
+              {r.link && <a class="label" href={`${base}/projects/${r.link}/`}>see it →</a>}
             </div>
           </li>
         ))
@@ -160,7 +153,6 @@ const releases = [
       display: flex;
       flex-direction: column;
       gap: var(--sp-6);
-      position: relative;
     }
     .release {
       display: grid;

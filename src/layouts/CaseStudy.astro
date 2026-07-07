@@ -1,7 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Base from './Base.astro';
-import EvidenceStamp from '../components/EvidenceStamp.astro';
 
 interface Props {
   entry: CollectionEntry<'fleet'>;
@@ -11,20 +10,21 @@ interface Props {
 const { entry, prev, next } = Astro.props;
 const d = entry.data;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const info = [d.dates, d.team, d.location, d.status].filter(Boolean).join(' · ');
 ---
 
 <Base title={d.title} description={d.summary}>
   <article class="container">
     <header class="cs-header">
-      <p class="label">{d.callsign} · {d.kind === 'cluster' ? 'unit cluster' : 'case study'}</p>
       <h1>{d.title}</h1>
       <p class="cs-summary">{d.summary}</p>
-      <EvidenceStamp dates={d.dates} team={d.team} status={d.status} location={d.location} />
+      <p class="label">{info}</p>
       <div class="cs-links">
         {
           d.repo ? (
             <a class="btn" href={d.repo} target="_blank" rel="noopener">
-              Source ↗
+              code ↗
             </a>
           ) : (
             d.repoNote && <span class="label cs-repo-note">{d.repoNote}</span>
@@ -43,17 +43,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
 
     <div class="cs-tech">
-      <h2 class="label" id="built-with">Built with</h2>
+      <p class="label" id="built-with">made with</p>
       <ul aria-labelledby="built-with">
         {d.tech.map((t) => <li>{t}</li>)}
       </ul>
     </div>
 
-    <nav class="berths" aria-label="Adjacent projects">
+    <nav class="berths" aria-label="More projects">
       {
         prev ? (
-          <a href={`${base}/fleet/${prev.id}/`} rel="prev">
-            <span class="label">← prev berth</span>
+          <a href={`${base}/projects/${prev.id}/`} rel="prev">
+            <span class="label">← previous</span>
             <span>{prev.data.title}</span>
           </a>
         ) : (
@@ -62,8 +62,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       }
       {
         next ? (
-          <a href={`${base}/fleet/${next.id}/`} rel="next" class="berths__next">
-            <span class="label">next berth →</span>
+          <a href={`${base}/projects/${next.id}/`} rel="next" class="berths__next">
+            <span class="label">next →</span>
             <span>{next.data.title}</span>
           </a>
         ) : (
@@ -90,13 +90,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     flex-wrap: wrap;
     gap: var(--sp-3);
     align-items: center;
-    margin-bottom: var(--sp-6);
+    margin-block: var(--sp-4) var(--sp-6);
   }
   .cs-repo-note {
     border: 1px dashed var(--line-strong);
     border-radius: var(--radius-sm);
     padding: var(--sp-2) var(--sp-3);
-    color: var(--warn);
   }
   .cs-tech ul {
     list-style: none;

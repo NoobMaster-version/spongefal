@@ -1,61 +1,47 @@
 ---
-title: "VVM: Voice Video Manipulator"
-callsign: VVM-01
-summary: "Say “pick up the red ball” and a simulated arm finds it, computes its 3D position, and grabs it. My first ROS2 project — the foundation everything after was built on."
+title: "VVM"
+summary: "say “pick up the red ball” and a robot arm finds it and picks it up. my first ROS2 project."
 kind: case-study
 order: 3
 status: retired
-dates: "Jun – Jul 2024"
-team: "solo"
-location: "simulation (Gazebo)"
+dates: "jun – jul 2024"
+team: "me"
+location: "simulation"
 tech:
   - ROS2
   - Gazebo
   - RViz
   - Python
   - OpenCV
-  - Speech recognition
-  - Open Manipulator X
-  - Forward/inverse kinematics
+  - speech recognition
+  - inverse kinematics
 repo: https://github.com/NoobMaster-version/voice-video-manipulator
 poster: "vvm/demo-pick-poster.jpg"
 video: "vvm/demo-pick.mp4"
-metric: "first ROS2 node to full pick-and-place"
+metric: "my first ROS2 project"
 ---
 
 import VideoEvidence from '../../components/VideoEvidence.astro';
-import Figure from '../../components/Figure.astro';
 
-## Mission
+Voice Video Manipulator. You say what you want, a camera finds it, an arm
+grabs it. All in Gazebo, with an Open Manipulator X.
 
-Connect three senses into one loop: **listen** (voice → command), **see**
-(camera → object detection → 3D position), **act** (inverse kinematics →
-pick-and-place with an Open Manipulator X arm in Gazebo).
-
-## Build
-
-- Voice commands parsed into target descriptions ("the red ball")
-- Object detection and tracking locates the target in the camera frame
-- 2D pixel coordinates converted to a 3D position estimate
-- Forward and inverse kinematics drive the arm through the pick sequence
-- Everything wired as ROS2 nodes — my first real contact with topics,
-  services, and the discipline of modular robot software
+The pipeline: speech recognition turns your words into a target ("red ball"),
+object detection finds it in the camera frame, some geometry turns the 2D
+pixel into a 3D position, and inverse kinematics moves the arm there.
 
 <VideoEvidence
   src="vvm/demo-detect.mp4"
   poster="vvm/demo-detect-poster.jpg"
-  caption="Object detection locating the target in simulation"
+  caption="finding the target"
 />
 
 <VideoEvidence
   src="vvm/demo-pick.mp4"
   poster="vvm/demo-pick-poster.jpg"
-  caption="Full pipeline: command → detect → kinematics → grasp"
+  caption="say it, see it, grab it"
 />
 
-## Debrief
-
-This was my introduction to ROS2, and it became the template for every project
-after it: MARIO's simulation work, the e-Yantra drone stack, the internship
-navigation systems. Learning to think in nodes and topics — instead of one big
-loop — was the single biggest jump in how I write robot software.
+This was the project where I learned ROS2 — nodes, topics, the whole way of
+thinking. Before this I wrote robots as one big loop. After this, everything
+I built was modular. It shows up in every project that came after.

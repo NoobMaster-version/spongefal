@@ -5,57 +5,38 @@ import Base from '../layouts/Base.astro';
 const fleet = (await getCollection('fleet')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// spotlight candidates: every unit; footage-first where it exists
 const spotlight = fleet.map((e) => ({
-  href: `${base}/fleet/${e.id}/`,
+  href: `${base}/projects/${e.id}/`,
   title: e.data.title,
-  callsign: e.data.callsign,
-  kindLabel: e.data.summary.split('—')[0]?.trim() ?? e.data.title,
   poster: `${base}/assets/${e.data.poster}`,
   video: e.data.video ? `${base}/assets/${e.data.video}` : null,
-  metric: e.data.metric ?? '',
+  hint: e.data.metric ?? '',
 }));
-// server-rendered default (works with JS off); JS randomizes per visit
 const first = spotlight.find((s) => s.video) ?? spotlight[0]!;
-
-const docks = [
-  { href: `${base}/fleet/`, label: 'FLEET', desc: 'every machine, with footage' },
-  { href: `${base}/research/`, label: 'RESEARCH', desc: 'deep dives & write-ups' },
-  { href: `${base}/timeline/`, label: 'TIMELINE', desc: 'the whole journey, as a changelog' },
-  { href: `${base}/uplink/`, label: 'UPLINK', desc: 'contact + resume' },
-];
-
-const proofs = [
-  { text: 'taught 200+ students on robot kits we build', href: `${base}/operator/` },
-  { text: 'directed a prize-winning short film', href: `${base}/operator/` },
-  { text: 'led a fest win 26 years in the making', href: `${base}/operator/` },
-  { text: 'the club cat has her own robot', href: `${base}/fleet/robots-for-good/` },
-];
 ---
 
-<Base
-  title="Console"
-  description="Kartikey Pathak — engineer, tinkerer, explorer. I build machines until they work: drones, quadrupeds, robot arms, boats, a smart switch, and one very well-fed cat."
->
+<Base title="hi" description="Kartikey Pathak. I build robots. This site is the stuff I've made.">
   <div class="container">
     <section class="hero">
       <div class="hero__text">
-        <p class="label">// workshop console · VJTI, Mumbai</p>
-        <h1 class="hero__name">Kartikey Pathak</h1>
+        <h1 class="hero__name">hi, I'm Kartikey</h1>
         <p class="hero__thesis">
-          I build machines until they work — drones, quadrupeds, robot arms,
-          boats, a smart switch, and one very well-fed cat.
+          I'm an electrical engineering student at VJTI, Mumbai. I build
+          robots. They usually work in the end.
+        </p>
+        <p class="hero__thesis hero__sub">
+          This site is the stuff I've made. Poke around — there are some toys
+          hidden in here.
         </p>
         <p class="hero__status label">
           <span class="blip" aria-hidden="true"></span>
-          STATUS: building · open to internships · you can call me at midnight
-          with an idea
+          currently building · call me at midnight with an idea
         </p>
       </div>
 
       <a class="spotlight" id="spotlight" href={first.href}>
         <span class="label spotlight__now">
-          NOW ON THE BENCH → <span id="spot-title">{first.title}</span>
+          on the bench right now → <span id="spot-title">{first.title}</span>
         </span>
         <span class="spotlight__screen">
           <video
@@ -70,27 +51,26 @@ const proofs = [
           >
             {first.video && <source src={first.video} type="video/mp4" />}
           </video>
-          <span class="label spotlight__hint" id="spot-metric">{first.metric}</span>
+          <span class="label spotlight__hint" id="spot-hint">{first.hint}</span>
         </span>
       </a>
       <script type="application/json" id="spotlight-data" set:html={JSON.stringify(spotlight)} />
     </section>
 
     <section class="bench" aria-labelledby="bench-h">
-      <p class="label">the bench · reload for a different machine above</p>
-      <h2 id="bench-h">Everything, at a glance</h2>
+      <h2 id="bench-h" class="bench__h">the stuff</h2>
+      <p class="label">roughly in the order I built it · reload the page for a different robot above</p>
       <ul class="bench-strip" role="list">
         {
           fleet.map((e) => (
             <li>
-              <a href={`${base}/fleet/${e.id}/`}>
+              <a href={`${base}/projects/${e.id}/`}>
                 <img
                   src={`${base}/assets/${e.data.poster}`}
                   alt=""
                   loading="lazy"
                   decoding="async"
                 />
-                <span class="label bench-strip__id">{e.data.callsign}</span>
                 <span class="bench-strip__t">{e.data.title}</span>
               </a>
             </li>
@@ -99,50 +79,35 @@ const proofs = [
       </ul>
     </section>
 
-    <nav class="docks" aria-label="Main destinations">
-      {
-        docks.map((d) => (
-          <a class="dock" href={d.href}>
-            <span class="dock__label">{d.label}</span>
-            <span class="dock__desc label">{d.desc}</span>
-          </a>
-        ))
-      }
-    </nav>
-
-    <section class="proofs" aria-label="Beyond the bench">
-      <ul role="list">
-        {
-          proofs.map((p) => (
-            <li>
-              <a href={p.href}>{p.text}</a>
-            </li>
-          ))
-        }
-      </ul>
+    <section class="also prose">
+      <p>
+        Also: I run robot workshops at <a href={`${base}/about/`}>SRA</a>,
+        made a short film with friends once (it won), and our lab cat has
+        <a href={`${base}/projects/robots-for-good/`}> her own robot</a>.
+      </p>
+      <p class="label">
+        the story so far → <a href={`${base}/log/`}>the log</a> ·
+        want to talk? → <a href={`${base}/contact/`}>contact</a>
+      </p>
     </section>
   </div>
 
   <script>
-    // Rotating spotlight: a different machine each visit.
-    type Spot = {
-      href: string; title: string; callsign: string;
-      poster: string; video: string | null; metric: string;
-    };
+    // a different machine on the bench every visit
+    type Spot = { href: string; title: string; poster: string; video: string | null; hint: string };
     const data = document.getElementById('spotlight-data');
     const link = document.getElementById('spotlight') as HTMLAnchorElement | null;
     const video = document.getElementById('spot-video') as HTMLVideoElement | null;
     if (data && link && video) {
       const spots: Spot[] = JSON.parse(data.textContent ?? '[]');
       const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      // rotate through the fleet across visits, not pure random (no repeats)
       const n = Number(localStorage.getItem('kp-spot') ?? '-1') + 1;
       localStorage.setItem('kp-spot', String(n));
       const pick = spots[n % spots.length];
       if (pick) {
         link.href = pick.href;
         document.getElementById('spot-title')!.textContent = pick.title;
-        document.getElementById('spot-metric')!.textContent = pick.metric;
+        document.getElementById('spot-hint')!.textContent = pick.hint;
         video.poster = pick.poster;
         video.innerHTML = '';
         if (pick.video && !reduce) {
@@ -170,12 +135,16 @@ const proofs = [
     .hero__name {
       font-size: var(--text-hero);
       letter-spacing: -0.02em;
-      margin: var(--sp-2) 0 var(--sp-4);
+      margin: 0 0 var(--sp-4);
     }
     .hero__thesis {
       font-size: var(--text-lg);
       color: var(--ink-soft);
-      max-width: 42ch;
+      max-width: 40ch;
+    }
+    .hero__sub {
+      font-size: var(--text-md);
+      color: var(--ink-faint);
     }
     .hero__status {
       display: flex;
@@ -207,7 +176,7 @@ const proofs = [
       border-color: var(--signal);
       box-shadow: var(--glow);
     }
-    .spotlight__now { color: var(--signal); }
+    .spotlight__now { color: var(--signal); text-transform: none; }
     .spotlight__screen {
       position: relative;
       display: block;
@@ -232,8 +201,10 @@ const proofs = [
       background: rgb(0 0 0 / 0.55);
       border-radius: var(--radius-sm);
       color: var(--ink);
+      text-transform: none;
     }
     .bench { margin-top: var(--sp-8); }
+    .bench__h { margin-top: 0; }
     .bench-strip {
       list-style: none;
       padding: 0;
@@ -246,7 +217,7 @@ const proofs = [
     .bench-strip a {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: var(--sp-1);
       text-decoration: none;
       color: var(--ink);
     }
@@ -261,56 +232,8 @@ const proofs = [
     .bench-strip a:focus-visible img {
       border-color: var(--signal);
     }
-    .bench-strip__id { margin-top: var(--sp-1); }
     .bench-strip__t { font-size: var(--text-sm); line-height: 1.3; }
-    .docks {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: var(--sp-3);
-      margin-block: var(--sp-12);
-    }
-    .dock {
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-1);
-      padding: var(--sp-4);
-      min-height: 88px;
-      border: 1px solid var(--line-strong);
-      border-radius: var(--radius);
-      background: var(--surface-1);
-      text-decoration: none;
-      transition: border-color var(--t-fast) var(--e-mech), box-shadow var(--t-fast) var(--e-mech);
-    }
-    .dock:hover,
-    .dock:focus-visible {
-      border-color: var(--signal);
-      box-shadow: var(--glow);
-    }
-    .dock__label {
-      font-family: var(--font-mono);
-      font-size: var(--text-lg);
-      letter-spacing: 0.1em;
-      color: var(--ink);
-    }
-    .proofs ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--sp-2) var(--sp-6);
-      max-width: none;
-      font-family: var(--font-mono);
-      font-size: var(--text-sm);
-    }
-    .proofs li::before {
-      content: '+ ';
-      color: var(--ok);
-    }
-    .proofs a {
-      color: var(--ink-soft);
-      text-decoration: none;
-    }
-    .proofs a:hover { color: var(--signal); }
+    .also { margin-top: var(--sp-12); }
     @media (max-width: 920px) {
       .hero { grid-template-columns: 1fr; padding-top: var(--sp-8); }
     }

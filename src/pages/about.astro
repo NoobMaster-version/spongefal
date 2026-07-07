@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base title="about" description="Electrical engineering student at VJTI. I build robots.">
+  <div class="container">
+    <header class="ab-head">
+      <h1>about</h1>
+    </header>
+
+    <div class="ab-grid">
+      <img
+        class="ab-portrait"
+        src={`${base}/assets/operator/portrait.jpg`}
+        alt="Kartikey Pathak"
+        width="340"
+        loading="eager"
+      />
+      <div class="prose">
+        <p>
+          I'm an electrical engineering student at VJTI, Mumbai (2023–2027,
+          minor in robotics). I've been building robots since my first year
+          and I'm not planning to stop.
+        </p>
+        <p>
+          The thing I chase is the moment a machine starts working. I don't
+          give up easily — most of my projects have a long list of versions
+          that didn't work before the one you see in the video.
+        </p>
+        <p>You can genuinely call me at midnight with an idea.</p>
+      </div>
+    </div>
+
+    <section class="prose">
+      <h2>SRA</h2>
+      <p>
+        Most of my building happens at the Society of Robotics and Automation
+        at VJTI. I run workshops there — embedded C, ESP32, sensor fusion —
+        and mentor juniors building their first robots. We make and sell
+        <a href={`${base}/projects/origins/`}>Wall-E kits</a>; over 200
+        students have learned on them so far.
+      </p>
+    </section>
+
+    <section class="prose">
+      <h2>not robots</h2>
+      <p>
+        I directed a short film with my friends once — "Plot Se Panga". It
+        won first prize across all branches. Turns out directing a film and
+        debugging a robot are the same job: many takes, one good one.
+      </p>
+      <p>
+        Also led my branch to a win at Pratibimb, VJTI's cultural fest —
+        first time in 26 years. The results came out on my 19th birthday.
+      </p>
+      <p>
+        And there's the <a href={`${base}/projects/robots-for-good/`}>lab
+        cat</a>. She has her own robot.
+      </p>
+    </section>
+
+    <section>
+      <h2>things I use a lot</h2>
+      <table>
+        <tbody>
+          <tr><th scope="row">languages</th><td>C, C++, Python</td></tr>
+          <tr><th scope="row">robots</th><td>ROS2, Gazebo, RViz, SLAM, NAV2, URDF, micro-ROS</td></tr>
+          <tr><th scope="row">embedded</th><td>ESP32, ESP-IDF, FreeRTOS, ESP-NOW, Raspberry Pi</td></tr>
+          <tr><th scope="row">control</th><td>PID, sensor fusion, kinematics</td></tr>
+          <tr><th scope="row">vision</th><td>OpenCV, ArUco, CNNs</td></tr>
+          <tr><th scope="row">making</th><td>KiCAD, OnShape, 3D printing, a soldering iron</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <p class="prose">
+      Want the formal version? <a href={`${base}/resume.pdf`}>resume (PDF)</a>
+      — or <a href={`${base}/plain/`}>everything on one page</a>.
+    </p>
+  </div>
+
+  <style>
+    .ab-head { padding-top: var(--sp-12); }
+    .ab-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: var(--sp-8);
+      align-items: start;
+      margin-bottom: var(--sp-8);
+    }
+    .ab-portrait {
+      width: 100%;
+      border: 1px solid var(--line-strong);
+    }
+    table { max-width: var(--measure); }
+    @media (max-width: 768px) {
+      .ab-grid { grid-template-columns: 1fr; }
+      .ab-portrait { max-width: 280px; }
+    }
+  </style>
+</Base>

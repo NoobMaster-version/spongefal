@@ -1,63 +1,45 @@
 ---
-title: "e-Yantra Warehouse Drone"
-callsign: EY-24
-summary: "An autonomous drone navigating a simulated warehouse for IIT Bombay's national e-Yantra competition: PID-stabilized flight, ArUco-marker localization, pick-and-place under time limits. Reached the semifinals."
+title: "e-Yantra drone"
+summary: "a drone flying itself around a simulated warehouse, reading ArUco markers to know where it is. we reached the national semifinals."
 kind: case-study
 order: 5
 status: retired
-dates: "Oct 2024 – Jan 2025"
-team: "team project"
-location: "IIT Bombay e-Yantra (remote)"
+dates: "oct 2024 – jan 2025"
+team: "team"
+location: "IIT Bombay e-Yantra"
 tech:
   - ROS2
   - Python
   - OpenCV
-  - ArUco detection
-  - PID control
-  - Path planning
-  - Drone SDK
-repoNote: "competition code — team repository"
+  - ArUco
+  - PID
+  - path planning
+repoNote: "team competition repo"
 poster: "eyantra/drone-1.jpg"
 video: "eyantra/flight-test.mp4"
-metric: "national semifinalist"
+metric: "national semifinals"
 ---
 
 import VideoEvidence from '../../components/VideoEvidence.astro';
 import Figure from '../../components/Figure.astro';
 
-## Mission
+e-Yantra is IIT Bombay's national robotics competition. Our task: a drone
+that flies through a warehouse on its own — find ArUco markers, figure out
+where you are from them, plan a path, pick and place packages, all against
+the clock.
 
-e-Yantra (IIT Bombay's national robotics competition) set the task: a drone
-that navigates a warehouse autonomously — detect and decode ArUco markers for
-localization, plan paths between racks, pick and place packages, and do all of
-it inside strict time limits.
+My side of it: PID loops for stable hover and precise movement, and the
+computer vision that detects and decodes the markers. A badly tuned axis on
+a drone isn't a bug report, it's a crash — you learn to tune carefully.
 
-## Build
-
-- **Flight control:** PID loops tuned for stable hover and precise movement —
-  the difference between a drone that drifts through a marker gate and one
-  that stops on it
-- **Localization:** OpenCV ArUco detection and decoding; marker positions
-  triangulated into the drone's position estimate
-- **Navigation:** path planning through the warehouse layout, integrated with
-  the perception pipeline in real time
-
-<Figure src="eyantra/drone-2.jpg" alt="Drone during a test flight" caption="Flight testing" />
+<Figure src="eyantra/drone-2.jpg" alt="the drone during testing" caption="testing" />
 
 <VideoEvidence
   src="eyantra/flight-test.mp4"
   poster="eyantra/flight-test-poster.jpg"
-  caption="Autonomous flight test"
+  caption="a flight test"
 />
 
-## Telemetry
-
-Advanced to the **semifinal level** of the national competition.
-
-## Debrief
-
-Two lessons that shaped what came after: PID tuning on a drone punishes
-sloppiness instantly (a badly tuned axis is airborne, not parked), and
-vision-only localization is fragile — markers occlude, lighting shifts. That
-second frustration is exactly what made UWB localization at KDAIL so
-interesting a year later.
+We made it to the semifinals. And I came away distrusting camera-only
+localization — markers hide, light changes. A year later that itch turned
+into the UWB work on [the forklift](/spongefal/projects/kdail/).

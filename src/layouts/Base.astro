@@ -13,20 +13,17 @@ interface Props {
 
 const {
   title,
-  description = 'Kartikey Pathak — engineer, tinkerer, explorer. I build machines until they work.',
+  description = "Kartikey Pathak. I build robots. This site is the stuff I've made.",
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-// current location shown as a ROS topic in the telemetry bar
 const topic = Astro.url.pathname.replace(base, '') || '/';
 
 const nav = [
-  { href: `${base}/`, label: 'console', topic: '/' },
-  { href: `${base}/fleet/`, label: 'fleet', topic: '/fleet' },
-  { href: `${base}/research/`, label: 'research', topic: '/research' },
-  { href: `${base}/timeline/`, label: 'timeline', topic: '/timeline' },
-  { href: `${base}/operator/`, label: 'operator', topic: '/operator' },
-  { href: `${base}/uplink/`, label: 'uplink', topic: '/uplink' },
+  { href: `${base}/projects/`, label: 'projects', topic: '/projects' },
+  { href: `${base}/log/`, label: 'log', topic: '/log' },
+  { href: `${base}/about/`, label: 'about', topic: '/about' },
+  { href: `${base}/contact/`, label: 'contact', topic: '/contact' },
 ];
 ---
 
@@ -45,18 +42,14 @@ const nav = [
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="telemetry" aria-label="Site telemetry">
-      <a class="telemetry__id" href={`${base}/`}>KP<span aria-hidden="true">//</span>CONSOLE</a>
+    <header class="telemetry" aria-label="Site header">
+      <a class="telemetry__id" href={`${base}/`}>~/kartikey</a>
       <nav class="telemetry__nav" aria-label="Primary">
         {
           nav.map((item) => (
             <a
               href={item.href}
-              aria-current={
-                topic === item.topic || (item.topic !== '/' && topic.startsWith(item.topic))
-                  ? 'page'
-                  : undefined
-              }
+              aria-current={topic.startsWith(item.topic) ? 'page' : undefined}
             >
               {item.label}
             </a>
@@ -65,8 +58,8 @@ const nav = [
       </nav>
       <div class="telemetry__state">
         <span class="telemetry__topic" aria-live="off">{topic}</span>
-        <button id="recruiter-toggle" class="telemetry__btn" aria-pressed="false" title="Recruiter mode: dense, static, facts only (shortcut: R)">
-          RECRUITER
+        <button id="plain-toggle" class="telemetry__btn" aria-pressed="false" title="Plain mode: no animations, just the content (shortcut: R)">
+          plain
         </button>
       </div>
     </header>
@@ -75,16 +68,15 @@ const nav = [
       <slot />
     </main>
 
-    <ConsoleNav />
-
     <footer class="site-footer">
       <div class="container">
         <nav aria-label="All pages" class="site-footer__nav">
+          <a href={`${base}/`}>home</a>
           {nav.map((item) => <a href={item.href}>{item.label}</a>)}
-          <a href={`${base}/recruiter/`}>recruiter view</a>
+          <a href={`${base}/plain/`}>everything on one page</a>
         </nav>
         <p class="label">
-          © 2026 Kartikey Pathak · REV 6 · built with Astro, no framework JS on this page
+          © 2026 kartikey pathak · built by hand · press <kbd>/</kbd> or <kbd>m</kbd> if you like keyboards
         </p>
       </div>
     </footer>
@@ -106,12 +98,11 @@ const nav = [
         font-size: var(--text-xs);
       }
       .telemetry__id {
-        color: var(--ink);
+        color: var(--signal);
         text-decoration: none;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.06em;
         font-weight: 500;
       }
-      .telemetry__id span { color: var(--signal); }
       .telemetry__nav {
         display: flex;
         gap: var(--sp-4);
@@ -120,8 +111,7 @@ const nav = [
       .telemetry__nav a {
         color: var(--ink-soft);
         text-decoration: none;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         padding: var(--sp-3) 0;
         border-block: 2px solid transparent;
       }
@@ -139,8 +129,7 @@ const nav = [
       .telemetry__topic { color: var(--ink-faint); }
       .telemetry__btn {
         font: inherit;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         color: var(--ink-soft);
         background: none;
         border: 1px solid var(--line-strong);
@@ -166,8 +155,13 @@ const nav = [
         margin-bottom: var(--sp-4);
         font-family: var(--font-mono);
         font-size: var(--text-xs);
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
+      }
+      kbd {
+        font-family: var(--font-mono);
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-sm);
+        padding: 0 4px;
       }
       @media (max-width: 768px) {
         .telemetry { gap: var(--sp-3); padding: 0 var(--sp-3); }
@@ -176,19 +170,17 @@ const nav = [
     </style>
 
     <script>
-      // Recruiter mode: dense, static, facts-first. Persisted; keystroke R.
-      const KEY = 'kp-recruiter';
+      // Plain mode: no animations, just the content. Persisted; keystroke R.
+      const KEY = 'kp-plain';
       const html = document.documentElement;
-      const btn = document.getElementById('recruiter-toggle');
+      const btn = document.getElementById('plain-toggle');
       const apply = (on: boolean) => {
-        html.classList.toggle('recruiter', on);
+        html.classList.toggle('plain', on);
         btn?.setAttribute('aria-pressed', String(on));
         localStorage.setItem(KEY, on ? '1' : '0');
       };
       apply(localStorage.getItem(KEY) === '1');
-      btn?.addEventListener('click', () =>
-        apply(!html.classList.contains('recruiter'))
-      );
+      btn?.addEventListener('click', () => apply(!html.classList.contains('plain')));
       addEventListener('keydown', (e) => {
         if (
           e.key.toLowerCase() === 'r' &&
@@ -196,7 +188,7 @@ const nav = [
           !(e.target instanceof HTMLInputElement) &&
           !(e.target instanceof HTMLTextAreaElement)
         ) {
-          apply(!html.classList.contains('recruiter'));
+          apply(!html.classList.contains('plain'));
         }
       });
     </script>

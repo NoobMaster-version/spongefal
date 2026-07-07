@@ -9,7 +9,6 @@ const fleet = defineCollection({
   loader: glob({ pattern: '*.mdx', base: './src/content/fleet' }),
   schema: z.object({
     title: z.string(),
-    callsign: z.string(), // short unit id shown on stamps, e.g. "KDAIL-01"
     summary: z.string(),
     kind: z.enum(['case-study', 'cluster']),
     order: z.number(), // ascending difficulty — the fleet sort order

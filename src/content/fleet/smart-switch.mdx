@@ -1,89 +1,62 @@
 ---
-title: "Smart Switch Board"
-callsign: SSB-01
-summary: "A hobby project that became a product mission: ordinary wall switches made remotely controllable — CAD enclosure, custom relay board, ESP-IDF firmware, TLS-secured MQTT cloud, BLE provisioning, and a Flutter app. Every layer built solo."
+title: "smart switch board"
+summary: "I made my wall switches smart. started as a hobby, now I want to make it a real product."
 kind: case-study
 order: 8
 status: deployed
 dates: "2025 – 2026"
-team: "solo — every layer"
-location: "my wall, running now"
+team: "me, every layer"
+location: "on my wall, running"
 tech:
   - ESP32
   - ESP-IDF
   - FreeRTOS
-  - MQTT (TLS 1.2, QoS 1, LWT)
-  - BLE GATT provisioning
+  - MQTT + TLS
+  - BLE
   - NVS
-  - cJSON
-  - Relays + MOSFETs + optocouplers
+  - relays + optocouplers
   - CAD
   - Flutter
-featured: true
-repoNote: "repo pending cleanup for public release"
+repoNote: "repo coming once I clean it up"
 links:
-  - label: App demo
+  - label: app demo
     url: https://www.youtube.com/watch?v=PdhZitnxkq0
-  - label: Physical button demo
+  - label: buttons demo
     url: https://www.youtube.com/watch?v=XPfEatq_d18
 poster: "smart-switch/final-switch.jpg"
-metric: "hardware → firmware → cloud → app, solo"
+metric: "hardware → firmware → cloud → app"
 ---
 
 import Figure from '../../components/Figure.astro';
 import YouTube from '../../components/YouTube.astro';
 
-## Mission
+Normal wall switches, but you can also flip them from your phone, from
+anywhere. The rule I set myself: the physical switches must keep working no
+matter what — wifi down, cloud down, app deleted, doesn't matter.
 
-This started as a hobby project — and then I decided it should be a **proper
-product**, not a demo. Retrofit ordinary electrical switches so they can be
-controlled from a phone anywhere, *without* breaking the physical switches
-people already trust. That one requirement (wall switch and app must always
-agree) drives most of the engineering below.
+I built every layer. Designed the box in CAD, soldered a perf board with
+relays and optocouplers (there's 220 V on one side of that board and a 3.3 V
+ESP32 on the other — the optocouplers are not optional), wrote the firmware
+on ESP-IDF, set up an MQTT broker with TLS, and made a Flutter app.
 
-## Constraints
+<Figure src="smart-switch/cad-model.jpg" alt="CAD model" caption="the CAD" />
+<Figure src="smart-switch/circuit-diagram.jpg" alt="circuit diagram" caption="the circuit" />
+<Figure src="smart-switch/perf-board.jpg" alt="perf board" caption="the board" />
+<Figure src="smart-switch/final-switch.jpg" alt="installed switch" caption="on the wall" />
 
-- **220 V AC** mains on one side, 3.3 V logic on the other — safety isn't optional
-- Wall switches must keep working with the cloud down
-- WiFi credentials must be configurable by a normal person (no re-flashing)
+Some details I'm fond of:
 
-## Build
+- wifi setup happens over BLE — the app sends the ssid and password, nothing
+  is hardcoded
+- state survives power cuts (NVS), and the board sends a small heartbeat
+  every 5 seconds so the app always knows the truth
+- the wall switch, the firmware, the cloud and the app all have to agree on
+  whether a light is on. keeping four copies of the truth in sync was the
+  hardest part of the whole project — harder than the mains voltage
+- the app was honestly vibe-coded. the firmware was not.
 
-Five layers, built end to end:
+<YouTube id="PdhZitnxkq0" title="from the app" />
+<YouTube id="XPfEatq_d18" title="from the buttons" />
 
-1. **Mechanical** — CAD-designed switch box and buttons
-2. **Electronics** — custom perf board: relays, MOSFETs, and optocouplers
-   isolating the ESP32 from 220 V AC
-3. **Firmware (ESP-IDF / FreeRTOS)** — manages 6 devices with GPIO mapping and
-   debounced interrupts; **BLE GATT provisioning** (phone sends
-   `{"ssid": "...", "password": "..."}` — no hardcoded WiFi); state persisted
-   in NVS across power cuts; a heartbeat JSON published every 5 seconds
-4. **Cloud** — MQTT broker with TLS 1.2, QoS 1 and Last-Will messages; topic
-   scheme `smart_switch/<board_id>/<device>/command` with ON/OFF/TOGGLE/STATUS
-5. **App (Flutter)** — control, rename, and live state for every switch.
-   Honestly: the app was vibe-coded — fast, focused on being usable. The
-   firmware was not.
-
-<Figure src="smart-switch/cad-model.jpg" alt="CAD model of the switch enclosure" caption="1 — CAD enclosure" />
-<Figure src="smart-switch/circuit-diagram.jpg" alt="Circuit diagram" caption="2 — circuit design" />
-<Figure src="smart-switch/perf-board.jpg" alt="Custom perf board with relays and ESP32" caption="3 — the board, soldered" />
-<Figure src="smart-switch/final-switch.jpg" alt="Finished smart switch installed" caption="4 — installed and live" />
-
-<YouTube id="PdhZitnxkq0" title="Controlling switches from the Flutter app" />
-<YouTube id="XPfEatq_d18" title="Physical buttons staying in sync with the app" />
-
-## Engineering challenges
-
-- **High-voltage safety:** optocoupled relay stage between mains and logic
-- **State synchronization:** wall switch, firmware state, cloud, and app must
-  never disagree — solved with retained state, NVS persistence, and the
-  heartbeat
-- **Provisioning UX:** BLE onboarding instead of hardcoded credentials
-- **Debouncing** real, aging wall switches at the interrupt level
-
-## Debrief
-
-Full-stack means something different in hardware: physics to pixels. The hard
-part of IoT wasn't connectivity — it was **state consistency** across four
-places a switch's truth can live. Next steps: move the perf board to a proper
-KiCAD PCB, OTA updates, then public release of the firmware.
+Next: a proper KiCAD PCB instead of the perf board, OTA updates, and then
+I'll publish the firmware.

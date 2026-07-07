@@ -1,86 +1,53 @@
 ---
-title: "NishCorp: Stair-Climbing Wheelchair"
-callsign: NC-WC1
-summary: "Internship at a mobility-robotics startup: brought their stair-climbing wheelchair from CAD into a full Gazebo/ROS simulation, then helped build the half-scale physical prototype. The work supported ₹13 lakh in grant funding."
+title: "stair-climbing wheelchair"
+summary: "internship at NishCorp: making their wheelchair exist in simulation before it existed in steel, then helping build the half-scale prototype."
 kind: case-study
 order: 7
 status: prototype
-dates: "May – Nov 2025"
-team: "team — Robotics Control Systems Engineer Intern"
-location: "NishCorp Technologies (hybrid)"
+dates: "may – nov 2025"
+team: "intern, control systems"
+location: "NishCorp Technologies"
 tech:
   - ROS
   - Gazebo
   - RViz
   - URDF
-  - Differential-drive kinematics
-  - IMU plugin
-  - Teleoperation
+  - kinematics
   - 3D printing
-repoNote: "code private — internship IP"
+repoNote: "code is the company's"
 links:
-  - label: Gazebo simulation demo
+  - label: sim demo
     url: https://www.youtube.com/watch?v=wYtic9mQcg0
 poster: "nishcorp/assembled-1.jpg"
-metric: "₹13,00,000 in grants supported"
+metric: "sim → half-scale prototype"
 ---
 
 import Figure from '../../components/Figure.astro';
 import YouTube from '../../components/YouTube.astro';
-import StatHero from '../../components/StatHero.astro';
 
-## Mission
+NishCorp is a startup building a wheelchair that can climb stairs. When I
+joined, it existed as a CAD model. My job was to make it exist in physics.
 
-NishCorp Technologies is building an autonomous wheelchair that climbs stairs.
-When I joined, the flagship design existed as a CAD model. My job: make it
-exist in physics — prove the motion in simulation before the startup spent
-money on hardware.
+I converted the CAD to URDF, spawned it in Gazebo, applied differential-drive
+kinematics, added an IMU plugin, and wrote teleop so we could actually drive
+it around in sim and study the motion and steering. Then we crossed over to
+the real world: 3D-printed parts, assembly, testing — a half-scale prototype
+that could sit and stand.
 
-<StatHero
-  stats={[
-    { value: '₹13 lakh', label: 'grants the work supported' },
-    { value: 'half-scale', label: 'physical prototype built' },
-    { value: 'sit + stand', label: 'kinematics demonstrated' },
-  ]}
-/>
-
-## Build
-
-The core challenge was **ROS spawning and then implementing the same stack on
-hardware** — getting the CAD model to exist correctly in simulation, then
-proving the identical behaviour physically:
-
-- Converted the provided CAD model to URDF and spawned it in Gazebo
-- Applied kinematic models for differential-drive control; analyzed motion and
-  steering behaviour
-- Added a Gazebo IMU plugin and sensor/actuator definitions; visualized in RViz
-- Wrote teleoperation scripts for driving the simulated chair
-- Then crossed sim-to-real: 3D-printed custom parts and helped assemble a
-  **half-scale physical prototype** that could sit and stand, contributing to
-  integration, testing, and field evaluations
-
-<YouTube id="wYtic9mQcg0" title="Wheelchair simulation in Gazebo" />
+<YouTube id="wYtic9mQcg0" title="the wheelchair in Gazebo" />
 
 <Figure
   src="nishcorp/assembled-1.jpg"
-  alt="Assembled half-scale wheelchair prototype"
-  caption="The half-scale prototype, assembled"
+  alt="half-scale prototype, assembled"
+  caption="the half-scale build"
 />
 
 <Figure
   src="nishcorp/motor-electronics.jpg"
-  alt="Motor control electronics for the prototype"
-  caption="Motor-control electronics"
+  alt="motor control electronics"
+  caption="motor electronics"
 />
 
-## Telemetry
-
-The simulation and prototype work became evidence in the startup's funding
-case — **NishCorp secured ₹13 lakh in grants** during this period.
-
-## Debrief
-
-Simulation isn't a rehearsal — it's an economic instrument. Proving motion in
-Gazebo cost the startup weeks; proving it in steel would have cost lakhs. The
-sim-to-real discipline I practiced here (model it, verify it, then build it at
-reduced scale) is now how I approach every hardware project.
+The simulation work mattered beyond the screen — it was part of what helped
+the startup land ₹13 lakh in grants. Simulating before building isn't
+academic; it's how a small team affords to be ambitious.

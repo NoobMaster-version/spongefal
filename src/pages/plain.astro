@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const fleet = (await getCollection('fleet')).sort((a, b) => b.data.order - a.data.order);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base title="everything on one page" description="The whole site as plain text: education, experience, every project with dates and links.">
+  <div class="container">
+    <header class="pl-head">
+      <h1>everything on one page</h1>
+      <p class="prose">
+        The whole site, plain. For people in a hurry.
+        <a href={`${base}/resume.pdf`}>resume PDF</a> ·
+        <a href="mailto:kartikeypathak.imp@gmail.com">email</a> ·
+        <a href="https://www.linkedin.com/in/kartikey-pathak-a365a8281/">linkedin</a> ·
+        <a href="https://github.com/NoobMaster-version">github</a>
+      </p>
+      <p class="prose">
+        Kartikey Pathak — B.Tech electrical engineering, minor in robotics,
+        VJTI Mumbai, 2023–2027 (CGPA 8.04).
+      </p>
+    </header>
+
+    <section>
+      <h2>work</h2>
+      <table>
+        <thead>
+          <tr><th scope="col">what</th><th scope="col">when</th><th scope="col">result</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>research intern — Krishna Defence & Allied Industries (at IIT Gandhinagar)</td>
+            <td>may – jul 2025</td>
+            <td>custom DS-TWR UWB firmware: 315 m range; 0.4% localization error over 10,000 m²; SLAM + NAV2 forklift</td>
+          </tr>
+          <tr>
+            <td>robotics intern — NishCorp Technologies</td>
+            <td>may – nov 2025</td>
+            <td>Gazebo sim + half-scale prototype of a stair-climbing wheelchair; work supported ₹13 lakh in grants</td>
+          </tr>
+          <tr>
+            <td>SRA, VJTI — member, workshop instructor</td>
+            <td>aug 2024 – now</td>
+            <td>embedded C / ESP32 workshops; Wall-E kits have taught 200+ students</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>projects</h2>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">project</th>
+            <th scope="col">when</th>
+            <th scope="col">in one line</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            fleet.map((e) => (
+              <tr>
+                <td><a href={`${base}/projects/${e.id}/`}>{e.data.title}</a></td>
+                <td>{e.data.dates}</td>
+                <td>{e.data.summary}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>tools</h2>
+      <table>
+        <tbody>
+          <tr><th scope="row">languages</th><td>C, C++, Python, Dart</td></tr>
+          <tr><th scope="row">robots</th><td>ROS/ROS2, Gazebo, RViz, SLAM, NAV2, URDF, micro-ROS, kinematics</td></tr>
+          <tr><th scope="row">embedded</th><td>ESP32 (ESP-IDF, FreeRTOS, ESP-NOW, BLE), Raspberry Pi, PID, sensor fusion</td></tr>
+          <tr><th scope="row">vision</th><td>OpenCV, ArUco, CNNs</td></tr>
+          <tr><th scope="row">hardware</th><td>KiCAD, OnShape, 3D printing, UWB, IMU, LIDAR</td></tr>
+          <tr><th scope="row">other</th><td>MQTT (TLS), BLE provisioning, Flutter</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <style>
+    .pl-head { padding-top: var(--sp-12); }
+    table { margin-bottom: var(--sp-6); }
+  </style>
+</Base>

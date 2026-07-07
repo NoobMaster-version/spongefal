@@ -18,9 +18,8 @@ Key facts:
   Wall-E self-balancing kit program has taught 200+ students.
 
 ## Pages
-- [Fleet — all projects](https://noobmaster-version.github.io/spongefal/fleet/): 13 projects, each with footage, dates, and measured results
-- [KDAIL case study](https://noobmaster-version.github.io/spongefal/fleet/kdail/): the UWB forklift work
-- [Research](https://noobmaster-version.github.io/spongefal/research/): DS-TWR firmware write-up
-- [Recruiter view](https://noobmaster-version.github.io/spongefal/recruiter/): dense 60-second summary
+- [Projects](https://noobmaster-version.github.io/spongefal/projects/): everything built, each page with footage and dates
+- [The forklift (KDAIL)](https://noobmaster-version.github.io/spongefal/projects/kdail/): the UWB localization work
+- [Everything on one page](https://noobmaster-version.github.io/spongefal/plain/): plain-text summary
 - [Resume PDF](https://noobmaster-version.github.io/spongefal/resume.pdf)
 - Contact: kartikeypathak.imp@gmail.com · github.com/NoobMaster-version
