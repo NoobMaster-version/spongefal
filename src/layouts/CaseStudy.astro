@@ -1,0 +1,135 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from './Base.astro';
+import EvidenceStamp from '../components/EvidenceStamp.astro';
+
+interface Props {
+  entry: CollectionEntry<'fleet'>;
+  prev?: CollectionEntry<'fleet'> | undefined;
+  next?: CollectionEntry<'fleet'> | undefined;
+}
+const { entry, prev, next } = Astro.props;
+const d = entry.data;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base title={d.title} description={d.summary}>
+  <article class="container">
+    <header class="cs-header">
+      <p class="label">{d.callsign} · {d.kind === 'cluster' ? 'unit cluster' : 'case study'}</p>
+      <h1>{d.title}</h1>
+      <p class="cs-summary">{d.summary}</p>
+      <EvidenceStamp dates={d.dates} team={d.team} status={d.status} location={d.location} />
+      <div class="cs-links">
+        {
+          d.repo ? (
+            <a class="btn" href={d.repo} target="_blank" rel="noopener">
+              Source ↗
+            </a>
+          ) : (
+            d.repoNote && <span class="label cs-repo-note">{d.repoNote}</span>
+          )
+        }
+        {d.links.map((l) => (
+          <a class="btn" href={l.url} target="_blank" rel="noopener">
+            {l.label} ↗
+          </a>
+        ))}
+      </div>
+    </header>
+
+    <div class="cs-body prose">
+      <slot />
+    </div>
+
+    <div class="cs-tech">
+      <h2 class="label" id="built-with">Built with</h2>
+      <ul aria-labelledby="built-with">
+        {d.tech.map((t) => <li>{t}</li>)}
+      </ul>
+    </div>
+
+    <nav class="berths" aria-label="Adjacent projects">
+      {
+        prev ? (
+          <a href={`${base}/fleet/${prev.id}/`} rel="prev">
+            <span class="label">← prev berth</span>
+            <span>{prev.data.title}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next ? (
+          <a href={`${base}/fleet/${next.id}/`} rel="next" class="berths__next">
+            <span class="label">next berth →</span>
+            <span>{next.data.title}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .cs-header {
+    padding-top: var(--sp-12);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: var(--sp-8);
+  }
+  .cs-summary {
+    font-size: var(--text-lg);
+    color: var(--ink-soft);
+    max-width: var(--measure);
+  }
+  .cs-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    align-items: center;
+    margin-bottom: var(--sp-6);
+  }
+  .cs-repo-note {
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: var(--sp-2) var(--sp-3);
+    color: var(--warn);
+  }
+  .cs-tech ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    max-width: none;
+  }
+  .cs-tech li {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: var(--sp-1) var(--sp-3);
+    color: var(--ink-soft);
+  }
+  .berths {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    margin-top: var(--sp-16);
+    border-top: 1px solid var(--line);
+    padding-top: var(--sp-6);
+  }
+  .berths a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    text-decoration: none;
+    color: var(--ink);
+    max-width: 40ch;
+  }
+  .berths a:hover span:last-child { color: var(--signal); }
+  .berths__next { text-align: right; margin-left: auto; }
+</style>

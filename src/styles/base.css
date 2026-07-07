@@ -1,0 +1,240 @@
+/* ============================================================
+   CONSOLE — base styles
+   Depth from lines, not shadows. Glow means powered.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+[data-theme='day'] {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: var(--surface-0);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  /* blueprint grid, barely there */
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ---------- typography ---------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--sp-4);
+  text-wrap: balance;
+}
+h1 { font-size: var(--text-2xl); }
+h2 { font-size: var(--text-xl); margin-top: var(--sp-12); }
+h3 { font-size: var(--text-lg); margin-top: var(--sp-8); }
+p, ul, ol {
+  max-width: var(--measure);
+  margin: 0 0 var(--sp-4);
+}
+a {
+  color: var(--signal);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--signal) 40%, transparent);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--t-fast) var(--e-mech);
+}
+a:hover { text-decoration-color: var(--signal); }
+strong { color: var(--ink); }
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.35em;
+}
+pre {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  overflow-x: auto;
+  font-size: var(--text-sm);
+}
+pre code { background: none; border: none; padding: 0; }
+
+/* mono labels — "if it's measured, it's mono" */
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+
+/* ---------- layout ---------- */
+.container {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--sp-6);
+}
+.prose { max-width: var(--measure); }
+section { margin-block: var(--sp-12); }
+
+/* ---------- panels: depth from lines ---------- */
+.panel {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--sp-6);
+}
+.panel--raised {
+  background: var(--surface-2);
+  border-top-color: var(--line-strong);
+}
+
+/* ---------- buttons: rectangles with corner ticks ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  padding: var(--sp-2) var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--surface-1);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    border-color var(--t-fast) var(--e-mech),
+    box-shadow var(--t-fast) var(--e-mech),
+    background var(--t-fast) var(--e-mech);
+}
+.btn:hover,
+.btn:focus-visible {
+  border-color: var(--signal);
+  box-shadow: var(--glow);
+}
+.btn--primary {
+  background: var(--signal);
+  color: var(--signal-ink);
+  border-color: var(--signal);
+}
+
+/* ---------- focus: powered ---------- */
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+/* ---------- skip link ---------- */
+.skip-link {
+  position: absolute;
+  left: var(--sp-4);
+  top: var(--sp-4);
+  z-index: 100;
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--signal);
+  color: var(--signal-ink);
+  border-radius: var(--radius-sm);
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+}
+
+/* ---------- scroll-driven reveals (tier 1 motion) ---------- */
+.reveal {
+  animation: reveal-in var(--t-slow) var(--e-mech) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+@keyframes reveal-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- tables: measured data ---------- */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+th, td {
+  text-align: left;
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--line);
+}
+th {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  font-weight: 500;
+}
+
+/* ---------- media ---------- */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+figure {
+  margin: var(--sp-6) 0;
+}
+figcaption {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-faint);
+  margin-top: var(--sp-2);
+}
+
+/* ============================================================
+   RECRUITER MODE — html.recruiter: dense, still, factual
+   Doubles as the high-legibility mode.
+   ============================================================ */
+html.recruiter *,
+html.recruiter *::before,
+html.recruiter *::after {
+  animation: none !important;
+  transition: none !important;
+}
+html.recruiter body {
+  background-image: none;
+}
+html.recruiter .instrument-only {
+  display: none !important;
+}
+
+/* ============================================================
+   Reduced motion: every effect has a static truth
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { animation: none; opacity: 1; transform: none; }
+}

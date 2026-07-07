@@ -1,0 +1,85 @@
+/* ============================================================
+   CONSOLE design system — tokens
+   Dark "NIGHT OPS" is default; [data-theme="day"] is DAY OPS.
+   Rule of the system: if it's measured, it's mono.
+   ============================================================ */
+
+:root {
+  /* --- surfaces & ink (NIGHT OPS) --- */
+  --surface-0: #0b0f14;
+  --surface-1: #11161d;
+  --surface-2: #1a212b;
+  --ink: #e8eff5;
+  --ink-soft: #9db0c1;
+  --ink-faint: #7d90a3;
+  --line: rgba(157, 176, 193, 0.16);
+  --line-strong: rgba(157, 176, 193, 0.34);
+
+  /* --- identity & status --- */
+  --signal: #3fe0c5;
+  --signal-ink: #0b0f14;
+  --warn: #ffb454;
+  --alert: #ff6b57;
+  --ok: #58d68a;
+  --grid: rgba(63, 224, 197, 0.05);
+  --glow: 0 0 12px rgba(63, 224, 197, 0.35);
+  --shadow-overlay: 0 16px 40px -24px rgb(0 0 0 / 0.5);
+
+  /* --- type --- */
+  --font-sans: 'Space Grotesk Variable', 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --text-xs: clamp(0.69rem, 0.66rem + 0.15vw, 0.78rem);
+  --text-sm: clamp(0.83rem, 0.79rem + 0.2vw, 0.94rem);
+  --text-md: clamp(1rem, 0.95rem + 0.25vw, 1.13rem);
+  --text-lg: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --text-xl: clamp(1.56rem, 1.4rem + 0.8vw, 2.1rem);
+  --text-2xl: clamp(1.95rem, 1.6rem + 1.7vw, 3rem);
+  --text-hero: clamp(2.6rem, 1.8rem + 4vw, 5.2rem);
+
+  /* --- space (4px base) --- */
+  --sp-1: 4px;  --sp-2: 8px;   --sp-3: 12px;  --sp-4: 16px;
+  --sp-6: 24px; --sp-8: 32px;  --sp-12: 48px; --sp-16: 64px;
+  --sp-24: 96px; --sp-32: 128px;
+  --section: var(--sp-24);
+  --measure: 68ch;
+  --content-max: 1200px;
+
+  /* --- shape: instruments are nearly square --- */
+  --radius-sm: 3px;
+  --radius: 6px;
+  --radius-lg: 10px;
+
+  /* --- motion --- */
+  --t-tick: 90ms;
+  --t-fast: 160ms;
+  --t-base: 240ms;
+  --t-slow: 480ms;
+  --t-scene: 640ms;
+  --e-mech: cubic-bezier(0.2, 0, 0, 1);
+  --e-scan: linear;
+  --e-settle: cubic-bezier(0.3, 1.4, 0.4, 1); /* PID demos ONLY */
+}
+
+[data-theme='day'] {
+  --surface-0: #f4f8fb;
+  --surface-1: #ffffff;
+  --surface-2: #e9f1f7;
+  --ink: #10233f;
+  --ink-soft: #40587a;
+  --ink-faint: #64789a;
+  --line: rgba(16, 35, 63, 0.14);
+  --line-strong: rgba(16, 35, 63, 0.32);
+  --signal: #0a8f7e;
+  --signal-ink: #ffffff;
+  --warn: #b26a00;
+  --alert: #c43d2b;
+  --ok: #1e7e46;
+  --grid: rgba(10, 143, 126, 0.06);
+  --glow: 0 0 12px rgba(10, 143, 126, 0.22);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section: var(--sp-16);
+  }
+}

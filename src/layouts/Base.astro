@@ -1,0 +1,201 @@
+---
+import '@fontsource-variable/space-grotesk';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Kartikey Pathak — robotics engineer. I build robots that know where they are.',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// current location shown as a ROS topic in the telemetry bar
+const topic = Astro.url.pathname.replace(base, '') || '/';
+
+const nav = [
+  { href: `${base}/`, label: 'console', topic: '/' },
+  { href: `${base}/fleet/`, label: 'fleet', topic: '/fleet' },
+  { href: `${base}/research/`, label: 'research', topic: '/research' },
+  { href: `${base}/timeline/`, label: 'timeline', topic: '/timeline' },
+  { href: `${base}/operator/`, label: 'operator', topic: '/operator' },
+  { href: `${base}/uplink/`, label: 'uplink', topic: '/uplink' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} · Kartikey Pathak</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="telemetry" aria-label="Site telemetry">
+      <a class="telemetry__id" href={`${base}/`}>KP<span aria-hidden="true">//</span>CONSOLE</a>
+      <nav class="telemetry__nav" aria-label="Primary">
+        {
+          nav.map((item) => (
+            <a
+              href={item.href}
+              aria-current={
+                topic === item.topic || (item.topic !== '/' && topic.startsWith(item.topic))
+                  ? 'page'
+                  : undefined
+              }
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="telemetry__state">
+        <span class="telemetry__topic" aria-live="off">{topic}</span>
+        <button id="recruiter-toggle" class="telemetry__btn" aria-pressed="false" title="Recruiter mode: dense, static, facts only (shortcut: R)">
+          RECRUITER
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <nav aria-label="All pages" class="site-footer__nav">
+          {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+          <a href={`${base}/recruiter/`}>recruiter view</a>
+        </nav>
+        <p class="label">
+          © 2026 Kartikey Pathak · REV 6 · built with Astro, no framework JS on this page
+        </p>
+      </div>
+    </footer>
+
+    <style>
+      .telemetry {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        gap: var(--sp-6);
+        padding: 0 var(--sp-6);
+        min-height: 48px;
+        background: color-mix(in srgb, var(--surface-0) 88%, transparent);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+      }
+      .telemetry__id {
+        color: var(--ink);
+        text-decoration: none;
+        letter-spacing: 0.1em;
+        font-weight: 500;
+      }
+      .telemetry__id span { color: var(--signal); }
+      .telemetry__nav {
+        display: flex;
+        gap: var(--sp-4);
+        overflow-x: auto;
+      }
+      .telemetry__nav a {
+        color: var(--ink-soft);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: var(--sp-3) 0;
+        border-block: 2px solid transparent;
+      }
+      .telemetry__nav a:hover { color: var(--ink); }
+      .telemetry__nav a[aria-current='page'] {
+        color: var(--signal);
+        border-bottom-color: var(--signal);
+      }
+      .telemetry__state {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: var(--sp-4);
+      }
+      .telemetry__topic { color: var(--ink-faint); }
+      .telemetry__btn {
+        font: inherit;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--ink-soft);
+        background: none;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-sm);
+        padding: var(--sp-1) var(--sp-2);
+        cursor: pointer;
+        min-height: 32px;
+      }
+      .telemetry__btn[aria-pressed='true'] {
+        background: var(--warn);
+        border-color: var(--warn);
+        color: var(--surface-0);
+      }
+      .site-footer {
+        margin-top: var(--sp-24);
+        border-top: 1px solid var(--line);
+        padding-block: var(--sp-8);
+      }
+      .site-footer__nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-bottom: var(--sp-4);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      @media (max-width: 768px) {
+        .telemetry { gap: var(--sp-3); padding: 0 var(--sp-3); }
+        .telemetry__topic { display: none; }
+      }
+    </style>
+
+    <script>
+      // Recruiter mode: dense, static, facts-first. Persisted; keystroke R.
+      const KEY = 'kp-recruiter';
+      const html = document.documentElement;
+      const btn = document.getElementById('recruiter-toggle');
+      const apply = (on: boolean) => {
+        html.classList.toggle('recruiter', on);
+        btn?.setAttribute('aria-pressed', String(on));
+        localStorage.setItem(KEY, on ? '1' : '0');
+      };
+      apply(localStorage.getItem(KEY) === '1');
+      btn?.addEventListener('click', () =>
+        apply(!html.classList.contains('recruiter'))
+      );
+      addEventListener('keydown', (e) => {
+        if (
+          e.key.toLowerCase() === 'r' &&
+          !e.metaKey && !e.ctrlKey && !e.altKey &&
+          !(e.target instanceof HTMLInputElement) &&
+          !(e.target instanceof HTMLTextAreaElement)
+        ) {
+          apply(!html.classList.contains('recruiter'));
+        }
+      });
+    </script>
+  </body>
+</html>

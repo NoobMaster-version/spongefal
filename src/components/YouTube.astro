@@ -1,0 +1,82 @@
+---
+/**
+ * Lite YouTube embed: a thumbnail + play button; the iframe (and its
+ * ~1 MB of third-party JS) loads only on click.
+ */
+interface Props {
+  id: string;
+  title: string;
+}
+const { id, title } = Astro.props;
+---
+
+<figure>
+  <button class="yt" data-yt-id={id} data-yt-title={title} aria-label={`Play video: ${title}`}>
+    <img
+      src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      width="480"
+      height="360"
+    />
+    <span class="yt__play" aria-hidden="true">▶</span>
+  </button>
+  <figcaption>{title}</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.yt').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.width = '560';
+      iframe.height = '315';
+      iframe.src = `https://www.youtube-nocookie.com/embed/${btn.dataset.ytId}?autoplay=1`;
+      iframe.title = btn.dataset.ytTitle ?? 'YouTube video';
+      iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.style.aspectRatio = '16 / 9';
+      iframe.style.width = '100%';
+      iframe.style.height = 'auto';
+      iframe.style.border = '0';
+      btn.replaceWith(iframe);
+    });
+  });
+</script>
+
+<style>
+  .yt {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--surface-1);
+  }
+  .yt img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    border: none;
+    border-radius: 0;
+  }
+  .yt__play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: var(--text-2xl);
+    color: var(--ink);
+    background: rgb(0 0 0 / 0.35);
+    transition: background var(--t-fast) var(--e-mech);
+  }
+  .yt:hover .yt__play,
+  .yt:focus-visible .yt__play {
+    background: rgb(0 0 0 / 0.15);
+    color: var(--signal);
+  }
+</style>

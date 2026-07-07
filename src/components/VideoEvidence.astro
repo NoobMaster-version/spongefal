@@ -1,0 +1,56 @@
+---
+/**
+ * Poster-first lazy video. Nothing heavier than a JPEG loads until
+ * the visitor asks for it (or it scrolls into view for loop clips).
+ */
+interface Props {
+  src: string; // under /assets/
+  poster: string; // under /assets/
+  caption?: string;
+  loop?: boolean;
+}
+const { src, poster, caption, loop = false } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<figure>
+  <video
+    controls={!loop}
+    muted={loop}
+    loop={loop}
+    playsinline
+    preload="none"
+    poster={`${base}/assets/${poster}`}
+    data-loop={loop ? 'true' : undefined}
+  >
+    <source src={`${base}/assets/${src}`} type="video/mp4" />
+  </video>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<script>
+  // Loop clips: play only while on screen; never fight reduced motion.
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) {
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          const v = e.target as HTMLVideoElement;
+          if (e.isIntersecting) v.play().catch(() => {});
+          else v.pause();
+        }),
+      { threshold: 0.4 }
+    );
+    document
+      .querySelectorAll<HTMLVideoElement>('video[data-loop]')
+      .forEach((v) => io.observe(v));
+  }
+</script>
+
+<style>
+  video {
+    width: 100%;
+    background: var(--surface-1);
+    border: 1px solid var(--line);
+  }
+</style>
