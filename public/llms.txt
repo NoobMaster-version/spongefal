@@ -1,8 +1,9 @@
 # Kartikey Pathak — robotics engineer
 
 > B.Tech Electrical Engineering (Minor: Robotics), VJTI Mumbai, 2023–2027.
-> Specialty: localization & navigation — UWB, SLAM/NAV2, ArUco — plus ROS2,
-> Gazebo simulation, and ESP32/ESP-IDF embedded systems.
+> Tinkerer-engineer who builds across robotics: drones, quadrupeds, robot
+> arms, boats, IoT products — with deep work in localization (UWB, SLAM/NAV2),
+> ROS2/Gazebo simulation, and ESP32/ESP-IDF embedded systems.
 
 Key facts:
 - Research intern, Krishna Defence & Allied Industries (May–Jul 2025, at IIT

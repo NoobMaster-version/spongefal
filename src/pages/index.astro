@@ -1,36 +1,102 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import RangingHero from '../instruments/RangingHero.astro';
 
-const fleet = (await getCollection('fleet')).sort((a, b) => b.data.order - a.data.order);
-const featured = fleet.filter((e) => e.data.featured).slice(0, 3);
+const fleet = (await getCollection('fleet')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+// spotlight candidates: every unit; footage-first where it exists
+const spotlight = fleet.map((e) => ({
+  href: `${base}/fleet/${e.id}/`,
+  title: e.data.title,
+  callsign: e.data.callsign,
+  kindLabel: e.data.summary.split('—')[0]?.trim() ?? e.data.title,
+  poster: `${base}/assets/${e.data.poster}`,
+  video: e.data.video ? `${base}/assets/${e.data.video}` : null,
+  metric: e.data.metric ?? '',
+}));
+// server-rendered default (works with JS off); JS randomizes per visit
+const first = spotlight.find((s) => s.video) ?? spotlight[0]!;
+
 const docks = [
-  { href: `${base}/fleet/`, label: 'FLEET', desc: `${fleet.length} units, all real` },
-  { href: `${base}/research/`, label: 'RESEARCH', desc: 'UWB localization at 315 m' },
-  { href: `${base}/timeline/`, label: 'TIMELINE', desc: 'v0.1 → today, as a changelog' },
+  { href: `${base}/fleet/`, label: 'FLEET', desc: 'every machine, with footage' },
+  { href: `${base}/research/`, label: 'RESEARCH', desc: 'deep dives & write-ups' },
+  { href: `${base}/timeline/`, label: 'TIMELINE', desc: 'the whole journey, as a changelog' },
   { href: `${base}/uplink/`, label: 'UPLINK', desc: 'contact + resume' },
+];
+
+const proofs = [
+  { text: 'taught 200+ students on robot kits we build', href: `${base}/operator/` },
+  { text: 'directed a prize-winning short film', href: `${base}/operator/` },
+  { text: 'led a fest win 26 years in the making', href: `${base}/operator/` },
+  { text: 'the club cat has her own robot', href: `${base}/fleet/robots-for-good/` },
 ];
 ---
 
-<Base title="Console" description="Kartikey Pathak — robotics engineer at VJTI. I build robots that know where they are. UWB localization, ROS2, embedded systems.">
+<Base
+  title="Console"
+  description="Kartikey Pathak — engineer, tinkerer, explorer. I build machines until they work: drones, quadrupeds, robot arms, boats, a smart switch, and one very well-fed cat."
+>
   <div class="container">
     <section class="hero">
-      <RangingHero />
-      <p class="label">// operator console · VJTI, Mumbai</p>
-      <h1 class="hero__name">Kartikey Pathak</h1>
-      <p class="hero__thesis">
-        I build robots that <em>know where they are</em> — UWB localization,
-        SLAM, drones, and the embedded systems underneath. Electrical
-        Engineering (Minor: Robotics), VJTI · class of 2027.
-      </p>
-      <p class="hero__status label">
-        <span class="blip" aria-hidden="true"></span>
-        STATUS: building · open to internships · you can call me at midnight
-        with an idea
-      </p>
+      <div class="hero__text">
+        <p class="label">// workshop console · VJTI, Mumbai</p>
+        <h1 class="hero__name">Kartikey Pathak</h1>
+        <p class="hero__thesis">
+          I build machines until they work — drones, quadrupeds, robot arms,
+          boats, a smart switch, and one very well-fed cat.
+        </p>
+        <p class="hero__status label">
+          <span class="blip" aria-hidden="true"></span>
+          STATUS: building · open to internships · you can call me at midnight
+          with an idea
+        </p>
+      </div>
+
+      <a class="spotlight" id="spotlight" href={first.href}>
+        <span class="label spotlight__now">
+          NOW ON THE BENCH → <span id="spot-title">{first.title}</span>
+        </span>
+        <span class="spotlight__screen">
+          <video
+            id="spot-video"
+            muted
+            loop
+            playsinline
+            autoplay
+            preload="metadata"
+            poster={first.poster}
+            aria-hidden="true"
+          >
+            {first.video && <source src={first.video} type="video/mp4" />}
+          </video>
+          <span class="label spotlight__hint" id="spot-metric">{first.metric}</span>
+        </span>
+      </a>
+      <script type="application/json" id="spotlight-data" set:html={JSON.stringify(spotlight)} />
+    </section>
+
+    <section class="bench" aria-labelledby="bench-h">
+      <p class="label">the bench · reload for a different machine above</p>
+      <h2 id="bench-h">Everything, at a glance</h2>
+      <ul class="bench-strip" role="list">
+        {
+          fleet.map((e) => (
+            <li>
+              <a href={`${base}/fleet/${e.id}/`}>
+                <img
+                  src={`${base}/assets/${e.data.poster}`}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="label bench-strip__id">{e.data.callsign}</span>
+                <span class="bench-strip__t">{e.data.title}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </section>
 
     <nav class="docks" aria-label="Main destinations">
@@ -44,39 +110,62 @@ const docks = [
       }
     </nav>
 
-    <section aria-labelledby="featured-h">
-      <p class="label">featured missions</p>
-      <h2 id="featured-h">The evidence, up front</h2>
-      <div class="missions">
+    <section class="proofs" aria-label="Beyond the bench">
+      <ul role="list">
         {
-          featured.map((entry) => (
-            <a class="mission panel" href={`${base}/fleet/${entry.id}/`}>
-              <img
-                src={`${base}/assets/${entry.data.poster}`}
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-              <div>
-                <span class="label">{entry.data.callsign} · {entry.data.dates}</span>
-                <h3>{entry.data.title}</h3>
-                <p class="mission__metric">{entry.data.metric}</p>
-              </div>
-            </a>
+          proofs.map((p) => (
+            <li>
+              <a href={p.href}>{p.text}</a>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </section>
   </div>
 
+  <script>
+    // Rotating spotlight: a different machine each visit.
+    type Spot = {
+      href: string; title: string; callsign: string;
+      poster: string; video: string | null; metric: string;
+    };
+    const data = document.getElementById('spotlight-data');
+    const link = document.getElementById('spotlight') as HTMLAnchorElement | null;
+    const video = document.getElementById('spot-video') as HTMLVideoElement | null;
+    if (data && link && video) {
+      const spots: Spot[] = JSON.parse(data.textContent ?? '[]');
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // rotate through the fleet across visits, not pure random (no repeats)
+      const n = Number(localStorage.getItem('kp-spot') ?? '-1') + 1;
+      localStorage.setItem('kp-spot', String(n));
+      const pick = spots[n % spots.length];
+      if (pick) {
+        link.href = pick.href;
+        document.getElementById('spot-title')!.textContent = pick.title;
+        document.getElementById('spot-metric')!.textContent = pick.metric;
+        video.poster = pick.poster;
+        video.innerHTML = '';
+        if (pick.video && !reduce) {
+          const s = document.createElement('source');
+          s.src = pick.video;
+          s.type = 'video/mp4';
+          video.appendChild(s);
+          video.load();
+          video.play().catch(() => {});
+        } else {
+          video.load();
+        }
+      }
+    }
+  </script>
+
   <style>
     .hero {
-      position: relative;
-      padding-block: var(--sp-24) var(--sp-12);
-    }
-    .hero > :global(*:not(canvas)) {
-      position: relative;
-      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: var(--sp-8);
+      align-items: center;
+      padding-block: var(--sp-16) var(--sp-8);
     }
     .hero__name {
       font-size: var(--text-hero);
@@ -86,11 +175,7 @@ const docks = [
     .hero__thesis {
       font-size: var(--text-lg);
       color: var(--ink-soft);
-      max-width: 46ch;
-    }
-    .hero__thesis em {
-      font-style: normal;
-      color: var(--signal);
+      max-width: 42ch;
     }
     .hero__status {
       display: flex;
@@ -104,12 +189,85 @@ const docks = [
       border-radius: 50%;
       background: var(--ok);
       box-shadow: 0 0 8px var(--ok);
+      flex-shrink: 0;
     }
+    .spotlight {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+      text-decoration: none;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--surface-1);
+      padding: var(--sp-3);
+      transition: border-color var(--t-fast) var(--e-mech), box-shadow var(--t-fast) var(--e-mech);
+    }
+    .spotlight:hover,
+    .spotlight:focus-visible {
+      border-color: var(--signal);
+      box-shadow: var(--glow);
+    }
+    .spotlight__now { color: var(--signal); }
+    .spotlight__screen {
+      position: relative;
+      display: block;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--surface-0);
+    }
+    .spotlight__screen video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border: none;
+      border-radius: 0;
+    }
+    .spotlight__hint {
+      position: absolute;
+      left: var(--sp-2);
+      bottom: var(--sp-2);
+      padding: 2px var(--sp-2);
+      background: rgb(0 0 0 / 0.55);
+      border-radius: var(--radius-sm);
+      color: var(--ink);
+    }
+    .bench { margin-top: var(--sp-8); }
+    .bench-strip {
+      list-style: none;
+      padding: 0;
+      margin: var(--sp-4) 0 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: var(--sp-3);
+      max-width: none;
+    }
+    .bench-strip a {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .bench-strip img {
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      width: 100%;
+      border: 1px solid var(--line);
+      transition: border-color var(--t-fast) var(--e-mech);
+    }
+    .bench-strip a:hover img,
+    .bench-strip a:focus-visible img {
+      border-color: var(--signal);
+    }
+    .bench-strip__id { margin-top: var(--sp-1); }
+    .bench-strip__t { font-size: var(--text-sm); line-height: 1.3; }
     .docks {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: var(--sp-3);
-      margin-block: var(--sp-8) var(--sp-16);
+      margin-block: var(--sp-12);
     }
     .dock {
       display: flex;
@@ -134,37 +292,27 @@ const docks = [
       letter-spacing: 0.1em;
       color: var(--ink);
     }
-    .missions {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--sp-4);
-      margin-top: var(--sp-6);
-    }
-    .mission {
+    .proofs ul {
+      list-style: none;
+      padding: 0;
       display: flex;
-      flex-direction: column;
-      gap: var(--sp-3);
-      text-decoration: none;
-      color: var(--ink);
-      transition: border-color var(--t-fast) var(--e-mech), box-shadow var(--t-fast) var(--e-mech);
-    }
-    .mission:hover,
-    .mission:focus-visible {
-      border-color: var(--signal);
-      box-shadow: var(--glow);
-    }
-    .mission img {
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      width: 100%;
-      border: 1px solid var(--line);
-    }
-    .mission h3 { margin: var(--sp-1) 0; }
-    .mission__metric {
+      flex-wrap: wrap;
+      gap: var(--sp-2) var(--sp-6);
+      max-width: none;
       font-family: var(--font-mono);
       font-size: var(--text-sm);
-      color: var(--signal);
-      margin: 0;
+    }
+    .proofs li::before {
+      content: '+ ';
+      color: var(--ok);
+    }
+    .proofs a {
+      color: var(--ink-soft);
+      text-decoration: none;
+    }
+    .proofs a:hover { color: var(--signal); }
+    @media (max-width: 920px) {
+      .hero { grid-template-columns: 1fr; padding-top: var(--sp-8); }
     }
   </style>
 </Base>

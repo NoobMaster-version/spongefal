@@ -1,11 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
+import RangingHero from '../instruments/RangingHero.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Base title="Research" description="UWB localization research: custom DS-TWR ranging firmware, channel and preamble tuning, validated to 0.4% error over 10,000 m² with a total station.">
   <div class="container prose-page">
     <header class="res-head">
+      <RangingHero />
       <p class="label">/research · Krishna Defence & Allied Industries · IIT Gandhinagar · May – Jul 2025</p>
       <h1>Centimeter-level UWB localization at industrial scale</h1>
       <p class="res-abstract">
@@ -95,7 +97,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   </div>
 
   <style>
-    .res-head { padding-top: var(--sp-12); }
+    .res-head {
+      position: relative;
+      padding-top: var(--sp-12);
+    }
+    .res-head > :global(*:not(canvas)) {
+      position: relative;
+      z-index: 1;
+    }
     .res-abstract {
       font-size: var(--text-md);
       color: var(--ink-soft);
