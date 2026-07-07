@@ -1,0 +1,109 @@
+---
+/**
+ * Landing instrument: the visitor is a UWB tag.
+ * Three anchors range to the cursor; circles intersect at you.
+ * Fine pointers only, honors reduced motion, pauses when hidden.
+ * Static truth: without JS/motion the hero is simply the hero.
+ */
+---
+
+<canvas class="ranging instrument-only" id="ranging-hero" aria-hidden="true"></canvas>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
+  const canvas = document.getElementById('ranging-hero') as HTMLCanvasElement | null;
+
+  if (canvas && !reduce && fine) {
+    const ctx = canvas.getContext('2d')!;
+    let w = 0, h = 0, raf = 0;
+    const dpr = Math.min(devicePixelRatio, 2);
+    // tag position follows the cursor with mechanical lag
+    const tag = { x: innerWidth / 2, y: 260 };
+    const aim = { x: innerWidth / 2, y: 260 };
+
+    const css = (name: string) =>
+      getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+    const size = () => {
+      w = canvas.clientWidth;
+      h = canvas.clientHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    size();
+    addEventListener('resize', size);
+
+    const anchors = () => [
+      { x: w * 0.08, y: h * 0.16, id: 'A0' },
+      { x: w * 0.92, y: h * 0.1, id: 'A1' },
+      { x: w * 0.78, y: h * 0.88, id: 'A2' },
+    ];
+
+    addEventListener('pointermove', (e) => {
+      const r = canvas.getBoundingClientRect();
+      aim.x = e.clientX - r.left;
+      aim.y = e.clientY - r.top;
+    });
+
+    const draw = () => {
+      const signal = css('--signal') || '#3fe0c5';
+      ctx.clearRect(0, 0, w, h);
+      tag.x += (aim.x - tag.x) * 0.12;
+      tag.y += (aim.y - tag.y) * 0.12;
+
+      ctx.font = '11px "IBM Plex Mono", monospace';
+      for (const a of anchors()) {
+        const d = Math.hypot(tag.x - a.x, tag.y - a.y);
+        // range circle through the tag
+        ctx.beginPath();
+        ctx.arc(a.x, a.y, d, 0, Math.PI * 2);
+        ctx.strokeStyle = signal + '22';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        // ranging line
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(tag.x, tag.y);
+        ctx.setLineDash([2, 6]);
+        ctx.strokeStyle = signal + '3a';
+        ctx.stroke();
+        ctx.setLineDash([]);
+        // anchor node + label + live range readout
+        ctx.fillStyle = signal;
+        ctx.fillRect(a.x - 3, a.y - 3, 6, 6);
+        ctx.fillStyle = signal + 'aa';
+        ctx.fillText(`${a.id} · ${(d / 100).toFixed(2)}m`, a.x + 8, a.y + 4);
+      }
+      // the tag: you
+      ctx.beginPath();
+      ctx.arc(tag.x, tag.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = signal;
+      ctx.fill();
+      ctx.fillStyle = signal + 'aa';
+      ctx.fillText('TAG · you · ±2cm', tag.x + 10, tag.y - 8);
+
+      raf = requestAnimationFrame(draw);
+    };
+    raf = requestAnimationFrame(draw);
+
+    // pause off-tab; recruiter mode kills it via CSS but stop the loop too
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(raf);
+      else raf = requestAnimationFrame(draw);
+    });
+  }
+</script>
+
+<style>
+  .ranging {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border: none;
+    border-radius: 0;
+  }
+</style>

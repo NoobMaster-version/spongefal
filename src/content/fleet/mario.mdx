@@ -25,6 +25,7 @@ metric: "runs SRA's ROS2 workshops"
 
 import VideoEvidence from '../../components/VideoEvidence.astro';
 import Figure from '../../components/Figure.astro';
+import IkArm from '../../instruments/IkArm.astro';
 
 ## Mission
 
@@ -60,6 +61,14 @@ stack was about to rot. My job: keep MARIO teachable.
   caption="The physical arm running the same stack via micro-ROS on ESP32"
   loop
 />
+
+## Try what MARIO does
+
+This robot's job is teaching — so let it teach. The arm below runs the same
+math MARIO uses: 2-link inverse kinematics solving for your cursor, with servo
+lag and a workspace boundary it honestly cannot cross.
+
+<IkArm />
 
 ## Debrief
 

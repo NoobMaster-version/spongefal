@@ -35,6 +35,7 @@ import Figure from '../../components/Figure.astro';
 import VideoEvidence from '../../components/VideoEvidence.astro';
 import YouTube from '../../components/YouTube.astro';
 import StatHero from '../../components/StatHero.astro';
+import UwbTradeoff from '../../instruments/UwbTradeoff.astro';
 
 ## Mission
 
@@ -92,7 +93,9 @@ delays** for each configuration.
 
 The trade is physics, not settings: longer preambles buy range and cost
 update rate; the time-delay budget (`poll_TX_to_response_RX` and friends) has
-to be re-derived for every profile.
+to be re-derived for every profile. Try it yourself:
+
+<UwbTradeoff />
 
 <VideoEvidence
   src="kdail/field-test.mp4"

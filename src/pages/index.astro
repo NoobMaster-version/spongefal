@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import RangingHero from '../instruments/RangingHero.astro';
 
 const fleet = (await getCollection('fleet')).sort((a, b) => b.data.order - a.data.order);
 const featured = fleet.filter((e) => e.data.featured).slice(0, 3);
@@ -17,6 +18,7 @@ const docks = [
 <Base title="Console" description="Kartikey Pathak — robotics engineer at VJTI. I build robots that know where they are. UWB localization, ROS2, embedded systems.">
   <div class="container">
     <section class="hero">
+      <RangingHero />
       <p class="label">// operator console · VJTI, Mumbai</p>
       <h1 class="hero__name">Kartikey Pathak</h1>
       <p class="hero__thesis">
@@ -69,7 +71,12 @@ const docks = [
 
   <style>
     .hero {
+      position: relative;
       padding-block: var(--sp-24) var(--sp-12);
+    }
+    .hero > :global(*:not(canvas)) {
+      position: relative;
+      z-index: 1;
     }
     .hero__name {
       font-size: var(--text-hero);

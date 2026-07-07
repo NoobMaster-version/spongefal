@@ -1,0 +1,136 @@
+---
+/**
+ * MARIO's signature instrument: a 2-link arm running real inverse
+ * kinematics against the cursor. It honestly refuses to reach outside
+ * its workspace — joint limits are the lesson, not a bug.
+ * Static truth: a poster line explains what the arm would do.
+ */
+---
+
+<div class="ik panel instrument-only">
+  <p class="label">instrument · inverse kinematics, live — move your cursor</p>
+  <canvas id="ik-arm" width="640" height="360" role="img" aria-label="Interactive 2-link robot arm tracking the cursor with inverse kinematics"></canvas>
+  <p class="label" id="ik-readout" aria-live="off">θ1: — · θ2: — · target: in reach</p>
+</div>
+<noscript>
+  <p class="label">
+    (With JavaScript, a 2-link arm solves inverse kinematics against your
+    cursor here — the math MARIO uses to reach a target.)
+  </p>
+</noscript>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas = document.getElementById('ik-arm') as HTMLCanvasElement | null;
+
+  if (canvas) {
+    const ctx = canvas.getContext('2d')!;
+    const readout = document.getElementById('ik-readout')!;
+    const W = canvas.width, H = canvas.height;
+    const bx = W / 2, by = H - 40; // base
+    const L1 = 120, L2 = 100;
+    // current joint state; IK gives targets, joints move mechanically
+    let t1 = -Math.PI / 2, t2 = 0.6;
+    let g1 = t1, g2 = t2;
+    let aimX = bx + 120, aimY = by - 140;
+    let raf = 0;
+
+    const css = (n: string) =>
+      getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+    canvas.addEventListener('pointermove', (e) => {
+      const r = canvas.getBoundingClientRect();
+      aimX = ((e.clientX - r.left) / r.width) * W;
+      aimY = ((e.clientY - r.top) / r.height) * H;
+    });
+
+    const solve = () => {
+      // classic 2-link IK, elbow-down
+      let dx = aimX - bx, dy = aimY - by;
+      const d = Math.hypot(dx, dy);
+      const reach = Math.min(d, L1 + L2 - 1e-3);
+      const inReach = d <= L1 + L2;
+      const c2 = (reach * reach - L1 * L1 - L2 * L2) / (2 * L1 * L2);
+      const k2 = -Math.acos(Math.max(-1, Math.min(1, c2)));
+      const k1 = Math.atan2(dy, dx) - Math.atan2(L2 * Math.sin(k2), L1 + L2 * Math.cos(k2));
+      g1 = k1;
+      g2 = k2;
+      return inReach;
+    };
+
+    const draw = () => {
+      const signal = css('--signal') || '#3fe0c5';
+      const alert = css('--alert') || '#ff6b57';
+      const line = css('--line-strong') || '#556';
+      const inReach = solve();
+      // servos don't teleport
+      const rate = reduce ? 1 : 0.15;
+      t1 += (g1 - t1) * rate;
+      t2 += (g2 - t2) * rate;
+
+      const jx = bx + L1 * Math.cos(t1), jy = by + L1 * Math.sin(t1);
+      const ex = jx + L2 * Math.cos(t1 + t2), ey = jy + L2 * Math.sin(t1 + t2);
+
+      ctx.clearRect(0, 0, W, H);
+      // workspace envelope — the honest boundary
+      ctx.beginPath();
+      ctx.arc(bx, by, L1 + L2, Math.PI, 2 * Math.PI);
+      ctx.strokeStyle = line;
+      ctx.setLineDash([3, 6]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      // base
+      ctx.fillStyle = line;
+      ctx.fillRect(bx - 26, by, 52, 8);
+      // links
+      ctx.lineWidth = 8;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = signal;
+      ctx.beginPath();
+      ctx.moveTo(bx, by);
+      ctx.lineTo(jx, jy);
+      ctx.lineTo(ex, ey);
+      ctx.stroke();
+      ctx.lineWidth = 1;
+      // joints
+      for (const [x, y] of [[bx, by], [jx, jy], [ex, ey]] as const) {
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#0b0f14';
+        ctx.fill();
+        ctx.strokeStyle = signal;
+        ctx.stroke();
+      }
+      // target
+      ctx.beginPath();
+      ctx.arc(aimX, aimY, 6, 0, Math.PI * 2);
+      ctx.strokeStyle = inReach ? signal : alert;
+      ctx.stroke();
+      ctx.font = '11px "IBM Plex Mono", monospace';
+      ctx.fillStyle = inReach ? signal : alert;
+      ctx.fillText(inReach ? 'target' : 'out of workspace', aimX + 10, aimY + 4);
+
+      readout.textContent = `θ1: ${((t1 * 180) / Math.PI).toFixed(0)}° · θ2: ${((t2 * 180) / Math.PI).toFixed(0)}° · target: ${inReach ? 'in reach' : 'OUT OF WORKSPACE'}`;
+
+      raf = requestAnimationFrame(draw);
+    };
+
+    // run only while visible
+    const io = new IntersectionObserver(([e]) => {
+      cancelAnimationFrame(raf);
+      if (e?.isIntersecting) raf = requestAnimationFrame(draw);
+    });
+    io.observe(canvas);
+  }
+</script>
+
+<style>
+  .ik { margin: var(--sp-8) 0; }
+  .ik canvas {
+    width: 100%;
+    background: var(--surface-0);
+    border: 1px solid var(--line);
+    touch-action: none;
+  }
+  #ik-readout { margin: var(--sp-2) 0 0; }
+</style>

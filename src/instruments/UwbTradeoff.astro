@@ -1,0 +1,134 @@
+---
+/**
+ * KDAIL's signature instrument: drag the range, watch the physical layer
+ * respond. Data is the real configuration table from the internship.
+ * Static truth: the config table in the case study says the same thing.
+ */
+---
+
+<div class="uwb panel" role="group" aria-label="Interactive UWB range–accuracy tradeoff">
+  <p class="label">instrument · drag the range, the physics answers</p>
+
+  <label class="uwb-slider">
+    <span class="label">target range</span>
+    <input id="uwb-range" type="range" min="5" max="315" value="10" step="1" />
+  </label>
+
+  <div class="uwb-scale" aria-hidden="true">
+    <span>5 m</span>
+    <span class="uwb-stock">45 m — stock firmware dies here</span>
+    <span>315 m</span>
+  </div>
+
+  <dl class="uwb-readout" aria-live="polite">
+    <div><dt>range</dt><dd id="uwb-r">10 m</dd></div>
+    <div><dt>profile</dt><dd id="uwb-p">short</dd></div>
+    <div><dt>preamble</dt><dd id="uwb-pre">128</dd></div>
+    <div><dt>accuracy</dt><dd id="uwb-acc">±2 cm</dd></div>
+    <div><dt>firmware</dt><dd id="uwb-fw" class="ok">stock OK</dd></div>
+  </dl>
+
+  <div class="uwb-bar" aria-hidden="true">
+    <div class="uwb-bar__err" id="uwb-bar"></div>
+    <span class="label" id="uwb-bar-label">error envelope</span>
+  </div>
+</div>
+
+<script>
+  // the real measured profiles
+  const profiles = [
+    { max: 12, name: 'short', preamble: 128, acc: '±2 cm', err: 2 },
+    { max: 55, name: 'mid', preamble: 256, acc: '±10 cm', err: 10 },
+    { max: 315, name: 'long', preamble: 512, acc: '±40 cm', err: 40 },
+  ];
+  const $ = (id: string) => document.getElementById(id)!;
+  const input = $('uwb-range') as HTMLInputElement;
+  if (input) {
+    const update = () => {
+      const r = Number(input.value);
+      const p = profiles.find((p) => r <= p.max) ?? profiles[2]!;
+      $('uwb-r').textContent = `${r} m`;
+      $('uwb-p').textContent = p.name;
+      $('uwb-pre').textContent = String(p.preamble);
+      $('uwb-acc').textContent = p.acc;
+      const fw = $('uwb-fw');
+      if (r > 45) {
+        fw.textContent = 'custom DS-TWR required';
+        fw.className = 'alert';
+      } else {
+        fw.textContent = 'stock OK';
+        fw.className = 'ok';
+      }
+      const bar = $('uwb-bar');
+      bar.style.width = `${Math.max(2, (p.err / 40) * 100)}%`;
+      $('uwb-bar-label').textContent = `error envelope: ${p.acc}`;
+    };
+    input.addEventListener('input', update);
+    update();
+  }
+</script>
+
+<style>
+  .uwb { margin: var(--sp-8) 0; }
+  .uwb-slider { display: block; margin: var(--sp-4) 0 var(--sp-2); }
+  .uwb-slider input {
+    width: 100%;
+    accent-color: var(--signal);
+    min-height: 32px;
+  }
+  .uwb-scale {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-faint);
+    margin-bottom: var(--sp-4);
+  }
+  .uwb-stock { color: var(--alert); }
+  .uwb-readout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: var(--sp-2);
+    margin: 0 0 var(--sp-4);
+  }
+  .uwb-readout div {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: var(--sp-2) var(--sp-3);
+  }
+  .uwb-readout dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+  .uwb-readout dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-md);
+    color: var(--signal);
+  }
+  .uwb-readout dd.ok { color: var(--ok); }
+  .uwb-readout dd.alert { color: var(--alert); }
+  .uwb-bar {
+    position: relative;
+    height: 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .uwb-bar__err {
+    height: 100%;
+    background: color-mix(in srgb, var(--signal) 30%, transparent);
+    border-right: 2px solid var(--signal);
+    transition: width var(--t-base) var(--e-mech);
+  }
+  .uwb-bar .label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    padding-left: var(--sp-3);
+  }
+</style>
