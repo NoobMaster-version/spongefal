@@ -4,6 +4,7 @@ import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
+import ConsoleNav from '../components/ConsoleNav.astro';
 
 interface Props {
   title: string;
@@ -73,6 +74,8 @@ const nav = [
     <main id="main">
       <slot />
     </main>
+
+    <ConsoleNav />
 
     <footer class="site-footer">
       <div class="container">

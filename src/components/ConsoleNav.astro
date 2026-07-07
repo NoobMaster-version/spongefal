@@ -1,0 +1,305 @@
+---
+/**
+ * The Console's navigation layer:
+ *  - Cmd+K / "/" command palette (ROS-flavored commands, plain-English aliases)
+ *  - "M" dock map with fog-of-war (rooms appear as you visit them)
+ *  - visited-room tracking in localStorage
+ * All of it sits ON TOP of real links — the failsafe nav in the footer and
+ * the telemetry bar work with JS disabled.
+ */
+import { getCollection } from 'astro:content';
+
+const fleet = (await getCollection('fleet')).sort((a, b) => a.data.order - b.data.order);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const rooms = [
+  { path: `${base}/`, id: '/', name: 'CONSOLE', desc: 'landing' },
+  { path: `${base}/fleet/`, id: '/fleet', name: 'FLEET', desc: `${fleet.length} units` },
+  { path: `${base}/research/`, id: '/research', name: 'RESEARCH', desc: 'UWB / DS-TWR' },
+  { path: `${base}/timeline/`, id: '/timeline', name: 'TIMELINE', desc: 'changelog' },
+  { path: `${base}/operator/`, id: '/operator', name: 'OPERATOR', desc: 'about' },
+  { path: `${base}/uplink/`, id: '/uplink', name: 'UPLINK', desc: 'contact' },
+  { path: `${base}/recruiter/`, id: '/recruiter', name: 'RECRUITER', desc: '60-sec view' },
+];
+
+const commands = [
+  ...rooms.map((r) => ({
+    cmd: `/goto ${r.id === '/' ? 'console' : r.id.slice(1)}`,
+    label: r.name.toLowerCase(),
+    href: r.path,
+  })),
+  ...fleet.map((e) => ({
+    cmd: `/goto fleet/${e.id}`,
+    label: e.data.title,
+    href: `${base}/fleet/${e.id}/`,
+  })),
+  { cmd: '/call resume', label: 'download resume (PDF)', href: `${base}/resume.pdf` },
+  { cmd: '/call email', label: 'send email', href: 'mailto:kartikeypathak.imp@gmail.com' },
+  { cmd: '/call github', label: 'open GitHub profile', href: 'https://github.com/NoobMaster-version' },
+];
+---
+
+<button class="dock-fab" id="dock-fab" aria-haspopup="dialog" title="Site map (M)">
+  <span aria-hidden="true">▦</span>
+  <span class="dock-fab__label">MAP</span>
+</button>
+
+<dialog class="console-dialog" id="dock-map" aria-label="Site map">
+  <div class="dock-head">
+    <span class="label">occupancy grid · <span id="dock-pct">0%</span> mapped</span>
+    <form method="dialog"><button class="dock-close" aria-label="Close map">ESC</button></form>
+  </div>
+  <nav class="dock-grid" aria-label="Rooms">
+    {
+      rooms.map((r) => (
+        <a class="dock-room" data-room={r.id} href={r.path}>
+          <span class="dock-room__name">{r.name}</span>
+          <span class="dock-room__desc label">{r.desc}</span>
+          <span class="dock-room__unknown label" aria-hidden="true">unmapped</span>
+        </a>
+      ))
+    }
+  </nav>
+  <p class="label dock-hint">rooms light up as you visit them · loop closure on revisit</p>
+</dialog>
+
+<dialog class="console-dialog" id="palette" aria-label="Command palette">
+  <input
+    id="palette-input"
+    type="text"
+    role="combobox"
+    aria-expanded="true"
+    aria-controls="palette-list"
+    aria-label="Type a command or destination"
+    placeholder="/goto fleet/kdail · resume · contact…"
+    autocomplete="off"
+    spellcheck="false"
+  />
+  <ul id="palette-list" role="listbox" aria-label="Commands">
+    {
+      commands.map((c, i) => (
+        <li role="option" data-href={c.href} data-cmd={`${c.cmd} ${c.label}`.toLowerCase()} aria-selected={i === 0 ? 'true' : 'false'}>
+          <span class="palette-cmd">{c.cmd}</span>
+          <span class="palette-label">{c.label}</span>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="label dock-hint">↑↓ select · ↵ go · esc close</p>
+</dialog>
+
+<script>
+  // ---- fog-of-war: record this room as visited ----
+  const KEY = 'kp-map';
+  const visited = new Set<string>(JSON.parse(localStorage.getItem(KEY) ?? '[]'));
+  const here = location.pathname.replace(/\/$/, '') || '/';
+  const rooms = [...document.querySelectorAll<HTMLAnchorElement>('.dock-room')];
+  const roomIds = rooms.map((r) => r.dataset.room!);
+  // normalize: /spongefal/fleet/kdail → /fleet
+  const match = roomIds
+    .filter((id) => id !== '/')
+    .find((id) => here.includes(id));
+  visited.add(match ?? '/');
+  localStorage.setItem(KEY, JSON.stringify([...visited]));
+
+  const map = document.getElementById('dock-map') as HTMLDialogElement;
+  const fab = document.getElementById('dock-fab');
+  const pct = document.getElementById('dock-pct');
+  const paint = () => {
+    let lit = 0;
+    rooms.forEach((r) => {
+      const on = visited.has(r.dataset.room!);
+      r.classList.toggle('is-mapped', on);
+      if (on) lit++;
+    });
+    if (pct) pct.textContent = `${Math.round((lit / rooms.length) * 100)}%`;
+  };
+  paint();
+  fab?.addEventListener('click', () => map.showModal());
+
+  // ---- command palette ----
+  const palette = document.getElementById('palette') as HTMLDialogElement;
+  const input = document.getElementById('palette-input') as HTMLInputElement;
+  const items = [...document.querySelectorAll<HTMLLIElement>('#palette-list li')];
+  let sel = 0;
+
+  const visible = () => items.filter((i) => !i.hidden);
+  const select = (idx: number) => {
+    const v = visible();
+    if (!v.length) return;
+    sel = ((idx % v.length) + v.length) % v.length;
+    items.forEach((i) => i.setAttribute('aria-selected', 'false'));
+    v[sel]!.setAttribute('aria-selected', 'true');
+    v[sel]!.scrollIntoView({ block: 'nearest' });
+  };
+  const filter = () => {
+    const q = input.value.trim().toLowerCase();
+    items.forEach((i) => (i.hidden = q !== '' && !i.dataset.cmd!.includes(q)));
+    select(0);
+  };
+  const go = () => {
+    const target = visible()[sel];
+    if (!target) return;
+    palette.close();
+    location.href = target.dataset.href!;
+  };
+  const openPalette = () => {
+    palette.showModal();
+    input.value = '';
+    filter();
+    input.focus();
+  };
+  input?.addEventListener('input', filter);
+  input?.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); select(sel + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); select(sel - 1); }
+    else if (e.key === 'Enter') { e.preventDefault(); go(); }
+  });
+  items.forEach((i) =>
+    i.addEventListener('click', () => {
+      palette.close();
+      location.href = i.dataset.href!;
+    })
+  );
+
+  // ---- global shortcuts ----
+  addEventListener('keydown', (e) => {
+    const typing =
+      e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement;
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      palette.open ? palette.close() : openPalette();
+    } else if (!typing && e.key === '/') {
+      e.preventDefault();
+      openPalette();
+    } else if (!typing && e.key.toLowerCase() === 'm' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      map.open ? map.close() : map.showModal();
+    }
+  });
+</script>
+
+<style>
+  .dock-fab {
+    position: fixed;
+    right: var(--sp-4);
+    bottom: var(--sp-4);
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    min-height: 44px;
+    padding: var(--sp-2) var(--sp-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    background: color-mix(in srgb, var(--surface-1) 85%, transparent);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: border-color var(--t-fast) var(--e-mech), box-shadow var(--t-fast) var(--e-mech);
+  }
+  .dock-fab:hover,
+  .dock-fab:focus-visible {
+    border-color: var(--signal);
+    box-shadow: var(--glow);
+  }
+  html.recruiter .dock-fab { display: none; }
+
+  .console-dialog {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--surface-1) 92%, transparent);
+    backdrop-filter: blur(12px);
+    color: var(--ink);
+    padding: var(--sp-4);
+    width: min(92vw, 640px);
+    box-shadow: var(--shadow-overlay);
+  }
+  .console-dialog::backdrop {
+    background: rgb(0 0 0 / 0.5);
+  }
+
+  .dock-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--sp-4);
+  }
+  .dock-close {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    background: none;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: var(--sp-1) var(--sp-2);
+    cursor: pointer;
+  }
+  .dock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--sp-2);
+  }
+  .dock-room {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--sp-3);
+    min-height: 64px;
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--ink-faint);
+  }
+  .dock-room__name { font-family: var(--font-mono); letter-spacing: 0.08em; font-size: var(--text-sm); }
+  .dock-room__desc { display: none; }
+  .dock-room.is-mapped {
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+    background: var(--surface-2);
+  }
+  .dock-room.is-mapped .dock-room__name { color: var(--signal); }
+  .dock-room.is-mapped .dock-room__desc { display: block; }
+  .dock-room.is-mapped .dock-room__unknown { display: none; }
+  .dock-room:hover, .dock-room:focus-visible { border-color: var(--signal); }
+  .dock-hint { margin: var(--sp-3) 0 0; }
+
+  #palette-input {
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: var(--text-md);
+    color: var(--ink);
+    background: var(--surface-0);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: var(--sp-3);
+  }
+  #palette-list {
+    list-style: none;
+    margin: var(--sp-3) 0 0;
+    padding: 0;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  #palette-list li {
+    display: flex;
+    gap: var(--sp-3);
+    align-items: baseline;
+    padding: var(--sp-2) var(--sp-3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+  #palette-list li[aria-selected='true'] {
+    background: var(--surface-2);
+    outline: 1px solid var(--line-strong);
+  }
+  .palette-cmd {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--signal);
+    white-space: nowrap;
+  }
+  .palette-label { color: var(--ink-soft); font-size: var(--text-sm); }
+</style>

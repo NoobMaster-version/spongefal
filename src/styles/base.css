@@ -208,6 +208,29 @@ figcaption {
 }
 
 /* ============================================================
+   Page transitions: cross-document view transitions, zero JS.
+   The incoming page sweeps in like a ranging scan (DS-TWR nod).
+   ============================================================ */
+@media not (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-old(root) {
+    animation: vt-out var(--t-base) var(--e-mech) both;
+  }
+  ::view-transition-new(root) {
+    animation: vt-scan 400ms var(--e-scan) both;
+  }
+  @keyframes vt-out {
+    to { opacity: 0.35; }
+  }
+  @keyframes vt-scan {
+    from { clip-path: inset(0 0 100% 0); }
+    to { clip-path: inset(0); }
+  }
+}
+
+/* ============================================================
    RECRUITER MODE — html.recruiter: dense, still, factual
    Doubles as the high-legibility mode.
    ============================================================ */
