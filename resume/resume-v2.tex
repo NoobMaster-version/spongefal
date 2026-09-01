@@ -1,5 +1,6 @@
 %-------------------------
-% Resume in Latex
+% Resume in Latex -- VERSION 2
+% Tighter cut: no coin sorter, no MARIO, no achievements section.
 % Author : Kartikey Pathak
 % Based on Jake's template
 %------------------------
@@ -51,7 +52,7 @@
 % Custom commands
 \newcommand{\resumeItem}[1]{
   \item\small{
-    {#1 \vspace{-2pt}}
+    {#1 \vspace{-4pt}}
   }
 }
 
@@ -71,7 +72,7 @@
 }
 
 \newcommand{\resumeItemListStart}{\begin{itemize}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-7pt}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-9pt}}
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
 
@@ -106,8 +107,8 @@
       {Eyecandy Robotics}{April 2026 -- August 2026}
       {Electronics and Hardware Engineer}{Bangalore, India}
       \resumeItemListStart
-        \resumeItem{Designed production PCBs for a legged consumer robot: Raspberry Pi Zero 2W and Milk-V compute carriers, 1S/2S battery charging and power boards, servo driver and sensor boards}
-        \resumeItem{Owned schematic capture, routing and fabrication output, integrating IMU, servo bus, audio amplifier and microphone array with test points and solder-jumper options for hardware bring-up}
+        \resumeItem{Designed production PCBs for a legged consumer robot: Raspberry Pi Zero 2W and Milk-V compute carriers, 1S/2S battery charging and power boards, and servo driver boards}
+        \resumeItem{Owned schematic capture, routing and fabrication output, integrating IMU, servo bus, audio and microphone array with test points for hardware bring-up}
       \resumeItemListEnd
 
     \resumeSubheading
@@ -136,7 +137,7 @@
     \resumeProjectHeading
       {\textbf{PCB Axial-Flux BLDC Motor} $|$ \emph{KiCAD, FEMM, Python}}{Aug 2026 -- Present}
       \resumeItemListStart
-        \resumeItem{Designing a coreless axial-flux motor whose stator is the PCB itself: 100\,mm two-layer board, 6 programmatically generated wedge coils over 8 poles, dual rotor with 16 N42 magnets across a 0.5\,mm air gap}
+        \resumeItem{Designing a coreless axial-flux motor whose stator is the PCB itself: 100\,mm two-layer board, 6 wedge coils over 8 poles, dual rotor with 16 N42 magnets across a 0.5\,mm air gap}
         \resumeItem{Built FEMM magnetostatic models to extract torque constant, back-EMF and torque ripple, identifying a 3.3x torque loss from the plastic rotor before fabrication}
       \resumeItemListEnd
 
@@ -151,14 +152,7 @@
       {\textbf{Smart Switch Board} $|$ \emph{ESP32, ESP-IDF, MQTT, BLE, Flutter, PCB Design}}{2025 -- Present}
       \resumeItemListStart
         \resumeItem{Built a network-controlled mains wall switch across every layer: CAD enclosure, a relay and optocoupler board isolating 220\,V from a 3.3\,V ESP32, ESP-IDF firmware, a TLS MQTT broker and a Flutter app}
-        \resumeItem{Designed the physical switches to keep working with network, broker and app unavailable, with WiFi provisioning over BLE and switch state persisted in NVS across power cuts}
-      \resumeItemListEnd
-
-    \resumeProjectHeading
-      {\textbf{\href{https://noobmaster-version.github.io/spongefal/projects/mario.html}{MARIO — 3DOF Robotic Manipulator}} $|$ \emph{ROS2, Gazebo Fortress, ESP32, micro-ROS}}{Apr 2025 -- Aug 2025}
-      \resumeItemListStart
-        \resumeItem{Developed ESP-IDF firmware and a micro-ROS pipeline for real-time hardware-software integration, migrating the simulation to Gazebo Fortress for teleoperation testing}
-        \resumeItem{Manufactured, tested and distributed 50+ robotics kits used by 200+ students for manipulator control}
+        \resumeItem{Kept the physical switches working with network, broker and app unavailable, using BLE WiFi provisioning and state persisted in NVS across power cuts}
       \resumeItemListEnd
 
     \resumeProjectHeading
@@ -166,13 +160,6 @@
       \resumeItemListStart
         \resumeItem{Programmed forward and inverse kinematics for an Open Manipulator X robot arm to perform precise pick-and-place tasks}
         \resumeItem{Implemented object detection and tracking algorithms to locate target objects in the Gazebo simulation environment}
-      \resumeItemListEnd
-
-    \resumeProjectHeading
-      {\textbf{\href{https://github.com/NoobMaster-version/Coin_Detection}{Automated Coin Sorter}} $|$ \emph{Raspberry Pi, TensorFlow, OpenCV, Servos}}{24-Hour Hackathon}
-      \resumeItemListStart
-        \resumeItem{Classified Rs 1, 2, 5 and 10 coins from a camera feed using a CNN trained by transfer learning, reaching above 95\% accuracy on Rs 5 and Rs 10 coins}
-        \resumeItem{Routed each classified coin into its bin using servo-actuated gates driven from the Raspberry Pi}
       \resumeItemListEnd
 
   \resumeSubHeadingListEnd
@@ -183,8 +170,7 @@
     \resumeProjectHeading
       {\textbf{\href{https://noobmaster-version.github.io/spongefal/projects/eyantra.html}{eYantra Warehouse Drone Competition}} $|$ \emph{IIT Bombay}}{Oct 2024 -- Feb 2025}
       \resumeItemListStart
-        \resumeItem{Developed autonomous navigation and PID control algorithms for stable hovering and motion of a simulated drone}
-        \resumeItem{Implemented ArUco marker detection using computer vision for autonomous localization and task execution}
+        \resumeItem{Developed autonomous navigation and PID control algorithms for stable hovering and motion of a simulated drone, with ArUco marker detection for localization and task execution}
       \resumeItemListEnd
   \resumeSubHeadingListEnd
 
@@ -199,13 +185,6 @@
         \resumeItem{Mentored junior teams in developing self-balancing and line-following robots, providing hardware/software expertise}
       \resumeItemListEnd
   \resumeSubHeadingListEnd
-
-%-----------ACHIEVEMENTS-----------
-\section{Achievements}
- \begin{itemize}[leftmargin=0.3in, label=\textendash]
-    \resumeItem{Led the Electrical Engineering branch to its first overall win at Pratibimb, VJTI's cultural festival, in the competition's 26-year history}
-    \resumeItem{Directed \emph{Plot Se Panga}, a short film that won first prize across all branches at VJTI}
- \end{itemize}\vspace{-7pt}
 
 %-----------TECHNICAL SKILLS-----------
 \section{Technical Skills}
