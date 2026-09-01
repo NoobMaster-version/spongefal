@@ -62,9 +62,14 @@ the fleet provisioning tooling, and the full FEMM findings (40.9 mN·m/A,
 
 - **Coin sorter has no month** in v1 and the master, only "24-Hour Hackathon",
   because the real date was not recorded anywhere.
-- **Skills are exactly your own list** from `reference.tex`, unchanged. Tools
-  the resumes demonstrate but do not claim: FEMM, MQTT, OpenCV, TensorFlow,
-  Flutter, FreeRTOS, BLE. Add any you would defend in an interview.
+- **Skills are your own list** from `reference.tex`, with Zephyr RTOS removed
+  at your request. Note that the Krishna Defence bullet still says the UWB
+  firmware was written "using Zephyr RTOS" — that is a record of what the work
+  was, not a skill claim, so it was left in. Remove it there too if you would
+  rather not be asked about Zephyr at all.
+- Tools the resumes demonstrate but do not claim in the skills list: FEMM,
+  MQTT, OpenCV, TensorFlow, Flutter, FreeRTOS, BLE. Add any you would defend
+  in an interview.
 - **With MARIO off v2**, the only "200+ students" claim there is the SRA
   workshops line, which resolves the duplicate that v1 had. If you put MARIO
   back, do not let that number appear twice on one page.
