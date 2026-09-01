@@ -1,0 +1,61 @@
+% Shared preamble for both resume variants.
+% Set \DENSE to 1 before \input{preamble} for the tighter one-page build.
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{charter}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tabularx}
+
+\definecolor{ink}{HTML}{111111}
+\definecolor{link}{HTML}{1A4B8C}
+\color{ink}
+\hypersetup{colorlinks=true,urlcolor=link,linkcolor=link}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\raggedright
+
+% ---- section headings -------------------------------------------------
+\titleformat{\section}
+  {\normalfont\large\bfseries\scshape}{}{0em}{}[\vspace{-0.72em}\rule{\linewidth}{0.6pt}]
+\titlespacing{\section}{0pt}{\secabove}{\secbelow}
+
+% ---- helpers ----------------------------------------------------------
+% \entry{organisation}{dates}{role}{location}
+\newcommand{\entry}[4]{%
+  \begin{tabularx}{\linewidth}{@{}Xr@{}}
+    \textbf{#1} & #2 \\
+    \textit{#3} & \textit{#4} \\
+  \end{tabularx}%
+  \vspace{-0.15em}%
+}
+% \pentry{project}{stack}{dates}
+\newcommand{\pentry}[3]{%
+  \begin{tabularx}{\linewidth}{@{}Xr@{}}
+    \textbf{#1} \,\textbar\, \textit{#2} & #3 \\
+  \end{tabularx}%
+  \vspace{-0.15em}%
+}
+\newenvironment{points}
+  {\begin{itemize}[leftmargin=1.1em,itemsep=\pointsep,topsep=0.18em,parsep=0pt,label=--]}
+  {\end{itemize}\vspace{\pointafter}}
+\newcommand{\skillrow}[2]{\textbf{#1:} #2\\[0.12em]}
+
+% ---- the header, identical in both variants ---------------------------
+\newcommand{\resumeheader}{%
+\begin{center}
+  {\LARGE\bfseries Kartikey Pathak}\\[0.35em]
+  {\small I build machines end to end --- mechanical, PCB, firmware, control, and the app on top.}\\[0.4em]
+  {\small
+    +91 7506048765 \,\textbar\,
+    \href{mailto:kartikeypathak.imp@gmail.com}{kartikeypathak.imp@gmail.com} \,\textbar\,
+    \href{https://spongefal.vercel.app}{spongefal.vercel.app} \,\textbar\,
+    \href{https://github.com/NoobMaster-version}{github.com/NoobMaster-version} \,\textbar\,
+    \href{https://www.linkedin.com/}{LinkedIn}
+  }
+\end{center}
+}
