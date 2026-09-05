@@ -58,6 +58,35 @@ bullets — UWB range extension 45 m → 315 m, the Rs 13 lakh grant contributio
 the fleet provisioning tooling, and the full FEMM findings (40.9 mN·m/A,
 496 rpm/V, zero cogging, 6 mm back plates).
 
+## Links
+
+Every link in all three PDFs points at the live Vercel site
+(`https://spongefal.vercel.app`), GitHub, or `eyecandyrobotics.com`.
+
+The old `noobmaster-version.github.io/spongefal/projects/<name>.html` URLs were
+all **404s** — Astro emits `projects/<name>/index.html`, so the `.html` form
+never existed. They are gone from every document. If you ever go back to
+GitHub Pages, the path is `/spongefal/projects/<name>/`, not `.html`.
+
+Linked entries: Portfolio (site root), Eyecandy Robotics
+(eyecandyrobotics.com), NishCorp, Krishna Defence, Smart Switch Board, Open
+Manipulator X Simulation, eYantra, FOC controller (GitHub), plus MARIO, Kurma,
+coin sorter, Wall-E, gesture car and animal feeder in the longer documents.
+The PCB axial-flux motor has no link because there is no case study for it on
+the site yet.
+
+To re-verify after editing, extract the URLs the PDF actually carries and check
+each one:
+
+```bash
+qpdf --qdf --object-streams=disable resume-v2.pdf - \
+  | grep -oP '/URI\s*\(\K[^)]*' | sort -u \
+  | while read u; do echo "$(curl -s -o /dev/null -w '%{http_code}' -L "$u")  $u"; done
+```
+
+Checking the `.tex` source is not enough — this reads the annotations in the
+built PDF, which is what a recruiter actually clicks.
+
 ## Open items
 
 - **Coin sorter has no month** in v1 and the master, only "24-Hour Hackathon",
