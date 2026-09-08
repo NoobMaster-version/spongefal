@@ -1,0 +1,46 @@
+name: CI
+
+# The trustworthy green check. Deliberately has nothing to do with GitHub
+# Pages, so it cannot be dragged red by Pages configuration — it just proves
+# the site compiles and holds together on both hosts.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Types and content schema
+        run: npx astro check
+
+      # The site is deployed to two hosts at two different base paths, and the
+      # base is what breaks: a link written for one host 404s on the other.
+      # So build and check both, every time.
+      - name: Build for GitHub Pages (base /spongefal)
+        run: npx astro build
+      - name: Every link resolves at /spongefal
+        run: node scripts/check-links.mjs /spongefal
+
+      - name: Build for Vercel (base /)
+        run: npx astro build
+        env:
+          VERCEL: '1'
+      - name: Every link resolves at /
+        run: node scripts/check-links.mjs
