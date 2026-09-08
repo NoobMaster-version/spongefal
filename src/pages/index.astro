@@ -8,6 +8,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const spotlight = fleet.map((e) => {
   const clip = e.data.homeVideo ?? e.data.video;
   return {
+    id: e.id,
     href: `${base}/projects/${e.id}/`,
     title: e.data.homeLabel ?? `${e.data.title} (${e.data.what})`,
     poster: `${base}/assets/${e.data.homePoster ?? e.data.poster}`,
@@ -15,7 +16,19 @@ const spotlight = fleet.map((e) => {
     hint: e.data.metric ?? '',
   };
 });
-const first = spotlight.find((s) => s.video) ?? spotlight[0]!;
+
+// Which slot opens the reel, in eighths. The rest of the weight goes to a
+// random pick from everything not listed here, so the older work still shows up.
+const OPENING_ODDS = [
+  { id: 'eyecandy', eighths: 3 },
+  { id: 'axial-flux-motor', eighths: 2 },
+];
+
+// No-JS (and first paint) gets the one I'd pick myself.
+const first =
+  spotlight.find((s) => s.id === OPENING_ODDS[0]!.id) ??
+  spotlight.find((s) => s.video) ??
+  spotlight[0]!;
 
 // the four I'd show someone first — newest and hardest at the top
 const featured = fleet
@@ -42,11 +55,42 @@ const featured = fleet
         </p>
       </div>
 
-      <a class="spotlight" id="spotlight" href={first.href}>
-        <span class="label spotlight__now">
-          on the bench right now → <span id="spot-title">{first.title}</span>
-        </span>
-        <span class="spotlight__screen">
+      {/* The screen is the link; the arrows are buttons beside it, because a
+          <button> cannot legally live inside an <a>. */}
+      <div class="spotlight">
+        <div class="spotlight__bar">
+          <span class="label spotlight__now" aria-live="polite">
+            on the bench right now → <span id="spot-title">{first.title}</span>
+          </span>
+          <span class="spotlight__nav">
+            <button type="button" class="spot-btn" id="spot-prev" aria-label="Previous project">
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path
+                  d="M10 3 5 8l5 5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <span class="spotlight__count" id="spot-count">1/{spotlight.length}</span>
+            <button type="button" class="spot-btn" id="spot-next" aria-label="Next project">
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path
+                  d="M6 3l5 5-5 5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </span>
+        </div>
+        <a class="spotlight__screen" id="spotlight-link" href={first.href} aria-label={`Open ${first.title}`}>
           <video
             id="spot-video"
             muted
@@ -60,9 +104,10 @@ const featured = fleet
             {first.video && <source src={first.video} type="video/mp4" />}
           </video>
           <span class="label spotlight__hint" id="spot-hint">{first.hint}</span>
-        </span>
-      </a>
+        </a>
+      </div>
       <script type="application/json" id="spotlight-data" set:html={JSON.stringify(spotlight)} />
+      <script type="application/json" id="spotlight-odds" set:html={JSON.stringify(OPENING_ODDS)} />
     </section>
 
     <section class="pick" aria-labelledby="pick-h">
@@ -157,23 +202,63 @@ const featured = fleet
   </div>
 
   <script>
-    // a different machine on the bench every visit
-    type Spot = { href: string; title: string; poster: string; video: string | null; hint: string };
+    // A different machine on the bench every visit, and arrows to page through
+    // the rest by hand.
+    type Spot = {
+      id: string;
+      href: string;
+      title: string;
+      poster: string;
+      video: string | null;
+      hint: string;
+    };
+    type Odds = { id: string; eighths: number };
+
     const data = document.getElementById('spotlight-data');
-    const link = document.getElementById('spotlight') as HTMLAnchorElement | null;
+    const oddsEl = document.getElementById('spotlight-odds');
+    const link = document.getElementById('spotlight-link') as HTMLAnchorElement | null;
     const video = document.getElementById('spot-video') as HTMLVideoElement | null;
+
     if (data && link && video) {
       const spots: Spot[] = JSON.parse(data.textContent ?? '[]');
-      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const n = Number(localStorage.getItem('kp-spot') ?? '-1') + 1;
-      localStorage.setItem('kp-spot', String(n));
-      const pick = spots[n % spots.length];
-      if (pick) {
+      const odds: Odds[] = JSON.parse(oddsEl?.textContent ?? '[]');
+      const titleEl = document.getElementById('spot-title')!;
+      const hintEl = document.getElementById('spot-hint')!;
+      const countEl = document.getElementById('spot-count')!;
+
+      // Weighted opening pick. The listed ids get their share of eighths; the
+      // remainder is split evenly over everything else, so the back catalogue
+      // still turns up instead of only ever showing the two newest.
+      const openingIndex = () => {
+        const total = 8;
+        let roll = Math.random() * total;
+        for (const o of odds) {
+          roll -= o.eighths;
+          if (roll < 0) {
+            const i = spots.findIndex((s) => s.id === o.id);
+            if (i >= 0) return i;
+          }
+        }
+        const rest = spots
+          .map((_, i) => i)
+          .filter((i) => !odds.some((o) => o.id === spots[i]!.id));
+        if (!rest.length) return 0;
+        return rest[Math.floor(Math.random() * rest.length)]!;
+      };
+
+      let at = openingIndex();
+
+      const show = (i: number) => {
+        at = (i + spots.length) % spots.length;
+        const pick = spots[at]!;
         link.href = pick.href;
-        document.getElementById('spot-title')!.textContent = pick.title;
-        document.getElementById('spot-hint')!.textContent = pick.hint;
+        link.setAttribute('aria-label', `Open ${pick.title}`);
+        titleEl.textContent = pick.title;
+        hintEl.textContent = pick.hint;
+        countEl.textContent = `${at + 1}/${spots.length}`;
         video.poster = pick.poster;
         video.innerHTML = '';
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
         const plain = document.documentElement.classList.contains('plain');
         if (pick.video && !reduce && !plain) {
           const s = document.createElement('source');
@@ -185,7 +270,11 @@ const featured = fleet
         } else {
           video.load();
         }
-      }
+      };
+
+      show(at);
+      document.getElementById('spot-prev')?.addEventListener('click', () => show(at - 1));
+      document.getElementById('spot-next')?.addEventListener('click', () => show(at + 1));
     }
 
     // featured cards: loop only while on screen, and never under reduced motion
@@ -253,15 +342,62 @@ const featured = fleet
       padding: var(--sp-3);
       transition: border-color var(--t-fast) var(--e-mech), box-shadow var(--t-fast) var(--e-mech);
     }
+    /* focus-within, not focus-visible: the focusable parts are now inside */
     .spotlight:hover,
-    .spotlight:focus-visible {
+    .spotlight:focus-within {
       border-color: var(--signal);
       box-shadow: var(--glow);
     }
-    .spotlight__now { color: var(--signal); text-transform: none; }
+    .spotlight__bar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--sp-3);
+    }
+    .spotlight__now { color: var(--signal); text-transform: none; min-width: 0; }
+    .spotlight__nav {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-1);
+      flex-shrink: 0;
+    }
+    .spot-btn {
+      position: relative;
+      display: inline-grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      color: var(--ink-soft);
+      background: none;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: color var(--t-fast) var(--e-mech), border-color var(--t-fast) var(--e-mech);
+    }
+    /* 26px reads right but is a poor thumb target — grow the hit area, not the box */
+    .spot-btn::after {
+      content: '';
+      position: absolute;
+      inset: -9px;
+    }
+    .spot-btn svg { width: 14px; height: 14px; display: block; }
+    .spot-btn:hover {
+      color: var(--signal);
+      border-color: var(--signal);
+    }
+    .spotlight__count {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-variant-numeric: tabular-nums;
+      color: var(--ink-faint);
+      min-width: 3.5ch;
+      text-align: center;
+    }
     .spotlight__screen {
       position: relative;
       display: block;
+      text-decoration: none;
       border-radius: var(--radius-sm);
       overflow: hidden;
       border: 1px solid var(--line);
