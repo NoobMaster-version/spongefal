@@ -43,6 +43,16 @@ const nav = [
     <meta name="theme-color" content="#0b0f14" />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    {/* Set theme and plain mode before first paint, or the page flashes the wrong one. */}
+    <script is:inline>
+      (function () {
+        try {
+          var h = document.documentElement;
+          if (localStorage.getItem('kp-theme') === 'day') h.dataset.theme = 'day';
+          if (localStorage.getItem('kp-plain') === '1') h.classList.add('plain');
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -63,9 +73,32 @@ const nav = [
       </nav>
       <div class="telemetry__state">
         <span class="telemetry__topic" aria-live="off">{topic}</span>
-        <button id="theme-toggle" class="telemetry__btn" title="Toggle light / dark">
-          <span id="theme-icon" aria-hidden="true">☾</span>
-          <span class="sr-only">toggle theme</span>
+        <button
+          id="theme-toggle"
+          class="telemetry__btn telemetry__btn--icon"
+          aria-label="Toggle light or dark theme"
+          title="Toggle light / dark"
+        >
+          {/* drawn, not typed — the moon and sun glyphs aren't in either webfont */}
+          <svg class="icon icon--moon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path
+              d="M13.2 10.1A5.6 5.6 0 0 1 5.9 2.8 5.6 5.6 0 1 0 13.2 10.1Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.3"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <svg class="icon icon--sun" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <circle cx="8" cy="8" r="3.1" fill="none" stroke="currentColor" stroke-width="1.3" />
+            <path
+              d="M8 1v1.8M8 13.2V15M1 8h1.8M13.2 8H15M3 3l1.3 1.3M11.7 11.7 13 13M13 3l-1.3 1.3M4.3 11.7 3 13"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.3"
+              stroke-linecap="round"
+            />
+          </svg>
         </button>
         <button id="plain-toggle" class="telemetry__btn" aria-pressed="false" title="Plain mode: no animations, just the content (shortcut: R)">
           plain
@@ -149,6 +182,17 @@ const nav = [
         cursor: pointer;
         min-height: 32px;
       }
+      .telemetry__btn--icon {
+        display: inline-grid;
+        place-items: center;
+        width: 32px;
+        padding: 0;
+      }
+      .icon { width: 14px; height: 14px; display: block; }
+      /* night is the default, so the moon shows; day swaps to the sun */
+      .icon--sun { display: none; }
+      :global([data-theme='day']) .icon--moon { display: none; }
+      :global([data-theme='day']) .icon--sun { display: block; }
       .telemetry__btn[aria-pressed='true'] {
         background: var(--warn);
         border-color: var(--warn);
@@ -189,6 +233,22 @@ const nav = [
         html.classList.toggle('plain', on);
         btn?.setAttribute('aria-pressed', String(on));
         localStorage.setItem(KEY, on ? '1' : '0');
+        // plain means plain: the decorative loops stop too. Coming back out of
+        // plain mode, the observers only fire on a *change* in visibility, so
+        // restart whatever is already on screen by hand.
+        const loops = document.querySelectorAll<HTMLVideoElement>(
+          'video[data-loop], video[data-pick-loop], video[data-wall-loop], #spot-video'
+        );
+        const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        loops.forEach((v) => {
+          if (on) {
+            v.pause();
+          } else if (!reduced) {
+            const r = v.getBoundingClientRect();
+            const onScreen = r.top < innerHeight && r.bottom > 0;
+            if (onScreen) v.play().catch(() => {});
+          }
+        });
       };
       apply(localStorage.getItem(KEY) === '1');
       btn?.addEventListener('click', () => apply(!html.classList.contains('plain')));
@@ -206,10 +266,11 @@ const nav = [
       // --- light / dark theme (default dark) ---
       const TKEY = 'kp-theme';
       const tbtn = document.getElementById('theme-toggle');
-      const ticon = document.getElementById('theme-icon');
+      const themeMeta = document.querySelector('meta[name="theme-color"]');
       const setTheme = (day: boolean) => {
         html.dataset.theme = day ? 'day' : 'night';
-        if (ticon) ticon.textContent = day ? '☀' : '☾';
+        // the browser chrome should match the page, not always the dark palette
+        themeMeta?.setAttribute('content', day ? '#f4f8fb' : '#0b0f14');
         localStorage.setItem(TKEY, day ? 'day' : 'night');
       };
       setTheme(localStorage.getItem(TKEY) === 'day');

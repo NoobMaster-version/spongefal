@@ -44,6 +44,8 @@ h1, h2, h3, h4 {
 h1 { font-size: var(--text-2xl); }
 h2 { font-size: var(--text-xl); margin-top: var(--sp-12); }
 h3 { font-size: var(--text-lg); margin-top: var(--sp-8); }
+/* the header is sticky at 48px — don't let it eat anchored headings */
+:is(h1, h2, h3, h4)[id] { scroll-margin-top: calc(48px + var(--sp-4)); }
 p, ul, ol {
   max-width: var(--measure);
   margin: 0 0 var(--sp-4);
@@ -56,6 +58,11 @@ a {
   transition: text-decoration-color var(--t-fast) var(--e-mech);
 }
 a:hover { text-decoration-color: var(--signal); }
+/* mobile: drop the 300ms double-tap-zoom delay, and pick our own tap flash */
+:is(a, button, summary, [role='button']) {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--signal) 24%, transparent);
+}
 strong { color: var(--ink); }
 code {
   font-family: var(--font-mono);
@@ -177,6 +184,14 @@ table {
   width: 100%;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+/* a wide table scrolls itself rather than pushing the page sideways */
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
 }
 th, td {
   text-align: left;

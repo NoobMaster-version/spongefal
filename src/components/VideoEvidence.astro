@@ -36,7 +36,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       (entries) =>
         entries.forEach((e) => {
           const v = e.target as HTMLVideoElement;
-          if (e.isIntersecting) v.play().catch(() => {});
+          const plain = document.documentElement.classList.contains('plain');
+          if (e.isIntersecting && !plain) v.play().catch(() => {});
           else v.pause();
         }),
       { threshold: 0.4 }
