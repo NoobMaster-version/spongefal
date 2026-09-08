@@ -14,7 +14,8 @@ Key facts:
 - Final year project: coreless axial-flux BLDC motor whose stator is the PCB
   itself — 100 mm two-layer board, 6 wedge coils over 8 poles, dual 3D-printed
   rotor with 16 N42 magnets across a 0.5 mm air gap. FEMM magnetostatic models
-  gave Kt 40.9 mN·m/A and Kv 496 rpm/V with exactly zero cogging, and identified
+  predicted Kt 40.9 mN·m/A and Kv 496 rpm/V with exactly zero cogging (the built
+  motor measures 350 rpm/V, i.e. ~1.4x more torque per amp than modelled), and identified
   a 3.3x torque loss caused by the plastic rotor before fabrication.
 - Research intern, Krishna Defence & Allied Industries (May–Jul 2025, at IIT
   Gandhinagar): custom DS-TWR UWB ranging firmware — 315 m range (stock limit
@@ -34,4 +35,4 @@ Key facts:
 - [The forklift (KDAIL)](https://noobmaster-version.github.io/spongefal/projects/kdail/): the UWB localization work
 - [Everything on one page](https://noobmaster-version.github.io/spongefal/plain/): plain-text summary
 - [Resume PDF](https://noobmaster-version.github.io/spongefal/resume.pdf)
-- Contact: kartikeypathak.imp@gmail.com · github.com/NoobMaster-version
+- Contact: krpathak@proton.me · github.com/NoobMaster-version

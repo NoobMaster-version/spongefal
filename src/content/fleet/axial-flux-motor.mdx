@@ -1,5 +1,6 @@
 ---
 title: "the motor is the PCB"
+what: "axial-flux BLDC"
 summary: "My final year project. A brushless motor with no iron and no wound coils — the stator is just a circuit board with copper spirals on it."
 kind: case-study
 order: 11
@@ -23,7 +24,7 @@ links:
 poster: "axial-flux-motor/stator-render.jpg"
 video: "axial-flux-motor/spin-test.mp4"
 featured: true
-metric: "496 rpm/V measured, 176 designed"
+metric: "350 rpm/V built · zero cogging"
 ---
 
 import Figure from '../../components/Figure.astro';
@@ -76,26 +77,47 @@ slices at r = 24, 28, 32, 36 and 40 mm, gave each the true local chord of the
 
 ## what it told me
 
-| | as built | with steel back plates |
+Everything in this table is the model, not the bench:
+
+| | plastic rotor | with steel back plates |
 | --- | --- | --- |
 | flux at the copper | 0.34 T | 0.82 T |
 | torque constant | 40.9 mN·m/A | 135.1 mN·m/A |
 | Kv | 496 rpm/V | 150 rpm/V |
 | cogging | zero | zero |
 
-I had designed for about 176 rpm/V. I measured 496 — 2.8× off, which is far
-too much to be noise.
-
-The reason is the plastic rotor. My design had quietly assumed steel behind the
-magnets to return the flux. With a printed carrier the only return path is back
-through air across a 25 mm pole pitch, so most of what the magnets produce
-never reaches the copper. **The 3D-printed rotor gives away 3.3× of the
-torque.** Two steel discs, about 6 mm each, get it back — and cost nothing in
-copper, current or board area. (I checked 3 mm first and it saturates badly, so
-6 mm is the honest number.)
+The useful finding is the gap between those two columns. My design had quietly
+assumed steel behind the magnets to return the flux. With a printed carrier the
+only return path is back through air across a 25 mm pole pitch, so most of what
+the magnets produce never reaches the copper. **The 3D-printed rotor gives away
+3.3× of the torque.** Two steel discs, about 6 mm each, get it back — and cost
+nothing in copper, current or board area. (I checked 3 mm first and it saturates
+badly, so 6 mm is the honest number.)
 
 Finding that before the design was frozen is the whole reason I bothered with
 the simulation.
+
+## and then I built it
+
+**The motor comes out at 350 rpm/V.** I had designed for about 176, and the
+model predicted 496 for the rotor I actually printed.
+
+So reality landed between the two, and — this is the part I did not expect —
+it landed on the *good* side of the model. A lower Kv means a higher torque
+constant, so the real motor makes about 1.4× the torque per amp that my
+unrolled model said it would.
+
+That's the opposite direction from the error I'd warned myself about. A 2D
+method has no radial end effects and no leakage around the coil end-turns, and
+both of those *reduce* real torque, so I expected to come in 10–20% below the
+model, not 40% above it. Something in the model is conservative and I haven't
+pinned down which thing yet. Candidates I'd check first: the effective magnet
+area (my chord-weighted slices came out 2.7% high, which is the wrong way), the
+0.5 mm air gap being tighter in the assembled stack than I specified, and the
+±0.04 T of mesh noise in the low-field gaps between magnets.
+
+I'd rather write that down than round it off. The number I'd quote for this
+motor is 350 rpm/V, because that's the one that came off the bench.
 
 The other thing worth knowing: the traces are 0.30 mm × 35 µm, which works out
 to 95 A/mm² per amp. That is a very high current density, so **this motor is
@@ -127,12 +149,15 @@ phase sequence is reversed from what I'd assumed. My first torque number came
 out as zero because all three phases were cancelling. Assuming that one would
 have cost me a rebuild.
 
-Since it's a 2D method with no radial end effects, I expect the real motor to
-land 10–20% below these numbers.
+All of which made the checks agree with each other — and the built motor still
+came out 40% off, in the direction the method said was impossible. Internal
+consistency is not accuracy. Worth remembering.
 
 ## next
 
-Steel back plates, then check the board doesn't bow more than the 0.5 mm air
-gap it's supposed to keep, then re-check thermals before I believe any current
-above 0.35 A. If I need better than ±15% after that, it needs a 3D solver and
-FEMM can't take me further.
+Measure the actual air gap in the assembled stack and check the board doesn't
+bow more than the 0.5 mm it's supposed to hold — that's my first suspect for
+the 350-against-496 gap, and it's the cheapest one to rule out. Then the steel
+back plates, then re-check thermals before I believe any current above 0.35 A.
+If I still need better than ±15% after that, it needs a 3D solver; FEMM can't
+take me further.
