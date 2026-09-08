@@ -5,13 +5,16 @@ import Base from '../layouts/Base.astro';
 const fleet = (await getCollection('fleet')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const spotlight = fleet.map((e) => ({
-  href: `${base}/projects/${e.id}/`,
-  title: e.data.title,
-  poster: `${base}/assets/${e.data.poster}`,
-  video: e.data.video ? `${base}/assets/${e.data.video}` : null,
-  hint: e.data.metric ?? '',
-}));
+const spotlight = fleet.map((e) => {
+  const clip = e.data.homeVideo ?? e.data.video;
+  return {
+    href: `${base}/projects/${e.id}/`,
+    title: e.data.homeLabel ?? `${e.data.title} (${e.data.what})`,
+    poster: `${base}/assets/${e.data.homePoster ?? e.data.poster}`,
+    video: clip ? `${base}/assets/${clip}` : null,
+    hint: e.data.metric ?? '',
+  };
+});
 const first = spotlight.find((s) => s.video) ?? spotlight[0]!;
 
 // the four I'd show someone first — newest and hardest at the top
@@ -96,7 +99,9 @@ const featured = fleet
                     />
                   )}
                 </span>
-                <span class="pick-card__t">{e.data.title}</span>
+                <span class="pick-card__t">
+                  {e.data.title} <span class="what">({e.data.what})</span>
+                </span>
                 {e.data.metric && <span class="pick-card__metric">{e.data.metric}</span>}
                 <span class="pick-card__s">{e.data.summary}</span>
                 <span class="pick-card__meta label">
@@ -128,7 +133,9 @@ const featured = fleet
                   width="400"
                   height="300"
                 />
-                <span class="bench-strip__t">{e.data.title}</span>
+                <span class="bench-strip__t">
+                  {e.data.title} <span class="what">({e.data.what})</span>
+                </span>
               </a>
             </li>
           ))
@@ -139,8 +146,8 @@ const featured = fleet
     <section class="also prose">
       <p>
         Also: I run robot workshops at <a href={`${base}/about/`}>SRA</a>,
-        made a short film with friends once (it won), and our lab cat has
-        <a href={`${base}/projects/robots-for-good/`}> her own robot</a>.
+        made a short film with friends once (it won), and our lab cat has{' '}
+        <a href={`${base}/projects/robots-for-good/`}>her own robot</a>.
       </p>
       <p class="label">
         the story so far → <a href={`${base}/log/`}>the log</a> ·
@@ -330,6 +337,13 @@ const featured = fleet
       line-height: 1.2;
       margin-top: var(--sp-3);
       text-wrap: balance;
+    }
+    /* the plain-language descriptor — quieter than the name it explains */
+    .what {
+      color: var(--ink-faint);
+      font-weight: 400;
+      font-size: 0.82em;
+      white-space: nowrap;
     }
     .pick-card__metric {
       display: block;

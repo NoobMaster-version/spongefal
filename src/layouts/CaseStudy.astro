@@ -17,7 +17,7 @@ const info = [d.dates, d.team, d.location, d.status].filter(Boolean).join(' · '
 <Base title={d.title} description={d.summary}>
   <article class="container">
     <header class="cs-header">
-      <h1>{d.title}</h1>
+      <h1>{d.title} <span class="what">({d.what})</span></h1>
       <p class="cs-summary">{d.summary}</p>
       {
         d.metric && (
@@ -62,7 +62,7 @@ const info = [d.dates, d.team, d.location, d.status].filter(Boolean).join(' · '
         prev ? (
           <a href={`${base}/projects/${prev.id}/`} rel="prev">
             <span class="label">← previous</span>
-            <span>{prev.data.title}</span>
+            <span>{prev.data.title} <span class="what">({prev.data.what})</span></span>
           </a>
         ) : (
           <span />
@@ -72,7 +72,7 @@ const info = [d.dates, d.team, d.location, d.status].filter(Boolean).join(' · '
         next ? (
           <a href={`${base}/projects/${next.id}/`} rel="next" class="berths__next">
             <span class="label">next →</span>
-            <span>{next.data.title}</span>
+            <span>{next.data.title} <span class="what">({next.data.what})</span></span>
           </a>
         ) : (
           <span />
@@ -93,6 +93,16 @@ const info = [d.dates, d.team, d.location, d.status].filter(Boolean).join(' · '
     color: var(--ink-soft);
     max-width: var(--measure);
   }
+  /* the plain-language descriptor — quieter than the name it explains */
+  .what {
+    color: var(--ink-faint);
+    font-weight: 400;
+    font-size: 0.82em;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+  /* the h1 runs up to 3rem, so the descriptor needs to shrink harder there */
+  .cs-header h1 .what { font-size: 0.46em; }
   .cs-metric {
     display: flex;
     flex-direction: column;

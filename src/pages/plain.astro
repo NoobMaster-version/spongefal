@@ -11,9 +11,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <header class="pl-head">
       <h1>everything on one page</h1>
       <p class="prose">
-        The whole site, plain. For people in a hurry.
+        The whole site, plain. For people in a hurry.{' '}
         <a href={`${base}/resume.pdf`}>resume PDF</a> ·
-        <a href="mailto:kartikeypathak.imp@gmail.com">email</a> ·
+        <a href="mailto:krpathak@proton.me">email</a> ·
         <a href="https://www.linkedin.com/in/kartikey-pathak-a365a8281/">linkedin</a> ·
         <a href="https://github.com/NoobMaster-version">github</a>
       </p>
@@ -73,7 +73,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           {
             fleet.map((e) => (
               <tr>
-                <td><a href={`${base}/projects/${e.id}/`}>{e.data.title}</a></td>
+                <td>
+                  <a href={`${base}/projects/${e.id}/`}>{e.data.title}</a>{' '}
+                  ({e.data.what})
+                </td>
                 <td>{e.data.dates}</td>
                 <td>{e.data.summary}</td>
               </tr>

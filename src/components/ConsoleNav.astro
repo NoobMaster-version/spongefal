@@ -29,11 +29,11 @@ const commands = [
   })),
   ...fleet.map((e) => ({
     cmd: `/goto projects/${e.id}`,
-    label: e.data.title,
+    label: `${e.data.title} (${e.data.what})`,
     href: `${base}/projects/${e.id}/`,
   })),
   { cmd: '/call resume', label: 'resume (PDF)', href: `${base}/resume.pdf` },
-  { cmd: '/call email', label: 'send email', href: 'mailto:kartikeypathak.imp@gmail.com' },
+  { cmd: '/call email', label: 'send email', href: 'mailto:krpathak@proton.me' },
   { cmd: '/call github', label: 'github', href: 'https://github.com/NoobMaster-version' },
 ];
 ---
