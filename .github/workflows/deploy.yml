@@ -29,6 +29,23 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      # configure-pages only enables Pages when it is currently off. This repo
+      # had Pages already on with a *branch* source, so it was left alone and
+      # GitHub kept running its own Jekyll builder beside this workflow — that
+      # job tried to parse .astro files as YAML front matter and failed on every
+      # push since July. Force the source across so only this workflow deploys.
+      # Non-fatal: changing the setting needs an admin-scoped token, and if the
+      # default one can't, it is one click in Settings > Pages.
+      - name: Force the Pages source to GitHub Actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api -X PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow; then
+            echo "Pages source is now GitHub Actions; the Jekyll job will stop running."
+          else
+            echo "::warning::Could not change the Pages source automatically."
+            echo "::warning::Set it by hand: Settings > Pages > Build and deployment > Source: GitHub Actions."
+          fi
       - run: npm ci
       - run: npx astro check
       - run: npx astro build
