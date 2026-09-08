@@ -29,23 +29,26 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
-      # configure-pages only enables Pages when it is currently off. This repo
-      # had Pages already on with a *branch* source, so it was left alone and
-      # GitHub kept running its own Jekyll builder beside this workflow — that
-      # job tried to parse .astro files as YAML front matter and failed on every
-      # push since July. Force the source across so only this workflow deploys.
-      # Non-fatal: changing the setting needs an admin-scoped token, and if the
-      # default one can't, it is one click in Settings > Pages.
-      - name: Force the Pages source to GitHub Actions
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          if gh api -X PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow; then
-            echo "Pages source is now GitHub Actions; the Jekyll job will stop running."
-          else
-            echo "::warning::Could not change the Pages source automatically."
-            echo "::warning::Set it by hand: Settings > Pages > Build and deployment > Source: GitHub Actions."
-          fi
+      #
+      # If you still see a red "pages build and deployment" run next to this
+      # one, the repo's Pages source is set to "deploy from a branch". GitHub
+      # then generates its own Jekyll job, which walks the repo, reads
+      # src/**/*.astro as Jekyll front matter and fails. It has never affected
+      # what gets published — this workflow's deployment is the one that wins —
+      # but it keeps the run list half-red.
+      #
+      # Fix it once, by hand:
+      #   Settings > Pages > Build and deployment > Source: GitHub Actions
+      #
+      # It cannot be fixed from here. configure-pages above only enables Pages
+      # when Pages is off, so it is a no-op on a repo that already has it on;
+      # and PUT /repos/{owner}/{repo}/pages with build_type=workflow is
+      # rejected for the default GITHUB_TOKEN (verified 2026-09-08 — it lacks
+      # the admin scope), so scripting it just adds a warning to every run.
+      #
+      # Do NOT "fix" the Jekyll error with a .nojekyll file. That makes the
+      # Jekyll job succeed and publish the repo root, which still holds the
+      # pre-Astro index.html — it would overwrite this build with the old site.
       - run: npm ci
       - run: npx astro check
       - run: npx astro build
