@@ -29,10 +29,10 @@ Key facts:
   Wall-E self-balancing kit program has taught 200+ students.
 
 ## Pages
-- [Projects](https://noobmaster-version.github.io/spongefal/projects/): everything built, each page with footage and dates
-- [Piko's electronics (Eyecandy Robotics)](https://noobmaster-version.github.io/spongefal/projects/eyecandy/): the PCB and power-electronics work
-- [The motor is the PCB](https://noobmaster-version.github.io/spongefal/projects/axial-flux-motor/): the axial-flux motor and its FEMM analysis
-- [The forklift (KDAIL)](https://noobmaster-version.github.io/spongefal/projects/kdail/): the UWB localization work
-- [Everything on one page](https://noobmaster-version.github.io/spongefal/plain/): plain-text summary
-- [Resume PDF](https://noobmaster-version.github.io/spongefal/resume.pdf)
+- [Projects](https://spongefal.vercel.app/projects/): everything built, each page with footage and dates
+- [Piko's electronics (Eyecandy Robotics)](https://spongefal.vercel.app/projects/eyecandy/): the PCB and power-electronics work
+- [The motor is the PCB](https://spongefal.vercel.app/projects/axial-flux-motor/): the axial-flux motor and its FEMM analysis
+- [The forklift (KDAIL)](https://spongefal.vercel.app/projects/kdail/): the UWB localization work
+- [Everything on one page](https://spongefal.vercel.app/plain/): plain-text summary
+- [Resume PDF](https://spongefal.vercel.app/resume.pdf)
 - Contact: krpathak@proton.me · github.com/NoobMaster-version
