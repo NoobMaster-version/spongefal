@@ -96,10 +96,33 @@ const releases = [
     link: 'smart-switch',
   },
   {
+    v: 'v5.0',
+    date: 'apr – aug 2026',
+    title: 'Eyecandy Robotics',
+    notes: [
+      '+ moved to Bangalore, designed the boards inside a small legged robot',
+      '+ compute carrier, motor driver, and a power board running 17 motors',
+      '+ learned: debugging other people\'s hardware teaches you more than debugging your own',
+    ],
+    link: 'eyecandy',
+  },
+  {
+    v: 'v5.5',
+    date: 'aug 2026',
+    title: 'the motor is the PCB',
+    notes: [
+      '+ final year project: a coreless axial-flux motor etched into a circuit board',
+      '+ simulated it before fabbing and found a 3.3x torque loss in my own design',
+      '- assuming anything about phase order',
+    ],
+    link: 'axial-flux-motor',
+  },
+  {
     v: 'HEAD',
     date: 'now',
     title: 'in progress',
     notes: [
+      '~ steel back plates on the motor, then re-measure Kv',
       '~ open-sourcing the cat feeder',
       '~ smart switch: perf board → real PCB, OTA updates',
       '~ known issue: cannot stop building robots. won\'t fix.',

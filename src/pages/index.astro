@@ -13,6 +13,11 @@ const spotlight = fleet.map((e) => ({
   hint: e.data.metric ?? '',
 }));
 const first = spotlight.find((s) => s.video) ?? spotlight[0]!;
+
+// the four I'd show someone first — newest and hardest at the top
+const featured = fleet
+  .filter((e) => e.data.featured)
+  .sort((a, b) => b.data.order - a.data.order);
 ---
 
 <Base title="hi" description="Kartikey Pathak. I build robots. This site is the stuff I've made.">
@@ -30,7 +35,7 @@ const first = spotlight.find((s) => s.video) ?? spotlight[0]!;
         </p>
         <p class="hero__status label">
           <span class="blip" aria-hidden="true"></span>
-          currently building · call me at midnight with an idea
+          right now: a motor with no iron in it · call me at midnight with an idea
         </p>
       </div>
 
@@ -57,9 +62,59 @@ const first = spotlight.find((s) => s.video) ?? spotlight[0]!;
       <script type="application/json" id="spotlight-data" set:html={JSON.stringify(spotlight)} />
     </section>
 
+    <section class="pick" aria-labelledby="pick-h">
+      <h2 id="pick-h" class="pick__h">start here</h2>
+      <p class="label">the four I'd show you first</p>
+      <ul class="pick-grid" role="list">
+        {
+          featured.map((e) => (
+            <li>
+              <a href={`${base}/projects/${e.id}/`}>
+                <span class="pick-card__screen">
+                  {e.data.video ? (
+                    <video
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                      data-pick-loop
+                      width="640"
+                      height="400"
+                      poster={`${base}/assets/${e.data.poster}`}
+                      aria-hidden="true"
+                    >
+                      <source src={`${base}/assets/${e.data.video}`} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <img
+                      src={`${base}/assets/${e.data.poster}`}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      width="640"
+                      height="400"
+                    />
+                  )}
+                </span>
+                <span class="pick-card__t">{e.data.title}</span>
+                {e.data.metric && <span class="pick-card__metric">{e.data.metric}</span>}
+                <span class="pick-card__s">{e.data.summary}</span>
+                <span class="pick-card__meta label">
+                  {e.data.dates} · {e.data.status}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
     <section class="bench" aria-labelledby="bench-h">
-      <h2 id="bench-h" class="bench__h">the stuff</h2>
-      <p class="label">roughly in the order I built it · reload the page for a different robot above</p>
+      <h2 id="bench-h" class="bench__h">everything</h2>
+      <p class="label">
+        all {fleet.length} of them, roughly in the order I built them · reload the
+        page for a different robot above
+      </p>
       <ul class="bench-strip" role="list">
         {
           fleet.map((e) => (
@@ -70,6 +125,8 @@ const first = spotlight.find((s) => s.video) ?? spotlight[0]!;
                   alt=""
                   loading="lazy"
                   decoding="async"
+                  width="400"
+                  height="300"
                 />
                 <span class="bench-strip__t">{e.data.title}</span>
               </a>
@@ -110,7 +167,8 @@ const first = spotlight.find((s) => s.video) ?? spotlight[0]!;
         document.getElementById('spot-hint')!.textContent = pick.hint;
         video.poster = pick.poster;
         video.innerHTML = '';
-        if (pick.video && !reduce) {
+        const plain = document.documentElement.classList.contains('plain');
+        if (pick.video && !reduce && !plain) {
           const s = document.createElement('source');
           s.src = pick.video;
           s.type = 'video/mp4';
@@ -121,6 +179,23 @@ const first = spotlight.find((s) => s.video) ?? spotlight[0]!;
           video.load();
         }
       }
+    }
+
+    // featured cards: loop only while on screen, and never under reduced motion
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const io = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            const v = e.target as HTMLVideoElement;
+            const plain = document.documentElement.classList.contains('plain');
+            if (e.isIntersecting && !plain) v.play().catch(() => {});
+            else v.pause();
+          }),
+        { threshold: 0.3 }
+      );
+      document
+        .querySelectorAll<HTMLVideoElement>('video[data-pick-loop]')
+        .forEach((v) => io.observe(v));
     }
   </script>
 
@@ -203,7 +278,77 @@ const first = spotlight.find((s) => s.video) ?? spotlight[0]!;
       color: var(--ink);
       text-transform: none;
     }
-    .bench { margin-top: var(--sp-8); }
+    /* ---- start here: the four cards ---- */
+    .pick { margin-top: var(--sp-8); }
+    .pick__h { margin-top: 0; }
+    .pick-grid {
+      list-style: none;
+      padding: 0;
+      margin: var(--sp-4) 0 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--sp-4);
+      max-width: none;
+    }
+    .pick-grid a {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-1);
+      padding: var(--sp-3);
+      transition: border-color var(--t-fast) var(--e-mech), box-shadow var(--t-fast) var(--e-mech);
+    }
+    .pick-grid a:hover,
+    .pick-grid a:focus-visible {
+      border-color: var(--signal);
+      box-shadow: var(--glow);
+    }
+    .pick-card__screen {
+      position: relative;
+      display: block;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      background: var(--surface-0);
+    }
+    .pick-card__screen :is(video, img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: none;
+      border-radius: 0;
+    }
+    .pick-card__t {
+      display: block;
+      font-weight: 600;
+      font-size: var(--text-lg);
+      line-height: 1.2;
+      margin-top: var(--sp-3);
+      text-wrap: balance;
+    }
+    .pick-card__metric {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+      color: var(--signal);
+      margin-top: var(--sp-1);
+    }
+    .pick-card__s {
+      display: block;
+      margin-top: var(--sp-2);
+      color: var(--ink-soft);
+      font-size: var(--text-sm);
+    }
+    .pick-card__meta { display: block; margin-top: auto; padding-top: var(--sp-3); }
+
+    .bench { margin-top: var(--sp-16); }
     .bench__h { margin-top: 0; }
     .bench-strip {
       list-style: none;

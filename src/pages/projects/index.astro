@@ -14,7 +14,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         Everything here physically exists (or existed). There's a video on
         every page — seeing a thing move beats reading about it.
       </p>
-      <p class="label">roughly in the order I built them</p>
+      <p class="label">{fleet.length} of them, roughly in the order I built them</p>
     </header>
 
     <ol class="wall" role="list">
@@ -30,6 +30,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                     playsinline
                     preload="none"
                     data-wall-loop
+                    width="640"
+                    height="400"
                     poster={`${base}/assets/${entry.data.poster}`}
                     aria-hidden="true"
                   >
@@ -41,11 +43,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
                     alt=""
                     loading="lazy"
                     decoding="async"
+                    width="640"
+                    height="400"
                   />
                 )}
                 <span class="monitor__status">{entry.data.status}</span>
               </span>
               <span class="monitor__title">{entry.data.title}</span>
+              {entry.data.metric && (
+                <span class="monitor__metric">{entry.data.metric}</span>
+              )}
               <span class="monitor__summary">{entry.data.summary}</span>
               <span class="monitor__meta label">{entry.data.dates}</span>
             </a>
@@ -62,7 +69,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         (entries) =>
           entries.forEach((e) => {
             const v = e.target as HTMLVideoElement;
-            if (e.isIntersecting) v.play().catch(() => {});
+            const plain = document.documentElement.classList.contains('plain');
+            if (e.isIntersecting && !plain) v.play().catch(() => {});
             else v.pause();
           }),
         { threshold: 0.3 }
@@ -133,9 +141,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       font-size: var(--text-lg);
       margin-top: var(--sp-3);
     }
+    .monitor__metric {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+      color: var(--signal);
+      margin-top: var(--sp-1);
+    }
     .monitor__summary {
       display: block;
-      margin-top: var(--sp-1);
+      margin-top: var(--sp-2);
       color: var(--ink-soft);
       font-size: var(--text-sm);
     }

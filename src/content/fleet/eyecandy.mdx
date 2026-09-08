@@ -1,0 +1,97 @@
+---
+title: "Piko's electronics"
+summary: "I designed the boards for a small legged robot at Eyecandy Robotics. The hard one was the power board — 17 motors out of one battery."
+kind: case-study
+order: 10
+status: deployed
+dates: "apr – aug 2026"
+team: "team — I owned the electronics"
+location: "Bangalore"
+tech:
+  - KiCAD
+  - Raspberry Pi Zero 2W
+  - Milk-V
+  - BQ25887
+  - MP2672
+  - TPS562202
+  - MPU6050
+  - LM393
+  - PAM8403
+  - ReSpeaker mic array
+  - Feetech servo bus
+  - DFM review
+  - oscilloscope
+repoNote: "these boards are Eyecandy's, so no repo"
+links:
+  - label: eyecandy robotics
+    url: https://eyecandyrobotics.com
+poster: "eyecandy/piko-stack.jpg"
+video: "eyecandy/piko-live.mp4"
+featured: true
+metric: "one power board, 17 motors"
+---
+
+import Figure from '../../components/Figure.astro';
+import VideoEvidence from '../../components/VideoEvidence.astro';
+
+I spent five months in Bangalore as the electronics and hardware engineer at
+Eyecandy Robotics. They make consumer robots that are meant to be liked
+rather than useful, which is a harder brief than it sounds. My job was the
+boards inside the small one, Piko.
+
+<Figure src="eyecandy/piko-done.jpg" width={1536} height={2048} alt="Piko, assembled, sitting on a cushion" caption="Piko, finished" />
+
+Three of them mattered, and they got harder in that order. (There was also a
+microphone board and the small connector boards that tie everything together.)
+I owned schematic capture, routing, DFM review and the fabrication output for
+each one.
+
+**The compute carriers.** Boards for a Raspberry Pi Zero 2W and a Milk-V
+module, breaking out an MPU6050 IMU, a buffered Feetech servo bus, per-leg
+force-sensitive resistors conditioned through LM393 comparators, and a
+ReSpeaker microphone array. Not conceptually difficult, but it's the board
+everything else plugs into, so I put test points on every rail and solder
+jumpers on anything I might want to bypass — you find out very fast during
+bring-up whether you left yourself a place to put a probe.
+
+**The motor driver.** Drivers for the servo bus, and the audio circuit — a
+PAM8403 amp — ended up living on this board too. Putting audio next to
+switching motor current is a bad idea that I had to make work: an amplifier
+picking up motor noise sounds exactly like a robot that is broken. Grounding,
+and where I let the switching loops run, stopped being a detail and became the
+design.
+
+**The power board.** This was the real work. One small pack has to run
+17 motors, and the board also has to charge it, protect it and step it down.
+So a BQ25887 doing 2S charging with cell balancing, an MP2672 alongside it, and
+TPS562202 bucks for the rails — all inside the volume of a robot you can pick
+up with one hand.
+
+<Figure src="eyecandy/piko-boards.jpg" width={1536} height={2048} alt="Four bare PCBs laid out on a wooden table" caption="bare boards, before anything is on them" />
+<Figure src="eyecandy/piko-stack.jpg" width={1536} height={2048} alt="The assembled board stack held in a hand" caption="assembled, and it fits in a hand" />
+
+17 motors is the number that makes it interesting. They don't all draw current
+politely at the same time — a robot standing up is every servo pulling at
+once, and the sag from that has to not reboot the compute module. Sizing for
+the average would have been comfortable and wrong.
+
+<Figure src="eyecandy/piko-frame.jpg" width={1536} height={2048} alt="Piko part-assembled, white printed shell and wiring on a desk" caption="part-way through assembly" />
+
+The rest of the time I was debugging hardware across everything in the
+building, not just Piko — whatever was broken that day, at whatever layer it
+was broken. A lot of it was other people's boards and other people's bots.
+That turned out to be the part I learned most from. You get a much better feel
+for what a bad design looks like from the outside than from inside your own.
+
+<VideoEvidence
+  src="eyecandy/bigbot-walk.mp4"
+  poster="eyecandy/bigbot-walk-poster.jpg"
+  caption="one of the bigger ones, walking"
+  loop
+/>
+
+<Figure src="eyecandy/fleet.jpg" width={1600} height={1200} alt="Five Eyecandy robots of different sizes lined up on a stage" caption="the lineup" />
+<Figure src="eyecandy/bench-debug.jpg" width={1536} height={2048} alt="Bench covered in printed parts, a compute module and two boards with LEDs lit" caption="a normal afternoon" />
+
+Piko works. I can hold the boards I drew in my hand, which is still the part
+I find slightly unreasonable.

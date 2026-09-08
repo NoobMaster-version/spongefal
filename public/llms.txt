@@ -6,6 +6,16 @@
 > ROS2/Gazebo simulation, and ESP32/ESP-IDF embedded systems.
 
 Key facts:
+- Electronics and hardware engineer, Eyecandy Robotics (Apr–Aug 2026,
+  Bangalore): production PCBs for a small legged consumer robot — compute
+  carrier, motor driver with audio codec, and a power board delivering 17 motors
+  off one battery (li-ion charging, BMS, buck converters); cross-domain hardware
+  debugging across the robot fleet.
+- Final year project: coreless axial-flux BLDC motor whose stator is the PCB
+  itself — 100 mm two-layer board, 6 wedge coils over 8 poles, dual 3D-printed
+  rotor with 16 N42 magnets across a 0.5 mm air gap. FEMM magnetostatic models
+  gave Kt 40.9 mN·m/A and Kv 496 rpm/V with exactly zero cogging, and identified
+  a 3.3x torque loss caused by the plastic rotor before fabrication.
 - Research intern, Krishna Defence & Allied Industries (May–Jul 2025, at IIT
   Gandhinagar): custom DS-TWR UWB ranging firmware — 315 m range (stock limit
   was 45 m), ±2 cm short-range accuracy, 0.4% error over 10,000 m², validated
@@ -19,6 +29,8 @@ Key facts:
 
 ## Pages
 - [Projects](https://noobmaster-version.github.io/spongefal/projects/): everything built, each page with footage and dates
+- [Piko's electronics (Eyecandy Robotics)](https://noobmaster-version.github.io/spongefal/projects/eyecandy/): the PCB and power-electronics work
+- [The motor is the PCB](https://noobmaster-version.github.io/spongefal/projects/axial-flux-motor/): the axial-flux motor and its FEMM analysis
 - [The forklift (KDAIL)](https://noobmaster-version.github.io/spongefal/projects/kdail/): the UWB localization work
 - [Everything on one page](https://noobmaster-version.github.io/spongefal/plain/): plain-text summary
 - [Resume PDF](https://noobmaster-version.github.io/spongefal/resume.pdf)

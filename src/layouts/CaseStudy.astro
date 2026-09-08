@@ -19,6 +19,14 @@ const info = [d.dates, d.team, d.location, d.status].filter(Boolean).join(' · '
     <header class="cs-header">
       <h1>{d.title}</h1>
       <p class="cs-summary">{d.summary}</p>
+      {
+        d.metric && (
+          <p class="cs-metric">
+            <span class="label cs-metric__k">what it earned</span>
+            <span class="cs-metric__v">{d.metric}</span>
+          </p>
+        )
+      }
       <p class="label">{info}</p>
       <div class="cs-links">
         {
@@ -84,6 +92,22 @@ const info = [d.dates, d.team, d.location, d.status].filter(Boolean).join(' · '
     font-size: var(--text-lg);
     color: var(--ink-soft);
     max-width: var(--measure);
+  }
+  .cs-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-left: 2px solid var(--signal);
+    padding: var(--sp-1) 0 var(--sp-1) var(--sp-3);
+    margin-block: var(--sp-4);
+    max-width: var(--measure);
+  }
+  .cs-metric__k { color: var(--ink-faint); }
+  .cs-metric__v {
+    font-family: var(--font-mono);
+    font-size: var(--text-md);
+    font-variant-numeric: tabular-nums;
+    color: var(--signal);
   }
   .cs-links {
     display: flex;
